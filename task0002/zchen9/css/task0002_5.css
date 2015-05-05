@@ -1,0 +1,28 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+/*task0002_5*/
+.box{
+	float: left;
+	overflow: hidden;
+
+	width: 200px;
+	min-height: 450px;
+	margin: 20px 30px;
+
+	border: 2px solid #000;
+	list-style: none;
+}
+.block{
+	width: 198px;
+	height: 70px;
+
+	background-color: #0FF;
+	border: 1px solid #000;
+}
+.dragging{
+	background-color: rgba(0,0,255,.5);
+}
