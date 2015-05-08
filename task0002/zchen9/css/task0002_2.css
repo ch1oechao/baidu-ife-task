@@ -1,25 +1,33 @@
-body{
-	font-family: 'Microsoft Yahei', sans-serif;
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
 }
+body{
+    font-family: 'Microsoft Yahei', sans-serif;
+}
+
+/*task0002_2*/
+
 .ask{
-	display: block;
-	padding: 20px 0;
+    display: block;
+    padding: 20px 0;
 }
 
 #time{
-	width: 200px;
-	height: 25px;
+    width: 200px;
+    height: 25px;
 }
 
 #tip{
-	margin-left: 10px;
+    margin-left: 10px;
 }
 
 #btn{
-	display: block;
-	margin-top: 20px;
-	width: 100px;
-	height: 30px;
-	border: 1px solid #2AD595;
-	background-color: #FFF;
+    display: block;
+    margin-top: 20px;
+    width: 100px;
+    height: 30px;
+    border: 1px solid #2AD595;
+    background-color: #FFF;
 }
