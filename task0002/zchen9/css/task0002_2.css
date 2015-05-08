@@ -1,0 +1,25 @@
+body{
+	font-family: 'Microsoft Yahei', sans-serif;
+}
+.ask{
+	display: block;
+	padding: 20px 0;
+}
+
+#time{
+	width: 200px;
+	height: 25px;
+}
+
+#tip{
+	margin-left: 10px;
+}
+
+#btn{
+	display: block;
+	margin-top: 20px;
+	width: 100px;
+	height: 30px;
+	border: 1px solid #2AD595;
+	background-color: #FFF;
+}
