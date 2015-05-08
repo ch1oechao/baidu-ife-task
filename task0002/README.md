@@ -5,8 +5,7 @@
 - [[查看demo]](http://www.chen9.info/task0002/task0002.html)
 
 
-###学习笔记
-* 慢慢补充...
+- [[学习笔记]](http://zchen9.github.io/baidu-ife/2015/05/07/baidu-ife-task0002-Note.html) (Loading...)
 
 ###任务进程
 总体基本完成，一些细节有待更正和调整：
