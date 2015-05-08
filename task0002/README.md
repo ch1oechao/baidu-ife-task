@@ -1,6 +1,12 @@
 ##任务完成时间：04.24-05.05
 
-[任务地址](https://github.com/baidu-ife/ife/tree/master/task/task0002)
+###baidu-ife task0002
+
+- [[任务地址]](https://github.com/baidu-ife/ife/tree/master/task/task0002)
+
+- [[任务demo]](http://www.chen9.info/task0002/task0002.html)
+
+
 
 ###学习笔记
 * 慢慢补充...
