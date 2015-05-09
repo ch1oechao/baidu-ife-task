@@ -2,7 +2,7 @@
 
 - [[任务地址]](https://github.com/baidu-ife/ife/tree/master/task/task0002)
 
-- [[查看demo]](http://www.chen9.info/task0002/task0002.html)
+- [[查看demo]](http://zchen9.github.io/baidu-ife-task/task0002/zchen9/task0002.html)
 
 
 - [[学习笔记]](http://zchen9.github.io/baidu-ife/2015/05/07/baidu-ife-task0002-Note.html) (Loading...)
