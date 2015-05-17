@@ -1,0 +1,201 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: 'Microsoft YaHei', arial, serif;
+	list-style: none;
+}
+
+html,body {
+	min-width: 960px;
+	height: 100%;
+	background-color: #F2ECE0;
+}
+
+.fa-fw{
+	margin: 0 5px;
+}
+
+/*header*/
+
+header{
+	width: 100%;
+	height: 10%;
+	min-height: 60px;
+	background-color: #FC6472;
+	color: #FFF;
+}
+
+header .todo-title{
+	display: block;
+	line-height: 60px;
+	margin-left: 60px;
+}
+
+/*todo_container*/
+.todo-container{
+	width: 100%;
+	height: 90%;
+	min-height: 450px;
+	float: left;
+	overflow: hidden;
+}
+
+/*todo_category*/
+
+.todo-category,
+.todo-inventory{
+	position: relative;
+	display: block;
+	float: left;
+	width: 22%;
+	min-width: 250px;
+	height: 100%;
+	overflow: hidden;
+	background-color: #FFD6CB;
+}
+
+.todo-category > a,
+.todo-inventory > a{
+	position: absolute;
+	bottom: 0;
+
+	display: block;
+	width: 100%;
+	padding: 10px;
+	background-color: #FFB4A7;
+	color: #000;
+
+	cursor: pointer;
+}
+.todo-category > a:hover,
+.todo-inventory > a:hover{
+	background-color: #FC6472;
+	color: #FFF;
+}
+
+.todo-category-total{
+	margin: 20px 10px;
+}
+
+.todo-category-detail{
+	 margin: 10px;
+}
+
+.todo-category-list{
+	margin-top: 10px;
+	width: 100%;
+	display: block;
+}
+.todo-category-list > li{
+	display: block;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+.todo-task-list{
+	display: block;
+	margin: 5px 0 10px 20px;
+}
+.todo-task-list > li{
+	display: block;
+	margin: 2px 0;
+	padding: 3px 0;
+}
+.todo-task-list > li:hover{
+	background-color: #FFFAF2;
+}
+
+/*todo_inventory*/
+
+.todo-inventory {
+	background-color: #FFF2E5;
+}
+.todo-inventory-category{
+	height: 45px;
+	padding-left: 10px;
+	background-color: #FCBCB2;
+}
+.todo-inventory-category > li{
+	display: inline-block;
+	line-height: 45px;
+	margin-right: 5px;
+	cursor: pointer;
+}
+.todo-inventory-category span{
+	padding: 3px 5px;
+	border-radius: 3px;
+}
+.todo-inventory-category span:hover,
+li .todo-inventory-selected{
+	background-color: #FFF2E5;
+}
+
+.todo-inventory-detail{
+	display: block;
+}
+.todo-inventory-detail > dt{
+	display: block;
+	height: 45px;
+	line-height: 45px;
+	padding-left: 20px;
+	background-color: #FFE3DB;
+}
+.todo-inventory-detail dd{
+	display: block;
+	height: 35px;
+	line-height: 35px;
+	padding-left: 40px;
+	cursor: pointer;
+}
+.todo-inventory-detail dd:hover{
+	color: #FC6472;
+}
+
+/*todo_spec*/
+
+.todo-spec{
+	display: block;
+	margin-left: -56%;
+	height: 100%;
+}
+
+.todo-spec-title{
+	height: 45px;
+	line-height: 45px;
+	text-indent: 2em;
+	width: 100%;
+	background-color: #FFA0AA;
+}
+.todo-spec-edit{
+	float: right;
+	margin-right: 2em;
+}
+.todo-spec-edit > i{
+	cursor: pointer;
+}
+.todo-spec-edit > i:hover{
+	color: #FFF;
+}
+
+.todo-spec-time{
+	text-indent: 2em;
+	height: 45px;
+	line-height: 45px;
+	background-color: #FFD6CE;
+}
+
+.todo-spec-content{
+	overflow: hidden;
+	height: 100%;
+	margin-top: -90px;
+}
+.todo-spec-content > textarea{
+	font-size: 16px;
+	padding: 2em;
+	resize: none;
+	width: 100%;
+	height: 100%;
+	margin-top: 90px;
+	border: none;
+	outline: none;
+	background-color: #FFFAF2;
+}
