@@ -141,13 +141,18 @@ function isMobilePhone(phone) {
  *
  * @class
  */
-function addClass(element, newClassName) {
-    try{
-        element.setAttribute("class", newClassName);
-    }
-    catch( ex ) {
-        element.className = "newClassName";
-    }
+function addClass(element,value) {
+	//判断className属性是否为空
+	if(!element.className) {
+		element.className = value;
+	}
+	else {
+		//若不为空，把空格和新的class设置值追加到className属性上去
+		newClassName = element.className;
+		newClassName += " ";
+		newClassName += value;
+		element.className = newClassName;
+	}
 }
 
 /**
