@@ -54,6 +54,18 @@ window.onload = function(){
         };
     } 
 
+    var todoInventory = $(".todo-inventory-category")[0].children;
+    for(var t=0;t<todoInventory.length;t++){
+        todoInventory[t].onclick = function(){
+            for (var tt=0;tt<todoInventory.length;tt++) {
+                if(hasClass(todoInventory[tt],"todo-inventory-selected")){
+                    removeClass(todoInventory[tt],"todo-inventory-selected");
+                }
+            }
+            addClass(this,"todo-inventory-selected");
+        };
+    }
+
     //function taskItemSelected(){
     //    stopBubble(this);
     //    if(!hasClass(this,"todo-task-selected")) {
