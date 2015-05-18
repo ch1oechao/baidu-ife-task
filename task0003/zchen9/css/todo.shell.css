@@ -123,19 +123,16 @@ header .todo-title{
 }
 .todo-inventory-category > li{
     display: inline-block;
-    line-height: 45px;
+    margin-top: 10px;
     margin-right: 5px;
     cursor: pointer;
-}
-.todo-inventory-category span{
     padding: 3px 5px;
     border-radius: 3px;
 }
-.todo-inventory-category span:hover,
-li .todo-inventory-selected{
+.todo-inventory-category li:hover,
+.todo-inventory-selected{
     background-color: #FFF2E5;
 }
-
 .todo-inventory-detail{
     display: block;
 }
