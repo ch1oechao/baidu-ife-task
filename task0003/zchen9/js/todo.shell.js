@@ -24,18 +24,34 @@ window.onload = function(){
     for(var j=0;j<todoTaskList.length;j++){
         var todoTaskItem = todoTaskList[j].getElementsByTagName("li");
         for(var r= 0;r<todoTaskItem.length;r++){
-            addClickEvent(todoTaskItem[r],taskItemSelected);
+            //addClickEvent(todoTaskItem[r],taskItemSelected);
+
+            todoTaskItem[r].onclick = function(){
+                stopBubble(this);
+                for(var jj = 0;jj<todoTaskList.length;jj++){
+                    todoTaskItem = todoTaskList[jj].getElementsByTagName("li");
+                    for(var rr = 0;rr<todoTaskItem.length;rr++){
+                        removeClass(todoTaskItem[rr], "todo-task-selected");
+                    }
+                }
+                if(!hasClass(this,"todo-task-selected")){
+                    addClass(this, "todo-task-selected");
+                }else{
+                    removeClass(this, "todo-task-selected");
+                }
+            };
+
         }
     }
 
-    function taskItemSelected(){
-        stopBubble(this);
-        if(!hasClass(this,"todo-task-selected")) {
-            addClass(this, "todo-task-selected");
-        }else{
-            removeClass(this, "todo-task-selected");
-        }
-    }
+    //function taskItemSelected(){
+    //    stopBubble(this);
+    //    if(!hasClass(this,"todo-task-selected")) {
+    //        addClass(this, "todo-task-selected");
+    //    }else{
+    //        removeClass(this, "todo-task-selected");
+    //    }
+    //}
 
     function taskListToggle(){
         var taskUlNode = document.createElement("ul");
