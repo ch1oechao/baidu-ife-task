@@ -44,6 +44,16 @@ window.onload = function(){
         }
     }
 
+    var todoDetail = $("dd");
+    for(var s=0;s<todoDetail.length;s++){
+        todoDetail[s].onclick = function(){
+            for(var ss=0;ss<todoDetail.length;ss++){
+                removeClass(todoDetail[ss],'todo-detail-selected');
+            }
+            addClass(this,"todo-detail-selected");
+        };
+    } 
+
     //function taskItemSelected(){
     //    stopBubble(this);
     //    if(!hasClass(this,"todo-task-selected")) {
