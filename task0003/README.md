@@ -8,3 +8,5 @@
 完成基本界面设计...
 
 ![设计图](./zchen9/img/demo_1.png)
+
+![设计图](./zchen9/img/demo_2.png)
