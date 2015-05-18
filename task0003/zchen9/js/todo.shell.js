@@ -76,9 +76,7 @@ window.onload = function(){
     //}
 
     function taskListToggle(){
-        var taskUlNode = document.createElement("ul");
-        taskUlNode.setAttribute("class","todo-task-list");
-        if(this.hasChildNodes(taskUlNode)){
+        if(this.childNodes.length!=0){
             var taskList = this.getElementsByTagName("ul")[0];
             var listDisplay = taskList.style.display;
             if(listDisplay === "none"){
