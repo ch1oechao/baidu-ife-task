@@ -15,12 +15,14 @@ html,body {
 }
 
 i.fa-remove{
+	display: none;
 	float: right;
 }
 
 /*header*/
 
 header{
+	display: block;
 	position: relative;
 	width: 100%;
 	height: 10%;
@@ -51,7 +53,6 @@ header .todo-title{
 	height: 90%;
 	min-height: 450px;
 	float: left;
-	overflow: hidden;
 }
 
 /*todo_category*/
@@ -86,6 +87,10 @@ header .todo-title{
 }
 
 .todo-category-detail{
+	overflow: scroll;
+	overflow-x: hidden;
+	width: 110%;
+	height: 82%;
 	margin: 10px;
 }
 
@@ -104,7 +109,6 @@ header .todo-title{
 
 .todo-task-list{
 	z-index: 100;
-	display: none;
 	margin: 5px 0 0 20px;
 }
 
@@ -112,6 +116,7 @@ header .todo-title{
 	display: block;
 	margin: 2px 0;
 	padding: 3px 0;
+	width: 88%;
 }
 
 /*todo_inventory*/
@@ -130,6 +135,11 @@ header .todo-title{
 
 .todo-inventory-detail{
 	display: block;
+	height: 82%;
+	width: 110%;
+	overflow: scroll;
+	overflow-x: hidden;
+
 }
 .todo-inventory-detail > dt{
 	display: block;
@@ -183,7 +193,7 @@ header .todo-title{
 	font-size: 16px;
 	padding: 2em;
 	resize: none;
-	width: 100%;
+	width: 85%;
 	height: 100%;
 	margin-top: 90px;
 	border: none;

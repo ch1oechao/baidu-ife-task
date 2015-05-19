@@ -616,3 +616,42 @@ function stopDefault( e ) {
     }
     return false;
 }
+
+// 兼容IE FF的getElementsByTagName办法
+var getElementsByTagName = function(tag,name) {
+	var returns = document.getElementsByName(name);
+	if (returns.length > 0) return returns;
+	returns = [];
+	var e = document.getElementsByTagName(tag);
+	for (var i = 0; i < e.length; i++) {
+		if (e[i].getAttribute("name") == name) {
+			returns[returns.length] = e[i];
+		}
+	}
+	return returns;
+};
+
+
+//getNextElement() —— 获取下一个元素节点
+function getNextElement(node) {
+	if(node.nodeType == 1) {
+		return node;
+	}
+	if(node.nextSibling) {
+		return getNextElement(node.nextSibling);
+	}
+	return null;
+}
+
+function delegateClickEvent(ele,listener){
+	for(var i = 0,len=ele.length;i<len;i++){
+		addClickEvent(ele[i],listener);
+	}
+}
+function delegateInitClass(ele,classname){
+	var eles = ele.parentNode.children;
+	for(var i = 0,len=eles.length;i<len;i++){
+		removeClass(eles[i],classname);
+	}
+	addClass(ele,classname);
+}

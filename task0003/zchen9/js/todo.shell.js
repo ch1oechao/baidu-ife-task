@@ -4,88 +4,48 @@
 window.onload = function(){
 
     var init = {
-        todoCategoryList : $(".todo-category-list")[0].children,
-        taskHide: function(){
-            var taskList = $(".todo-task-list");
-            for(var i = 0;i < taskList.length;i++){
-                taskList[i].style.display= "none";
-            }
-        }
 
+	    todoTaskItem : (function(){
+		    var todoTaskList = $(".todo-task-list");
+		    var todoItem = [];
+		    for(var j=0;j<todoTaskList.length;j++){
+			    var todoTaskItem = todoTaskList[j].getElementsByTagName("li");
+			    todoItem.push(todoTaskItem[0]);
+		        todoItem.push(todoTaskItem[1]);
+		    }
+		    return todoItem;
+	    })(),
+	    todoDetail : $("dd"),
+	    todoInventory : $(".todo-inventory-category")[0].children,
+
+	    classToggle : function(e){
+		    e = e||window.event;
+		    var target = e.target||e.srcElement;
+		    stopBubble(e);
+		    var classname = "";
+		    if(target.parentNode!=null){
+			    switch(target.parentNode.className){
+				    case "todo-inventory-detail":
+					    classname="todo-detail-selected";
+					    break;
+				    case "todo-inventory-category":
+					    classname="todo-inventory-selected";
+					    break;
+				    case "todo-task-list":
+					    classname="todo-task-selected";
+					    for(var j=0;j<init.todoTaskItem.length;j++){
+						    removeClass(init.todoTaskItem[j],classname);
+					    }
+					    break;
+			    }
+			    delegateInitClass(target,classname);
+		    }
+	    }
     };
 
 
-    for(var i=0;i<init.todoCategoryList.length;i++){
-        init.taskHide();
-        addClickEvent(init.todoCategoryList[i],taskListToggle);
-    }
-
-    var todoTaskList = $(".todo-task-list");
-    for(var j=0;j<todoTaskList.length;j++){
-        var todoTaskItem = todoTaskList[j].getElementsByTagName("li");
-        for(var r= 0;r<todoTaskItem.length;r++){
-            //addClickEvent(todoTaskItem[r],taskItemSelected);
-
-            todoTaskItem[r].onclick = function(){
-                stopBubble(this);
-                for(var jj = 0;jj<todoTaskList.length;jj++){
-                    todoTaskItem = todoTaskList[jj].getElementsByTagName("li");
-                    for(var rr = 0;rr<todoTaskItem.length;rr++){
-                        removeClass(todoTaskItem[rr], "todo-task-selected");
-                    }
-                }
-                if(!hasClass(this,"todo-task-selected")){
-                    addClass(this, "todo-task-selected");
-                }else{
-                    removeClass(this, "todo-task-selected");
-                }
-            };
-
-        }
-    }
-
-    var todoDetail = $("dd");
-    for(var s=0;s<todoDetail.length;s++){
-        todoDetail[s].onclick = function(){
-            for(var ss=0;ss<todoDetail.length;ss++){
-                removeClass(todoDetail[ss],'todo-detail-selected');
-            }
-            addClass(this,"todo-detail-selected");
-        };
-    } 
-
-    var todoInventory = $(".todo-inventory-category")[0].children;
-    for(var t=0;t<todoInventory.length;t++){
-        todoInventory[t].onclick = function(){
-            for (var tt=0;tt<todoInventory.length;tt++) {
-                if(hasClass(todoInventory[tt],"todo-inventory-selected")){
-                    removeClass(todoInventory[tt],"todo-inventory-selected");
-                }
-            }
-            addClass(this,"todo-inventory-selected");
-        };
-    }
-
-    //function taskItemSelected(){
-    //    stopBubble(this);
-    //    if(!hasClass(this,"todo-task-selected")) {
-    //        addClass(this, "todo-task-selected");
-    //    }else{
-    //        removeClass(this, "todo-task-selected");
-    //    }
-    //}
-
-    function taskListToggle(){
-        if(this.childNodes.length!=0){
-            var taskList = this.getElementsByTagName("ul")[0];
-            var listDisplay = taskList.style.display;
-            if(listDisplay === "none"){
-                taskList.style.display = "block";
-            }else{
-                taskList.style.display = "none";
-            }
-
-        }
-    }
+	delegateClickEvent(init.todoTaskItem,init.classToggle);
+	delegateClickEvent(init.todoDetail,init.classToggle);
+	delegateClickEvent(init.todoInventory,init.classToggle);
 
 };
