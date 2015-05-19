@@ -17,6 +17,35 @@ window.onload = function(){
 	    })(),
 	    todoDetail : $("dd"),
 	    todoInventory : $(".todo-inventory-category")[0].children,
+
+	    todoDefault: (function(){
+		    var taskTitle = $("#todo-default-title");
+		    var taskTime = $("#todo-default-time");
+		    var taskContent = $("#todo-default-content");
+		    return [taskTitle,taskTime,taskContent];
+	    })(),
+
+	    todoEdit: (function(){
+		    var taskTitle = $("#todo-task-title");
+		    var taskTime = $("#todo-task-time");
+		    var taskContent = $("#todo-task-content");
+		    taskTitle.style.display = "none";
+		    taskTime.style.display = "none";
+		    taskContent.style.display = "none";
+		    return [taskTitle,taskTime,taskContent];
+	    })(),
+
+		todoSpecEdit : $(".todo-spec-edit")[0],
+	    todoEditIcon : $(".fa-pencil-square-o")[0],
+	    todoCheckIcon : $(".fa-check-square-o")[0],
+	    todoUndoEle : (function(){
+		    var undoIcon = document.createElement("i");
+		    addClass(undoIcon,"fa fa-undo fa-2x");
+		    undoIcon.setAttribute("onclick","javascript:document.taskForm.reset()");
+		    return undoIcon;
+	    })(),
+	    todoFormName : $("#todo-form").getAttribute("name"),
+
 	    classToggle : function(e){
 		    e = e||window.event;
 		    var target = e.target||e.srcElement;
@@ -46,4 +75,27 @@ window.onload = function(){
 	delegateClickEvent(init.todoDetail,init.classToggle);
 	delegateClickEvent(init.todoInventory,init.classToggle);
 
+	addClickEvent(init.todoEditIcon,function(){
+		this.style.display = "none";
+		init.todoSpecEdit.insertBefore(init.todoUndoEle,init.todoCheckIcon);
+		init.todoUndoEle.style.display = "block";
+		delegateEleEvent(init.todoDefault,function(ele){
+			ele.style.display = "none";
+		});
+		delegateEleEvent(init.todoEdit,function(ele){
+			ele.style.display = "inline-block";
+		});
+	});
+
+	addClickEvent(init.todoCheckIcon,function(){
+		init.todoEditIcon.style.display = "block";
+		init.todoUndoEle.style.display = "none";
+		delegateEleEvent(init.todoDefault,function(ele){
+			ele.style.display = "inline";
+			init.todoDefault[init.todoDefault.length-1].style.display = "block";
+		});
+		delegateEleEvent(init.todoEdit,function(ele){
+			ele.style.display = "none";
+		});
+	});
 };

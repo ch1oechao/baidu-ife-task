@@ -71,19 +71,28 @@
         </section>
 
         <section class="todo-spec">
-            <div class="todo-spec-title">
-                <label for="todo-task-content" id="todo-task-title">to-do 6</label>
+	        <form name="taskForm" id="todo-form">
+		        <div class="todo-spec-title">
+			        <label>标题：</label>
+			        <input type="text" id="todo-task-title" placeholder="在这里输入标题">
+			        <span id="todo-default-title">To-Do Title</span>
                 <span class="todo-spec-edit">
-                    <i class="fa fa-check-square-o"></i>
-                    <i class="fa fa-pencil-square-o"></i>
+                    <i class="fa fa-pencil-square-o fa-2x"></i>
+	                <i class="fa fa-check-square-o fa-2x"></i>
                 </span>
-            </div>
-            <div class="todo-spec-time">
-                <span>任务日期：<time id="todo-task-time">2015-05-15</time></span>
-            </div>
-            <div class="todo-spec-content">
-                <textarea id="todo-task-content" placeholder="在这里输入内容"></textarea>
-            </div>
+		        </div>
+		        <div class="todo-spec-time">
+			        <label>任务日期：</label>
+			        <input id="todo-task-time" type="date">
+			        <span id="todo-default-time">YYYY-MM-DD</span>
+		        </div>
+		        <div class="todo-spec-content">
+			        <textarea id="todo-task-content" placeholder="在这里输入内容"></textarea>
+			        <p id="todo-default-content">
+				        这里是任务内容
+			        </p>
+		        </div>
+	        </form>
         </section>
     </div>
 
