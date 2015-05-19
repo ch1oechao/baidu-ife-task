@@ -45,6 +45,7 @@ window.onload = function(){
 		    return undoIcon;
 	    })(),
 	    todoFormName : $("#todo-form").getAttribute("name"),
+	    todoAddTask : $("#todo-add-task"),
 
 	    classToggle : function(e){
 		    e = e||window.event;
@@ -79,6 +80,18 @@ window.onload = function(){
 		e = e || window.event;
 		var target = e.target|| e.srcElement;
 		target.style.display = "none";
+		init.todoSpecEdit.insertBefore(init.todoUndoEle,init.todoCheckIcon);
+		init.todoUndoEle.style.display = "block";
+		delegateEleEvent(init.todoDefault,function(ele){
+			ele.style.display = "none";
+		});
+		delegateEleEvent(init.todoEdit,function(ele){
+			ele.style.display = "inline-block";
+		});
+	});
+
+	addClickEvent(init.todoAddTask,function(){
+		init.todoEditIcon.style.display = "none";
 		init.todoSpecEdit.insertBefore(init.todoUndoEle,init.todoCheckIcon);
 		init.todoUndoEle.style.display = "block";
 		delegateEleEvent(init.todoDefault,function(ele){
