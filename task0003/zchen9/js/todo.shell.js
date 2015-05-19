@@ -75,8 +75,10 @@ window.onload = function(){
 	delegateClickEvent(init.todoDetail,init.classToggle);
 	delegateClickEvent(init.todoInventory,init.classToggle);
 
-	addClickEvent(init.todoEditIcon,function(){
-		this.style.display = "none";
+	addClickEvent(init.todoEditIcon,function(e){
+		e = e || window.event;
+		var target = e.target|| e.srcElement;
+		target.style.display = "none";
 		init.todoSpecEdit.insertBefore(init.todoUndoEle,init.todoCheckIcon);
 		init.todoUndoEle.style.display = "block";
 		delegateEleEvent(init.todoDefault,function(ele){
