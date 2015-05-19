@@ -4,20 +4,19 @@
 window.onload = function(){
 
     var init = {
-
 	    todoTaskItem : (function(){
 		    var todoTaskList = $(".todo-task-list");
 		    var todoItem = [];
 		    for(var j=0;j<todoTaskList.length;j++){
 			    var todoTaskItem = todoTaskList[j].getElementsByTagName("li");
-			    todoItem.push(todoTaskItem[0]);
-		        todoItem.push(todoTaskItem[1]);
+			    for(var i=0;i<todoTaskItem.length;i++){
+				    todoItem.push(todoTaskItem[i]);
+			    }
 		    }
 		    return todoItem;
 	    })(),
 	    todoDetail : $("dd"),
 	    todoInventory : $(".todo-inventory-category")[0].children,
-
 	    classToggle : function(e){
 		    e = e||window.event;
 		    var target = e.target||e.srcElement;
@@ -42,7 +41,6 @@ window.onload = function(){
 		    }
 	    }
     };
-
 
 	delegateClickEvent(init.todoTaskItem,init.classToggle);
 	delegateClickEvent(init.todoDetail,init.classToggle);
