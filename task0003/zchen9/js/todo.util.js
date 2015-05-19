@@ -643,6 +643,12 @@ function getNextElement(node) {
 	return null;
 }
 
+function delegateEleEvent(ele,listener){
+	for(var i = 0,len=ele.length;i<len;i++){
+		listener(ele[i]);
+	}
+}
+
 function delegateClickEvent(ele,listener){
 	for(var i = 0,len=ele.length;i<len;i++){
 		addClickEvent(ele[i],listener);
