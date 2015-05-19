@@ -38,6 +38,7 @@ window.onload = function(){
 		todoSpecEdit : $(".todo-spec-edit")[0],
 	    todoEditIcon : $(".fa-pencil-square-o")[0],
 	    todoCheckIcon : $(".fa-check-square-o")[0],
+	    todoRemoveIcon : $(".fa-remove")[0],
 	    todoUndoEle : (function(){
 		    var undoIcon = document.createElement("i");
 		    addClass(undoIcon,"fa fa-undo fa-2x");

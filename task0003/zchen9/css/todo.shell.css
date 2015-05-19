@@ -21,6 +21,7 @@ html,body {
 
 i.fa-remove{
 	display: none;
+	line-height: 22px;
 	float: right;
 }
 
@@ -95,14 +96,14 @@ header .todo-title{
 .todo-category-detail{
 	overflow: scroll;
 	overflow-x: hidden;
-	width: 110%;
+	width: 105%;
 	height: 82%;
 	margin: 10px;
 }
 
 .todo-category-list{
 	margin-top: 10px;
-	width: 100%;
+	width: 90%;
 	display: block;
 }
 .todo-category-list > li{
@@ -115,14 +116,14 @@ header .todo-title{
 
 .todo-task-list{
 	z-index: 100;
-	margin: 5px 0 0 20px;
+	margin-left: 15px;
 }
 
 .todo-task-list > li{
 	display: block;
-	margin: 2px 0;
-	padding: 3px 0;
-	width: 88%;
+	margin: 4px 0;
+	padding: 2px 0;
+	width: 100%;
 }
 
 /*todo_inventory*/

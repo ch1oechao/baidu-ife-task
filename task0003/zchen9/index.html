@@ -17,36 +17,11 @@
         <section class="todo-category">
             <p class="todo-category-total">
                 <span>所有任务</span>
-                <span id="todo-total-count">(9)</span>
+                <!--<span id="todo-total-count">(9)</span>-->
             </p>
             <div class="todo-category-detail">
                 <span>分类列表</span>
-                <ul class="todo-category-list">
-                    <li id="list-default">
-                        <span><i class="fa fa-folder-open fa-fw"></i>默认分类</span>
-                        <span id="list-default-count">(2)</span>
-                        <ul class="todo-task-list">
-                            <li><i class="fa fa-file-o fa-fw"></i>task1</li>
-                            <li><i class="fa fa-file-o fa-fw"></i>task2</li>
-                        </ul>
-                    </li>
-                    <li id="list-baiduife">
-                        <span><i class="fa fa-folder-open fa-fw"></i>百度IFE项目</span>
-                        <span id="list-baiduife-count">(2)</span>
-                        <ul class="todo-task-list">
-                            <li><i class="fa fa-file-o fa-fw"></i>task3</li>
-                            <li><i class="fa fa-file-o fa-fw"></i>task4</li>
-                        </ul>
-                    </li>
-                    <li id="list-design">
-                        <span><i class="fa fa-folder-open fa-fw"></i>毕业设计</span>
-                        <span id="list-design-count">(0)</span>
-                        <ul class="todo-task-list">
-                            <li><i class="fa fa-file-o fa-fw"></i>task5</li>
-                            <li><i class="fa fa-file-o fa-fw"></i>task6</li>
-                        </ul>
-                    </li>
-                </ul>
+                <ul class="todo-category-list"></ul>
             </div>
             <a id="todo-add-category"><i class="fa fa-plus fa-fw"></i>新增分类</a>
         </section>
@@ -57,15 +32,9 @@
                 <li>已完成</li>
             </ul>
             <dl class="todo-inventory-detail">
-                <dt><time>2015-05-15</time></dt>
-                <dd>to-do 1</dd>
-                <dd>to-do 2</dd>
-                <dt><time>2015-05-15</time></dt>
-                <dd>to-do 3</dd>
-                <dd>to-do 4</dd>
-                <dt><time>2015-05-15</time></dt>
-                <dd>to-do 5</dd>
-                <dd>to-do 6</dd>
+                <!--<dt><time>2015-05-15</time></dt>-->
+                <!--<dd>to-do 1</dd>-->
+                <!--<dd>to-do 2</dd>-->
             </dl>
             <a id="todo-add-task"><i class="fa fa-plus fa-fw"></i>新增任务</a>
         </section>
@@ -75,7 +44,7 @@
 		        <div class="todo-spec-title">
 			        <label>标题：</label>
 			        <input type="text" id="todo-task-title" placeholder="在这里输入标题">
-			        <span id="todo-default-title">To-Do Title</span>
+			        <span id="todo-default-title"></span>
                 <span class="todo-spec-edit">
                     <i class="fa fa-pencil-square-o fa-2x"></i>
 	                <i class="fa fa-check-square-o fa-2x"></i>
@@ -84,13 +53,11 @@
 		        <div class="todo-spec-time">
 			        <label>任务日期：</label>
 			        <input id="todo-task-time" type="date">
-			        <span id="todo-default-time">YYYY-MM-DD</span>
+			        <span id="todo-default-time"></span>
 		        </div>
 		        <div class="todo-spec-content">
 			        <textarea id="todo-task-content" placeholder="在这里输入内容"></textarea>
-			        <p id="todo-default-content">
-				        这里是任务内容
-			        </p>
+			        <p id="todo-default-content"></p>
 		        </div>
 	        </form>
         </section>
@@ -99,5 +66,6 @@
     <script src="js/todo.util.js"></script>
     <script src="js/todo.shell.js"></script>
 	<script src="js/todo.data.js"></script>
+	<script src="js/todo.task.js"></script>
 </body>
 </html>
