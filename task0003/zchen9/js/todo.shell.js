@@ -15,6 +15,7 @@ window.onload = function(){
 		    }
 		    return todoItem;
 	    })(),
+	    todoCateList:$(".todo-category-list")[0].getElementsByTagName("li"),
 	    todoDetail : $("dd"),
 	    todoInventory : $(".todo-inventory-category")[0].children,
 
@@ -38,7 +39,7 @@ window.onload = function(){
 		todoSpecEdit : $(".todo-spec-edit")[0],
 	    todoEditIcon : $(".fa-pencil-square-o")[0],
 	    todoCheckIcon : $(".fa-check-square-o")[0],
-	    todoRemoveIcon : $(".fa-remove")[0],
+	    todoRemoveIcon : $(".fa-remove"),
 	    todoUndoEle : (function(){
 		    var undoIcon = document.createElement("i");
 		    addClass(undoIcon,"fa fa-undo fa-2x");
@@ -72,6 +73,19 @@ window.onload = function(){
 		    }
 	    }
     };
+
+
+
+	delegateEleMouseEvent(init.todoCateList,"mouseover",function(){
+		if(this.lastChild.nodeName.toLowerCase() === "i"){
+			this.lastChild.style.opacity = 1;
+		}
+	});
+	delegateEleMouseEvent(init.todoCateList,"mouseout",function(){
+		if(this.lastChild.nodeName.toLowerCase() === "i"){
+			this.lastChild.style.opacity = 0;
+		}
+	});
 
 	delegateClickEvent(init.todoTaskItem,init.classToggle);
 	delegateClickEvent(init.todoDetail,init.classToggle);

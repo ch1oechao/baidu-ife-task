@@ -20,9 +20,24 @@ html,body {
 }
 
 i.fa-remove{
-	display: none;
-	line-height: 22px;
+	opacity: 0;
+	line-height: 23px;
 	float: right;
+}
+
+i.fa-remove:hover{
+	color: #294B7C;
+}
+
+i.fa-smile-o{
+	float: right;
+	line-height: inherit;
+	margin-right: 30px;
+}
+
+label > i{
+	margin-left: -33px;
+	margin-right: 10px;
 }
 
 /*header*/
@@ -115,7 +130,6 @@ header .todo-title{
 }
 
 .todo-task-list{
-	z-index: 100;
 	margin-left: 15px;
 }
 
@@ -124,6 +138,7 @@ header .todo-title{
 	margin: 4px 0;
 	padding: 2px 0;
 	width: 100%;
+	z-index: 100;
 }
 
 /*todo_inventory*/
@@ -158,7 +173,7 @@ header .todo-title{
 	display: block;
 	height: 35px;
 	line-height: 35px;
-	padding-left: 40px;
+	padding-left: 20px;
 	cursor: pointer;
 }
 

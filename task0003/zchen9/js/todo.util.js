@@ -649,6 +649,12 @@ function delegateEleEvent(ele,listener){
 	}
 }
 
+function delegateEleMouseEvent(ele,event,listener){
+	for(var i = 0,len=ele.length;i<len;i++){
+		addEvent(ele[i],event,listener);
+	}
+}
+
 function delegateClickEvent(ele,listener){
 	for(var i = 0,len=ele.length;i<len;i++){
 		addClickEvent(ele[i],listener);
