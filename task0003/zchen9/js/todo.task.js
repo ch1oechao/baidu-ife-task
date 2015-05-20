@@ -45,68 +45,19 @@ var datainit = {
 //初始化
 if(defaultTask){
 	(function(){
-		var todoCateList = datainit.todoCateList;
-		var liCateDefault = document.createElement("li");
-		liCateDefault.setAttribute("data-cate-id",defaultTask.category);
-		var spanCateDefault = document.createElement("span");
-		spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
-									+defaultTask.category
-									+" ("+todoCount(defaultTask)+")";
-		liCateDefault.appendChild(spanCateDefault);
-		if(defaultTask.taskList){
-			var ulTaskList = document.createElement("ul");
-			addClass(ulTaskList,"todo-task-list");
-			var liTaskList = document.createElement("li");
-			liTaskList.setAttribute("data-list-id",defaultTask.taskList);
-			liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>" + defaultTask.taskList;
-			ulTaskList.appendChild(liTaskList);
-			liCateDefault.appendChild(ulTaskList);
-		}
-		todoCateList.appendChild(liCateDefault);
-		var defaultTaskList = $(".todo-task-list")[0].getElementsByTagName("li")[0];
-		addClass(defaultTaskList,"todo-task-selected");
-		if(defaultTask.taskDetail){
-			var taskDetail = defaultTask.taskDetail;
-			if(taskDetail[1]){
-				var dtTaskTime = document.createElement("dt");
-				dtTaskTime.setAttribute("data-list-time",defaultTask.taskDetail[1]-0);
-				dtTaskTime.innerHTML = "<time>"+formatTime(defaultTask)+"</time>";
-				datainit.taskInventory.appendChild(dtTaskTime);
-				datainit.todoDefault[1].innerHTML = formatTime(defaultTask);
-			}
-			if(taskDetail[0]){
-				var ddTaskTitle = document.createElement("dd");
-				if(defaultTask.isDone){
-					ddTaskTitle.setAttribute("data-task-done","1");
-					ddTaskTitle.innerHTML = taskDetail[0]+"<i class='fa fa-smile-o'></i>";
-				}else{
-					ddTaskTitle.setAttribute("data-task-done","0");
-					ddTaskTitle.innerHTML = taskDetail[0];
-				}
-				ddTaskTitle.setAttribute("data-task-id",defaultTask.id);
-				datainit.taskInventory.appendChild(ddTaskTitle);
-				datainit.todoDefault[0].setAttribute("data-task-id",defaultTask.id);
-				datainit.todoDefault[0].innerHTML = taskDetail[0];
-				var defaultTaskTitle = $("dd")[0];
-				addClass(defaultTaskTitle,"todo-detail-selected");
-			}
-			if(taskDetail[2]){
-				datainit.todoDefault[2].innerHTML = taskDetail[2];
-			}
-		}
+		addContent(defaultTask);
 	})();
 }
 
 function addTask(obj){
 	addCate(obj);
 	addList(obj);
-	//addInventory(obj);
+	addInventory(obj);
 }
 
-//addTask(task1);
-//addTask(task2);
-//addTask(task3);
-//addTask(task4);
+for(var i= 0 ;i<tasks.length;i++){
+	addTask(tasks[i]);
+}
 
 function todoCount(obj){
 	for(var i=0;i<obj.length;i++){
@@ -116,67 +67,6 @@ function todoCount(obj){
 	}
 	return t;
 }
-
-
-addClickEvent(datainit.todoEditIcon,function(e){
-	e = e || window.event;
-	var target = e.target|| e.srcElement;
-	target.style.display = "none";
-	datainit.todoCheckIcon.style.display = "none";
-	datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
-	datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
-	datainit.todoUndoEle.style.display = "block";
-	datainit.todoCheckEle.style.display = "block";
-	delegateEleEvent(datainit.todoDefault,function(ele){
-		ele.style.display = "none";
-	});
-	delegateEleEvent(datainit.todoEdit,function(ele){
-		ele.style.display = "inline-block";
-		for(var i=0;i<datainit.todoEdit.length;i++){
-			datainit.todoEdit[i].value = datainit.todoDefault[i].innerHTML;
-		}
-	});
-});
-
-addClickEvent(datainit.todoAddTask,function(){
-	datainit.todoEditIcon.style.display = "none";
-	datainit.todoCheckIcon.style.display = "none";
-	datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
-	datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
-	datainit.todoUndoEle.style.display = "block";
-	datainit.todoCheckEle.style.display = "block";
-	delegateEleEvent(datainit.todoDefault,function(ele){
-		ele.style.display = "none";
-	});
-	delegateEleEvent(datainit.todoEdit,function(ele){
-		ele.style.display = "inline-block";
-	});
-});
-
-addClickEvent(datainit.todoCheckEle,function(){
-	datainit.todoEditIcon.style.display = "block";
-	datainit.todoCheckIcon.style.display = "block";
-	datainit.todoUndoEle.style.display = "none";
-	datainit.todoCheckEle.style.display = "none";
-	delegateEleEvent(datainit.todoDefault,function(ele){
-		ele.style.display = "inline";
-		datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
-		for(var i=0;i<datainit.todoDefault.length;i++){
-			datainit.todoDefault[i].innerHTML = datainit.todoEdit[i].value;
-		}
-	});
-	delegateEleEvent(datainit.todoEdit,function(ele){
-		ele.style.display = "none";
-	});
-});
-
-
-delegateClickEvent(datainit.todoDetail,function(e){
-	e = e||window.event;
-	var target = e.target|| e.srcElement;
-	var taskId = target.getAttribute("data-task-id");
-	addContent(tasks[taskId]);
-});
 
 function formatTime(obj){
 	var taskDetail = obj.taskDetail;
@@ -281,3 +171,64 @@ function addContent(obj){
 	}
 }
 
+//点击事件
+
+addClickEvent(datainit.todoEditIcon,function(e){
+	e = e || window.event;
+	var target = e.target|| e.srcElement;
+	target.style.display = "none";
+	datainit.todoCheckIcon.style.display = "none";
+	datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
+	datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
+	datainit.todoUndoEle.style.display = "block";
+	datainit.todoCheckEle.style.display = "block";
+	delegateEleEvent(datainit.todoDefault,function(ele){
+		ele.style.display = "none";
+	});
+	delegateEleEvent(datainit.todoEdit,function(ele){
+		ele.style.display = "inline-block";
+		for(var i=0;i<datainit.todoEdit.length;i++){
+			datainit.todoEdit[i].value = datainit.todoDefault[i].innerHTML;
+		}
+	});
+});
+
+addClickEvent(datainit.todoAddTask,function(){
+	datainit.todoEditIcon.style.display = "none";
+	datainit.todoCheckIcon.style.display = "none";
+	datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
+	datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
+	datainit.todoUndoEle.style.display = "block";
+	datainit.todoCheckEle.style.display = "block";
+	delegateEleEvent(datainit.todoDefault,function(ele){
+		ele.style.display = "none";
+	});
+	delegateEleEvent(datainit.todoEdit,function(ele){
+		ele.style.display = "inline-block";
+	});
+});
+
+addClickEvent(datainit.todoCheckEle,function(){
+	datainit.todoEditIcon.style.display = "block";
+	datainit.todoCheckIcon.style.display = "block";
+	datainit.todoUndoEle.style.display = "none";
+	datainit.todoCheckEle.style.display = "none";
+	delegateEleEvent(datainit.todoDefault,function(ele){
+		ele.style.display = "inline";
+		datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
+		for(var i=0;i<datainit.todoDefault.length;i++){
+			datainit.todoDefault[i].innerHTML = datainit.todoEdit[i].value;
+		}
+	});
+	delegateEleEvent(datainit.todoEdit,function(ele){
+		ele.style.display = "none";
+	});
+});
+
+
+delegateClickEvent(datainit.todoDetail,function(e){
+	e = e||window.event;
+	var target = e.target|| e.srcElement;
+	var taskId = target.getAttribute("data-task-id");
+	addContent(tasks[taskId]);
+});

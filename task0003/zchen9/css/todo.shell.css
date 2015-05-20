@@ -26,7 +26,8 @@ span:hover i.fa-remove{
 }
 i.fa-remove{
 	display: none;
-	line-height: 23px;
+	margin-top: 2px;
+	line-height: inherit;
 	float: right;
 }
 
@@ -116,16 +117,20 @@ header .todo-title{
 	height: 82%;
 	margin: 10px;
 }
+.todo-category-detail > span{
+	height: 45px;
+}
 
 .todo-category-list{
 	margin-top: 10px;
 	width: 90%;
 	display: block;
 }
-.todo-category-list > li{
+.todo-category-list > li > span{
 	display: block;
-	padding: 3px 0;
-	margin-bottom: 5px;
+	/*padding: 3px 0;*/
+	height: 35px;
+	line-height: 35px;
 	z-index: 99;
 	cursor: pointer;
 }
@@ -141,7 +146,7 @@ header .todo-title{
 .todo-task-list > li{
 	display: block;
 	margin: 4px 0;
-	padding: 2px 0;
+	padding: 2px 3px;
 	width: 100%;
 	z-index: 100;
 }

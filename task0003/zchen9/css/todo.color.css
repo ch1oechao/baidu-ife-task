@@ -11,7 +11,7 @@ header{
 	color: #294B7C;
 }
 .todo-category-total{
-	background-color: #C5D2DA;
+	background-color: #9BB2D1;
 	color: #FFF;
 }
 .todo-category > a,
@@ -27,8 +27,12 @@ header{
 }
 .todo-task-list > li:hover,
 .todo-task-selected{
-    background-color: #C5D2DA;
+    background-color: #B7C6DE;
     color: #FFF;
+}
+.todo-task-list > li:hover, {
+	background-color: #C5D2DA;
+	color: #FFF;
 }
 .todo-inventory {
     background-color: #F7F2E5;

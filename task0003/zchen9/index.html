@@ -16,20 +16,20 @@
     <div class="todo-container">
         <section class="todo-category">
             <p class="todo-category-total">
-                <span>所有任务</span>
+                <span><i class="fa fa-archive fa-fw"></i>所有任务</span>
                 <span id="todo-total-count"></span>
             </p>
             <div class="todo-category-detail">
-                <span>分类列表</span>
+                <span><i class="fa fa-folder fa-fw"></i>分类列表</span>
                 <ul class="todo-category-list"></ul>
             </div>
             <a id="todo-add-category"><i class="fa fa-plus fa-fw"></i>新增分类</a>
         </section>
         <section class="todo-inventory">
             <ul class="todo-inventory-category">
-                <li class="todo-inventory-selected">所有</li>
-                <li>未完成</li>
-                <li>已完成</li>
+                <li class="todo-inventory-selected" id="todo-all">所有</li>
+                <li id="todo-doing">未完成</li>
+                <li id="todo-done">已完成</li>
             </ul>
             <dl class="todo-inventory-detail">
             </dl>
