@@ -37,7 +37,8 @@ var datainit = {
 		addClass(checkIcon,"fa fa-check fa-2x");
 		return checkIcon;
 	})(),
-	todoAddTask : $("#todo-add-task")
+	todoAddTask : $("#todo-add-task"),
+	todoTotal : $("#todo-total-count")
 };
 
 
@@ -48,7 +49,9 @@ if(defaultTask){
 		var liCateDefault = document.createElement("li");
 		liCateDefault.setAttribute("data-cate-id",defaultTask.category);
 		var spanCateDefault = document.createElement("span");
-		spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"+defaultTask.category;
+		spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
+									+defaultTask.category
+									+" ("+todoCount(defaultTask)+")";
 		liCateDefault.appendChild(spanCateDefault);
 		if(defaultTask.taskList){
 			var ulTaskList = document.createElement("ul");
@@ -97,12 +100,22 @@ if(defaultTask){
 function addTask(obj){
 	addCate(obj);
 	addList(obj);
-	addInventory(obj);
+	//addInventory(obj);
 }
 
-addTask(task1);
-addTask(task2);
-addTask(task3);
+//addTask(task1);
+//addTask(task2);
+//addTask(task3);
+//addTask(task4);
+
+function todoCount(obj){
+	for(var i=0;i<obj.length;i++){
+		if(!obj[i].isDone){
+			t++;
+		}
+	}
+	return t;
+}
 
 
 addClickEvent(datainit.todoEditIcon,function(e){
@@ -127,8 +140,11 @@ addClickEvent(datainit.todoEditIcon,function(e){
 
 addClickEvent(datainit.todoAddTask,function(){
 	datainit.todoEditIcon.style.display = "none";
-	datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoCheckIcon);
+	datainit.todoCheckIcon.style.display = "none";
+	datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
+	datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
 	datainit.todoUndoEle.style.display = "block";
+	datainit.todoCheckEle.style.display = "block";
 	delegateEleEvent(datainit.todoDefault,function(ele){
 		ele.style.display = "none";
 	});
@@ -188,6 +204,7 @@ function addCate(obj){
 			var spanCateDefault = document.createElement("span");
 			spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
 										+ obj.category
+										+" ("+todoCount(obj)+")"
 										+"<i class='fa fa-remove fa-fw'></i>";
 			liCate.appendChild(spanCateDefault);
 			datainit.todoCateList.appendChild(liCate);
