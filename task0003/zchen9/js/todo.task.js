@@ -6,7 +6,6 @@ var datainit = {
 	todoCateList : $(".todo-category-list")[0],
 	taskInventory : $(".todo-inventory-detail")[0],
 	todoDetail : $("dd"),
-	defaultTask : defaultTasks.task01,
 	todoDefault: (function(){
 		var taskTitle = $("#todo-default-title");
 		var taskTime = $("#todo-default-time");
@@ -43,8 +42,7 @@ var datainit = {
 
 
 //初始化
-if(defaultTasks.task01){
-	var defaultTask = defaultTasks.task01;
+if(defaultTask){
 	(function(){
 		var todoCateList = datainit.todoCateList;
 		var liCateDefault = document.createElement("li");
@@ -77,11 +75,12 @@ if(defaultTasks.task01){
 				var ddTaskTitle = document.createElement("dd");
 				if(defaultTask.isDone){
 					ddTaskTitle.setAttribute("data-task-done","1");
+					ddTaskTitle.innerHTML = taskDetail[0]+"<i class='fa fa-smile-o'></i>";
 				}else{
 					ddTaskTitle.setAttribute("data-task-done","0");
+					ddTaskTitle.innerHTML = taskDetail[0];
 				}
 				ddTaskTitle.setAttribute("data-task-id",defaultTask.id);
-				ddTaskTitle.innerHTML = taskDetail[0];
 				datainit.taskInventory.appendChild(ddTaskTitle);
 				datainit.todoDefault[0].setAttribute("data-task-id",defaultTask.id);
 				datainit.todoDefault[0].innerHTML = taskDetail[0];
@@ -101,7 +100,6 @@ function addTask(obj){
 	addInventory(obj);
 }
 
-addTask(defaultTasks.task02);
 addTask(task1);
 addTask(task2);
 addTask(task3);

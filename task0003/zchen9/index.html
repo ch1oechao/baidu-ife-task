@@ -17,7 +17,7 @@
         <section class="todo-category">
             <p class="todo-category-total">
                 <span>所有任务</span>
-                <!--<span id="todo-total-count">(9)</span>-->
+                <span id="todo-total-count"></span>
             </p>
             <div class="todo-category-detail">
                 <span>分类列表</span>
@@ -40,7 +40,7 @@
             <form name="taskForm" id="todo-form">
                 <div class="todo-spec-title">
                     <label><i class="fa fa-flag"></i></label>
-                    <input type="text" id="todo-task-title" placeholder="在这里输入标题" autofocus="autofocus">
+                    <input type="text" id="todo-task-title" placeholder="在这里输入标题" autofocus="autofocus" display="none">
                     <span id="todo-default-title"></span>
                 <span class="todo-spec-edit">
                     <i class="fa fa-pencil-square-o fa-2x"></i>
@@ -49,11 +49,11 @@
                 </div>
                 <div class="todo-spec-time">
                     <label><i class="fa fa-calendar"></i></label>
-                    <input id="todo-task-time" type="date">
+                    <input id="todo-task-time" type="date" display="none">
                     <span id="todo-default-time"></span>
                 </div>
                 <div class="todo-spec-content">
-                    <textarea id="todo-task-content" placeholder="在这里输入内容" ></textarea>
+                    <textarea id="todo-task-content" placeholder="在这里输入内容"  display="none"></textarea>
                     <p id="todo-default-content"></p>
                 </div>
             </form>

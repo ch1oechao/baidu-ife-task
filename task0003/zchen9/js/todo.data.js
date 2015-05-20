@@ -64,25 +64,15 @@ Task.prototype = {
     category: Category.prototype.category,
     taskList: TaskList.prototype.taskList,
     taskDetail:TaskDetail.prototype.taskDetail,
-    isDone:false
+    isDone:true
 };
 
-var defaultTasks = {
-	task01 : Task.prototype,
-	task02 : new Task("默认分类","使用说明",
-					["I'm completed ! ",
-						new Date(2015,0,1),
-						"<i class='fa fa-check'></i>"+" 使用教程结束啦，学会使用了吗~"],
-					true)
-};
-
-console.log(defaultTasks);
-
+var defaultTask = Task.prototype;
 var task1 = new Task("百度IFE项目","task1",["to-do 1",new Date(2015,3,15),"完成task0001"],true);
 var task2 = new Task("百度IFE项目","task2",["to-do 2",new Date(2015,4,1),"完成task0002"],true);
 var task3 = new Task("百度IFE项目","task3",["to-do 3",new Date(2015,4,25),"完成task0003"],false);
 
-var tasks = [defaultTasks.task01,defaultTasks.task02,task1,task2,task3];
+var tasks = [defaultTask,task1,task2,task3];
 
 for(var i=0;i<tasks.length;i++){
 	tasks[i].id += i;
