@@ -18,36 +18,8 @@ window.onload = function(){
 	    todoCateList:$(".todo-category-list")[0].getElementsByTagName("li"),
 	    todoDetail : $("dd"),
 	    todoInventory : $(".todo-inventory-category")[0].children,
-
-	    todoDefault: (function(){
-		    var taskTitle = $("#todo-default-title");
-		    var taskTime = $("#todo-default-time");
-		    var taskContent = $("#todo-default-content");
-		    return [taskTitle,taskTime,taskContent];
-	    })(),
-
-	    todoEdit: (function(){
-		    var taskTitle = $("#todo-task-title");
-		    var taskTime = $("#todo-task-time");
-		    var taskContent = $("#todo-task-content");
-		    taskTitle.style.display = "none";
-		    taskTime.style.display = "none";
-		    taskContent.style.display = "none";
-		    return [taskTitle,taskTime,taskContent];
-	    })(),
-
-		todoSpecEdit : $(".todo-spec-edit")[0],
-	    todoEditIcon : $(".fa-pencil-square-o")[0],
-	    todoCheckIcon : $(".fa-check-square-o")[0],
 	    todoRemoveIcon : $(".fa-remove"),
-	    todoUndoEle : (function(){
-		    var undoIcon = document.createElement("i");
-		    addClass(undoIcon,"fa fa-undo fa-2x");
-		    undoIcon.setAttribute("onclick","javascript:document.taskForm.reset()");
-		    return undoIcon;
-	    })(),
 	    todoFormName : $("#todo-form").getAttribute("name"),
-	    todoAddTask : $("#todo-add-task"),
 
 	    classToggle : function(e){
 		    e = e||window.event;
@@ -74,70 +46,8 @@ window.onload = function(){
 	    }
     };
 
-
-
-	delegateEleMouseEvent(init.todoCateList,"mouseover",function(){
-		if(this.lastChild.nodeName.toLowerCase() === "i"){
-			this.lastChild.style.opacity = 1;
-		}
-		if(this.getElementsByTagName("span")[0]){
-			var spanList = this.getElementsByTagName("span")[0].lastChild;
-			if(spanList.nodeName.toLowerCase() === "i"){
-				spanList.style.opacity = 1;
-			}
-		}
-	});
-	delegateEleMouseEvent(init.todoCateList,"mouseout",function(){
-		if(this.lastChild.nodeName.toLowerCase() === "i"){
-			this.lastChild.style.opacity = 0;
-		}
-		if(this.getElementsByTagName("span")[0]){
-			var spanList = this.getElementsByTagName("span")[0].lastChild;
-			if(spanList.nodeName.toLowerCase() === "i"){
-				spanList.style.opacity = 0;
-			}
-		}
-	});
-
 	delegateClickEvent(init.todoTaskItem,init.classToggle);
 	delegateClickEvent(init.todoDetail,init.classToggle);
 	delegateClickEvent(init.todoInventory,init.classToggle);
 
-	addClickEvent(init.todoEditIcon,function(e){
-		e = e || window.event;
-		var target = e.target|| e.srcElement;
-		target.style.display = "none";
-		init.todoSpecEdit.insertBefore(init.todoUndoEle,init.todoCheckIcon);
-		init.todoUndoEle.style.display = "block";
-		delegateEleEvent(init.todoDefault,function(ele){
-			ele.style.display = "none";
-		});
-		delegateEleEvent(init.todoEdit,function(ele){
-			ele.style.display = "inline-block";
-		});
-	});
-
-	addClickEvent(init.todoAddTask,function(){
-		init.todoEditIcon.style.display = "none";
-		init.todoSpecEdit.insertBefore(init.todoUndoEle,init.todoCheckIcon);
-		init.todoUndoEle.style.display = "block";
-		delegateEleEvent(init.todoDefault,function(ele){
-			ele.style.display = "none";
-		});
-		delegateEleEvent(init.todoEdit,function(ele){
-			ele.style.display = "inline-block";
-		});
-	});
-
-	addClickEvent(init.todoCheckIcon,function(){
-		init.todoEditIcon.style.display = "block";
-		init.todoUndoEle.style.display = "none";
-		delegateEleEvent(init.todoDefault,function(ele){
-			ele.style.display = "inline";
-			init.todoDefault[init.todoDefault.length-1].style.display = "block";
-		});
-		delegateEleEvent(init.todoEdit,function(ele){
-			ele.style.display = "none";
-		});
-	});
 };

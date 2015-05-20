@@ -19,15 +19,15 @@ html,body {
 	font-size: 1.3em;
 }
 
+.todo-task-list > li:hover i.fa-remove,
+span:hover i.fa-remove{
+	display: block;
+	color: #294B7C;
+}
 i.fa-remove{
-	opacity: 0;
+	display: none;
 	line-height: 23px;
 	float: right;
-	color: #FFF;
-}
-
-i.fa-remove:hover{
-	color: #294B7C;
 }
 
 dd i.fa-smile-o{
@@ -128,6 +128,10 @@ header .todo-title{
 	margin-bottom: 5px;
 	z-index: 99;
 	cursor: pointer;
+}
+
+.todo-category-list > li >span{
+	display: block;
 }
 
 .todo-task-list{
@@ -244,7 +248,7 @@ header .todo-title{
 	resize: none;
 	width: 580px;
 	overflow-y: hidden;
-	height: 90%;
+	height: 300px;
 	margin-top: 90px;
 	border: none;
 	outline: none;
