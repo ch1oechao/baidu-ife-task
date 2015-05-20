@@ -23,6 +23,7 @@ i.fa-remove{
 	opacity: 0;
 	line-height: 23px;
 	float: right;
+	color: #FFF;
 }
 
 i.fa-remove:hover{

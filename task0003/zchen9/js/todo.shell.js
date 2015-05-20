@@ -80,10 +80,22 @@ window.onload = function(){
 		if(this.lastChild.nodeName.toLowerCase() === "i"){
 			this.lastChild.style.opacity = 1;
 		}
+		if(this.getElementsByTagName("span")[0]){
+			var spanList = this.getElementsByTagName("span")[0].lastChild;
+			if(spanList.nodeName.toLowerCase() === "i"){
+				spanList.style.opacity = 1;
+			}
+		}
 	});
 	delegateEleMouseEvent(init.todoCateList,"mouseout",function(){
 		if(this.lastChild.nodeName.toLowerCase() === "i"){
 			this.lastChild.style.opacity = 0;
+		}
+		if(this.getElementsByTagName("span")[0]){
+			var spanList = this.getElementsByTagName("span")[0].lastChild;
+			if(spanList.nodeName.toLowerCase() === "i"){
+				spanList.style.opacity = 0;
+			}
 		}
 	});
 
