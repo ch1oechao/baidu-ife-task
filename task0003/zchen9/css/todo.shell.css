@@ -30,7 +30,7 @@ i.fa-remove:hover{
 	color: #294B7C;
 }
 
-i.fa-smile-o{
+dd i.fa-smile-o{
 	float: right;
 	line-height: inherit;
 	margin-right: 30px;
@@ -230,8 +230,7 @@ header .todo-title{
 .todo-spec-content > p{
 	color: #E58193;
 	margin-top: 90px;
-	padding-top: 2em;
-	padding-left: 2em;
+	padding: 2em;
 }
 
 .todo-spec-content i{

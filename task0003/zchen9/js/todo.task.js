@@ -77,9 +77,9 @@ function addTask(obj){
 }
 
 addTask(defaultDone);
-addTask(task1);
-addTask(task2);
-addTask(task3);
+//addTask(task1);
+//addTask(task2);
+//addTask(task3);
 
 
 function addCate(obj){
