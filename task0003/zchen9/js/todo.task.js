@@ -54,14 +54,6 @@ var datainit = {
 	addInventory(tasks[0]);
 	addContent(tasks[0]);
 
-	//var listFirst = $(".todo-task-list")[0].getElementsByTagName("li")[0];
-	//if(listFirst){
-	//	addClass(listFirst,"todo-task-selected");
-	//}
-	//var titleFirst = $("dd")[0];
-	//if(titleFirst){
-	//	addClass(titleFirst,"todo-detail-selected");
-	//}
 })();
 
 
@@ -93,8 +85,7 @@ function addCate(obj){
 					+ obj.category;
 			}else{
 				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
-					+ obj.category
-					+"<i class='fa fa-remove fa-fw'></i>";
+					+ obj.category;
 			}
 			liCate.appendChild(spanCateDefault);
 			datainit.todoCateList.appendChild(liCate);
@@ -118,8 +109,7 @@ function addList(obj){
 					var liTaskList = document.createElement("li");
 					liTaskList.setAttribute("data-list-id",obj[1]);
 					liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
-						+ obj[1]
-						+"<i class='fa fa-remove fa-fw'></i>";
+						+ obj[1];
 					ulTask.appendChild(liTaskList);
 				}
 			}
@@ -179,29 +169,66 @@ addClickEvent(datainit.todoCheckIcon,function(){
 			}
 		}
 	}
-
-
 });
 
-addClickEvent(datainit.todoEditIcon,function(e){
-	e = e || window.event;
-	var target = e.target|| e.srcElement;
-	target.style.display = "none";
-	datainit.todoCheckIcon.style.display = "none";
-	datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
-	datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
-	datainit.todoUndoEle.style.display = "block";
-	datainit.todoCheckEle.style.display = "block";
-	delegateEleEvent(datainit.todoDefault,function(ele){
-		ele.style.display = "none";
-	});
-	delegateEleEvent(datainit.todoEdit,function(ele){
-		ele.style.display = "inline-block";
-		for(var i=0;i<datainit.todoEdit.length;i++){
-			datainit.todoEdit[i].value = datainit.todoDefault[i].innerHTML;
+addClickEvent(datainit.todoEditIcon,function(){
+
+	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
+		if(isTaskDefault(taskId)){
+			for(var i=0;i<tasks.length;i++){
+				if(tasks[i].id == taskId){
+				if(tasks[i].isDone){
+					if(confirm("该任务已完成！需要重置，进行编辑吗？")){
+						tasks[i].isDone = false;
+						listInventory(tasks,tasks[i].cateList[1],"all");
+						taskEdit();
+					}
+				}else{
+					taskEdit();
+				}
+			}
 		}
-	});
+	}
 });
+
+//var todoRemoveIcon = $(".fa-remove");
+//delegateClickEvent(todoRemoveIcon,function(e){
+//	e = e || window.event;
+//	var target = e.target|| e.srcElement;
+//	var listId = target.parentNode.getAttribute("data-list-id");
+//	var cateId = target.parentNode.parentNode.getAttribute("data-cate-id");
+//	console.log(listId,cateId);
+//});
+
+//判断是否为默认文本
+function isTaskDefault(i){
+	if(i==0){
+		alert("我是【使用说明】(～￣▽￣)～，不要动我喔~");
+		return false;
+	}
+	return true;
+}
+
+function taskEdit(){
+	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
+	if(isTaskDefault(taskId)){
+		datainit.todoEditIcon.style.display = "none";
+		datainit.todoCheckIcon.style.display = "none";
+		datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
+		datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
+		datainit.todoUndoEle.style.display = "block";
+		datainit.todoCheckEle.style.display = "block";
+		delegateEleEvent(datainit.todoDefault,function(ele){
+			ele.style.display = "none";
+		});
+		delegateEleEvent(datainit.todoEdit,function(ele){
+			ele.style.display = "inline-block";
+			for(var i=0;i<datainit.todoEdit.length;i++){
+				datainit.todoEdit[i].value = datainit.todoDefault[i].innerHTML;
+			}
+		});
+	}
+}
 
 addClickEvent(datainit.todoAddTask,function(){
 	datainit.todoEditIcon.style.display = "none";

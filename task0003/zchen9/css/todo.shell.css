@@ -11,7 +11,7 @@ html,body {
 }
 
 .fa-fw{
-	margin: 0 5px;
+	/*margin: 0 5px;*/
 }
 
 .fa-2x{
@@ -19,18 +19,15 @@ html,body {
 	font-size: 1.3em;
 }
 
-.todo-task-list > li:hover i.fa-remove,
-span:hover i.fa-remove{
-	display: block;
+.todo-task-list > li:hover i.fa-trash-o,
+span:hover i.fa-trash-o{
+	opacity: 1;
 	color: #294B7C;
-}
-i.fa-remove{
-	display: none;
-	margin-top: 2px;
-	line-height: inherit;
-	float: right;
 	cursor: pointer;
-	z-index: 101;
+}
+i.fa-trash-o{
+	opacity: 0;
+	float: right;
 }
 
 dd i.fa-smile-o{
@@ -132,7 +129,6 @@ header .todo-title{
 }
 .todo-category-list > li > span{
 	display: block;
-	/*padding: 3px 0;*/
 	height: 35px;
 	line-height: 35px;
 	z-index: 99;
