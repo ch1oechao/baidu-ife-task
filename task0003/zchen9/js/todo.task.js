@@ -162,16 +162,22 @@ function addInventory(obj){
 	}
 }
 
-function addContent(obj){
-	if(obj){
-		datainit.todoDefault[1].innerHTML = formatTime(obj);
-		datainit.todoDefault[0].setAttribute("data-task-id",obj.id);
-		datainit.todoDefault[0].innerHTML = obj.title;
-		datainit.todoDefault[2].innerHTML = obj.content;
-	}
-}
-
 //点击事件
+
+addClickEvent(datainit.todoCheckIcon,function(){
+	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
+	console.log(tasks[taskId].isDone);
+	console.log(tasks[taskId].cateList[1]);
+	if(tasks[taskId].isDone){
+		alert("该任务已完成！o(≧v≦)o~~");
+	}else{
+		if(confirm("又有一个任务完成了是吗~")){
+			tasks[taskId].isDone = true;
+			listInventory(tasks,tasks[taskId].cateList[1],"all");
+			alert("该任务已完成！o(≧v≦)o~~");
+		}
+	}
+});
 
 addClickEvent(datainit.todoEditIcon,function(e){
 	e = e || window.event;
@@ -253,34 +259,35 @@ delegateClickEvent(todoTaskItem,function(e){
 function listInventory(arr,list,isDone){
 	var taskInventory = $(".todo-inventory-detail")[0];
 	taskInventory.innerHTML = "";
-	arr.sort(compare("time"));
+	var arr1 = arr;
+	arr1.sort(compare("time"));
 	if(typeof isDone === "string"){
-		for(var i=0;i<arr.length;i++){
+		for(var i=0;i<arr1.length;i++){
 			if(list === "all"){
-				addInventory(arr[i]);
+				addInventory(arr1[i]);
 			}
-			else if(arr[i].cateList[1] === list){
-				addInventory(arr[i]);
+			else if(arr1[i].cateList[1] === list){
+				addInventory(arr1[i]);
 			}
 		}
 	}
 	else if(typeof isDone === "boolean"){
 		if(isDone){
-			for(var ii=0;ii<arr.length;ii++){
+			for(var ii=0;ii<arr1.length;ii++){
 				if(list === "all"){
-					addInventory(arr[ii]);
+					addInventory(arr1[ii]);
 				}
-				else if(arr[ii].isDone&&arr[ii].cateList[1] === list){
-					addInventory(arr[ii]);
+				else if(arr1[ii].isDone&&arr1[ii].cateList[1] === list){
+					addInventory(arr1[ii]);
 				}
 			}
 		}else{
-			for(var iii=0;iii<arr.length;iii++){
+			for(var iii=0;iii<arr1.length;iii++){
 				if(list === "all"){
-					addInventory(arr[iii]);
+					addInventory(arr1[iii]);
 				}
-				else if(!arr[iii].isDone&&arr[iii].cateList[1] === list){
-					addInventory(arr[iii]);
+				else if(!arr1[iii].isDone&&arr1[iii].cateList[1] === list){
+					addInventory(arr1[iii]);
 				}
 			}
 		}
@@ -290,9 +297,15 @@ function listInventory(arr,list,isDone){
 		e = e||window.event;
 		var target = e.target|| e.srcElement;
 		var taskId = target.getAttribute("data-task-id");
-		addContent(tasks[taskId]);
+		for(var i=0;i<tasks.length;i++){
+			if(tasks[i].id == taskId){
+				addContent(tasks[i]);
+			}
+		}
 	});
+
 }
+
 
 delegateClickEvent(datainit.todoInventory,function(e){
 	e =e || window.event;
@@ -353,5 +366,14 @@ function addCatePanel(display){
 		addCatePanel.style.left = (cWidth-oWidth)/3 +"px";
 		addCatePanel.style.top = (cHeight-oHeight)/3 +"px";
 		addCatePanel.style.display = display;
+	}
+}
+
+function addContent(obj){
+	if(obj){
+		datainit.todoDefault[1].innerHTML = formatTime(obj);
+		datainit.todoDefault[0].setAttribute("data-task-id",obj.id);
+		datainit.todoDefault[0].innerHTML = obj.title;
+		datainit.todoDefault[2].innerHTML = obj.content;
 	}
 }
