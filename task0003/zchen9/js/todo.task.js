@@ -166,17 +166,21 @@ function addInventory(obj){
 
 addClickEvent(datainit.todoCheckIcon,function(){
 	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
-	console.log(tasks[taskId].isDone);
-	console.log(tasks[taskId].cateList[1]);
-	if(tasks[taskId].isDone){
-		alert("该任务已完成！o(≧v≦)o~~");
-	}else{
-		if(confirm("又有一个任务完成了是吗~")){
-			tasks[taskId].isDone = true;
-			listInventory(tasks,tasks[taskId].cateList[1],"all");
-			alert("该任务已完成！o(≧v≦)o~~");
+	for(var i=0;i<tasks.length;i++){
+		if(tasks[i].id == taskId){
+			if(tasks[i].isDone){
+				alert("该任务已完成！o(≧v≦)o~~");
+			}else{
+				if(confirm("又有一个任务完成了是吗~")){
+					tasks[i].isDone = true;
+					listInventory(tasks,tasks[i].cateList[1],"all");
+					alert("该任务已完成！o(≧v≦)o~~");
+				}
+			}
 		}
 	}
+
+
 });
 
 addClickEvent(datainit.todoEditIcon,function(e){
