@@ -15,7 +15,14 @@ var init = {
 	    return todoItem;
     })(),
     todoCateList:$(".todo-category-list")[0].getElementsByTagName("li"),
-    todoDetail : $("dd"),
+    todoDetail : (function(){
+	    var ddTitle = $("dd");
+	    var ddTitles = [];
+	    for(var i=0;i<ddTitle.length;i++){
+		    ddTitles.push(ddTitle[i]);
+	    }
+	    return ddTitles;
+    })(),
     todoInventory : $(".todo-inventory-category")[0].children,
     todoRemoveIcon : $(".fa-remove"),
     todoFormName : $("#todo-form").getAttribute("name"),
@@ -45,7 +52,5 @@ var init = {
     }
 };
 
-	delegateClickEvent(init.todoTaskItem,init.classToggle);
-	delegateClickEvent(init.todoDetail,init.classToggle);
 	delegateClickEvent(init.todoInventory,init.classToggle);
 

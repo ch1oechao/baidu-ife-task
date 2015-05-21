@@ -120,7 +120,7 @@ function addList(obj){
 				}
 			}
 		}
-
+		delegateClickEvent(init.todoTaskItem,init.classToggle);
 	}
 }
 //添加子任务视图
@@ -153,8 +153,10 @@ function addInventory(obj){
 				ddTaskTitle.setAttribute("data-list-id",obj.cateList[1]);
 				ddTaskTitle.setAttribute("data-task-id",obj.id);
 				taskInventory.appendChild(ddTaskTitle);
+				init.todoDetail.push(ddTaskTitle);
 			}
 		}
+		delegateClickEvent(init.todoDetail,init.classToggle);
 	}
 }
 
@@ -239,25 +241,43 @@ addClickEvent(datainit.todoAddTask,function(){
 	});
 	delegateEleEvent(datainit.todoEdit,function(ele){
 		ele.style.display = "inline-block";
+		for(var i=0;i<datainit.todoEdit.length;i++){
+			datainit.todoEdit[i].value = "";
+		}
+
 	});
 });
 
 addClickEvent(datainit.todoCheckEle,function(){
-	datainit.todoEditIcon.style.display = "block";
-	datainit.todoCheckIcon.style.display = "block";
-	datainit.todoUndoEle.style.display = "none";
-	datainit.todoCheckEle.style.display = "none";
-	delegateEleEvent(datainit.todoDefault,function(ele){
-		ele.style.display = "inline";
-		datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
-		for(var i=0;i<datainit.todoDefault.length;i++){
-			datainit.todoDefault[i].innerHTML = datainit.todoEdit[i].value;
-		}
-	});
-	delegateEleEvent(datainit.todoEdit,function(ele){
-		ele.style.display = "none";
-	});
+	if(checkNewTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2])){
+		datainit.todoEditIcon.style.display = "block";
+		datainit.todoCheckIcon.style.display = "block";
+		datainit.todoUndoEle.style.display = "none";
+		datainit.todoCheckEle.style.display = "none";
+		delegateEleEvent(datainit.todoDefault,function(ele){
+			ele.style.display = "inline";
+			datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
+			for(var i=0;i<datainit.todoDefault.length;i++){
+				datainit.todoDefault[i].innerHTML = datainit.todoEdit[i].value;
+			}
+		});
+		delegateEleEvent(datainit.todoEdit,function(ele){
+			ele.style.display = "none";
+		});
+	}
+
 });
+
+function checkNewTask(title,time,content){
+	if(title.value == ""||time.value == ""||content.value == ""){
+		alert("请仔细检查任务，查看是否填写完整~");
+		return false;
+	}
+	else{
+		console.log("任务OK");
+		return true;
+	}
+}
 
 
 
