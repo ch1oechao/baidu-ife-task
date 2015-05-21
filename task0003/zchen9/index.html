@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="zh-cn">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
     <title>Todo - zchen9</title>
@@ -58,6 +58,26 @@
                 </div>
             </form>
         </section>
+    </div>
+
+    <div class="add-cate-panel">
+        <h3><i class="fa fa-folder fa-fw"></i>新增分类</h3>
+        <ul>
+            <li>
+                <label for="add-cate-main">选择主分类：</label>
+                <select id="add-cate-main">
+                    <option value="null">新增主分类</option>
+                </select>
+            </li>
+            <li>
+                <label for="add-cate-name">新分类名称：</label>
+                <input type="text" id="add-cate-name">
+            </li>
+        </ul>
+        <div class="add-cate-btn">
+            <span id="add-cate-cancel"><i class="fa fa-meh-o"></i>取消</span>
+            <span id="add-cate-check"><i class="fa fa-smile-o"></i>确认</span>
+        </div>
     </div>
 
     <script src="js/todo.util.js"></script>

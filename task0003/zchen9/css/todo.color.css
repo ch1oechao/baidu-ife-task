@@ -69,3 +69,21 @@ header{
 .todo-spec-content > textarea{
     background-color: #FCF5F5;
 }
+
+/*addCatePanel*/
+.add-cate-panel{
+    color: #FFF;
+    background-color: #9BB2D1;
+}
+.add-cate-panel > h3{
+    color: #294B7C;
+}
+.add-cate-btn > span{
+    background-color: #294B7C;
+    color: #FFF;
+}
+.add-cate-btn > span:hover{
+    background-color: #FFF;
+    color: #294B7C;
+}
+

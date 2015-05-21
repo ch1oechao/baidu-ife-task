@@ -55,7 +55,7 @@ TaskDetail.prototype = {
         +"<i class='fa fa-plus fa-fw'></i>"+"[添加]：可以添加新分类或者添加新任务"
         +"<br>"
         +"<i class='fa fa-smile-o fa-fw'></i>"+"[笑脸]：标明该任务已完成 :)",
-    isDone: false
+    isDone: true
 };
 
 
