@@ -40,7 +40,12 @@ var datainit = {
 	todoTotal : $("#todo-total-count"),
 	todoInventory : $(".todo-inventory-category")[0].children,
 	todoCateBtn :$("#todo-add-category"),
-	todoCateAll:$(".todo-category-total")[0]
+	todoCateAll:$(".todo-category-total")[0],
+
+	addCateSelect : $("#add-cate-main"),
+	addCateName : $("#add-cate-name"),
+	addCateCancel : $("#add-cate-cancel"),
+	addCateCheck : $("#add-cate-check")
 };
 
 //初始化
@@ -191,15 +196,6 @@ addClickEvent(datainit.todoEditIcon,function(){
 	}
 });
 
-//var todoRemoveIcon = $(".fa-remove");
-//delegateClickEvent(todoRemoveIcon,function(e){
-//	e = e || window.event;
-//	var target = e.target|| e.srcElement;
-//	var listId = target.parentNode.getAttribute("data-list-id");
-//	var cateId = target.parentNode.parentNode.getAttribute("data-cate-id");
-//	console.log(listId,cateId);
-//});
-
 //判断是否为默认文本
 function isTaskDefault(i){
 	if(i==0){
@@ -290,35 +286,34 @@ delegateClickEvent(todoTaskItem,function(e){
 function listInventory(arr,list,isDone){
 	var taskInventory = $(".todo-inventory-detail")[0];
 	taskInventory.innerHTML = "";
-	var arr1 = arr;
-	arr1.sort(compare("time"));
+	arr.sort(compare("time"));
 	if(typeof isDone === "string"){
-		for(var i=0;i<arr1.length;i++){
+		for(var i=0;i<arr.length;i++){
 			if(list === "all"){
-				addInventory(arr1[i]);
+				addInventory(arr[i]);
 			}
-			else if(arr1[i].cateList[1] === list){
-				addInventory(arr1[i]);
+			else if(arr[i].cateList[1] === list){
+				addInventory(arr[i]);
 			}
 		}
 	}
 	else if(typeof isDone === "boolean"){
 		if(isDone){
-			for(var ii=0;ii<arr1.length;ii++){
+			for(var ii=0;ii<arr.length;ii++){
 				if(list === "all"){
-					addInventory(arr1[ii]);
+					addInventory(arr[ii]);
 				}
-				else if(arr1[ii].isDone&&arr1[ii].cateList[1] === list){
-					addInventory(arr1[ii]);
+				else if(arr[ii].isDone&&arr[ii].cateList[1] === list){
+					addInventory(arr[ii]);
 				}
 			}
 		}else{
-			for(var iii=0;iii<arr1.length;iii++){
+			for(var iii=0;iii<arr.length;iii++){
 				if(list === "all"){
-					addInventory(arr1[iii]);
+					addInventory(arr[iii]);
 				}
-				else if(!arr1[iii].isDone&&arr1[iii].cateList[1] === list){
-					addInventory(arr1[iii]);
+				else if(!arr[iii].isDone&&arr[iii].cateList[1] === list){
+					addInventory(arr[iii]);
 				}
 			}
 		}
@@ -378,13 +373,73 @@ function compare(properyName){
 
 addClickEvent(datainit.todoCateBtn,function(){
 	addCatePanel("block");
-	var addCateCancel = $("#add-cate-cancel");
-	if(addCateCancel){
-		addClickEvent(addCateCancel,function(){
+	if(datainit.addCateCancel){
+		addClickEvent(datainit.addCateCancel,function(){
 			addCatePanel("none");
 		});
 	}
+	if(datainit.addCateCheck){
+		addClickEvent(datainit.addCateCheck,function(){
+			var mainCateName = datainit.addCateSelect.value;
+			var newCateName = datainit.addCateName.value;
+			addCateCheck(mainCateName,newCateName);
+		});
+	}
 });
+
+//检查输入内容插入新分类或新列表
+function addCateCheck(main,name){
+	if(getByteVal(name,20)){
+		var cateName = getByteVal(name,20);
+		if(main === "null"){
+			if(confirm("确认创建新分类【"+cateName+"】吗？")){
+				cates.push(new Category(cateName));
+				addCate(cates[cates.length-1]);
+			}
+			addCatePanel("none");
+		}
+		else{
+			if(confirm("确认在【"+main+"】分类下创建新列表【"+cateName+"】吗？")){
+				lists.push(new TaskList(main,cateName));
+				addList(lists[lists.length-1]);
+			}
+			addCatePanel("none");
+		}
+	}
+}
+
+//http://www.cnblogs.com/gossip/archive/2010/10/13/1849896.html
+//返回val在规定字节长度max内的值
+function getByteVal(val, max) {
+	var returnValue = '';
+	var byteValLen = 0;
+	for (var i = 0; i < val.length; i++) {
+		if (val[i].match(/[^\x00-\xff]/ig) != null){
+			byteValLen += 2;
+		}
+		else{
+			byteValLen += 1;
+		}
+		if (byteValLen > max){
+			alert("分类名不能超过十位汉字！请重新想个简短的名字吧~");
+			datainit.addCateName.value = "";
+			return false;
+		}
+		returnValue += val[i];
+	}
+	return returnValue;
+}
+
+//下拉框添加主分类选项
+for(var i=0;i<cates.length;i++){
+	addCateOption(cates[i].category);
+}
+function addCateOption(cate){
+	var cateOption = document.createElement("option");
+	cateOption.setAttribute("value",cate);
+	cateOption.innerHTML = cate;
+	datainit.addCateSelect.appendChild(cateOption);
+}
 
 function addCatePanel(display){
 	var addCatePanel = $(".add-cate-panel")[0];
