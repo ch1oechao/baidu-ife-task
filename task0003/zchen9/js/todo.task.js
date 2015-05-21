@@ -59,6 +59,15 @@ var datainit = {
 	addInventory(tasks[0]);
 	addContent(tasks[0]);
 
+	var listFirst = $(".todo-task-list")[0].getElementsByTagName("li")[0];
+	if(listFirst){
+		addClass(listFirst,"todo-task-selected");
+	}
+	var titleFirst = $("dd")[0];
+	if(titleFirst){
+		addClass(titleFirst,"todo-detail-selected");
+	}
+
 })();
 
 
