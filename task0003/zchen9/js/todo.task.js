@@ -395,6 +395,7 @@ function addCateCheck(main,name){
 			if(confirm("确认创建新分类【"+cateName+"】吗？")){
 				cates.push(new Category(cateName));
 				addCate(cates[cates.length-1]);
+				addCateOption(cates[cates.length-1].category);
 			}
 			addCatePanel("none");
 		}

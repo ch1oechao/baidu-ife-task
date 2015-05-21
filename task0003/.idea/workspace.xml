@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3d9e07e3-3080-41bd-a627-f97f49337e95" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/js/todo.task.js" afterPath="$PROJECT_DIR$/zchen9/js/todo.task.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="task0003.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,8 +36,8 @@
       <file leaf-file-name="todo.task.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zchen9/js/todo.task.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.11798839">
-              <caret line="389" column="17" selection-start-line="389" selection-start-column="17" selection-end-line="389" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.5589942">
+              <caret line="404" column="47" selection-start-line="404" selection-start-column="47" selection-end-line="404" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -101,8 +100,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="210" />
-    <option name="y" value="55" />
+    <option name="x" value="188" />
+    <option name="y" value="54" />
     <option name="width" value="1134" />
     <option name="height" value="704" />
   </component>
@@ -275,7 +274,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="210" y="55" width="1134" height="704" extended-state="0" />
+    <frame x="188" y="54" width="1134" height="704" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18156934" sideWeight="0.49913943" order="0" side_tool="false" content_ui="combo" />
@@ -371,8 +370,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zchen9/js/todo.task.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11798839">
-          <caret line="389" column="17" selection-start-line="389" selection-start-column="17" selection-end-line="389" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.5589942">
+          <caret line="404" column="47" selection-start-line="404" selection-start-column="47" selection-end-line="404" selection-end-column="47" />
           <folding />
         </state>
       </provider>
