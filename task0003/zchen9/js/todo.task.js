@@ -116,6 +116,7 @@ function addList(obj){
 					liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
 						+ obj[1];
 					ulTask.appendChild(liTaskList);
+					init.todoTaskItem.push(liTaskList);
 				}
 			}
 		}
@@ -396,6 +397,7 @@ function addCateCheck(main,name){
 				cates.push(new Category(cateName));
 				addCate(cates[cates.length-1]);
 				addCateOption(cates[cates.length-1].category);
+				datainit.addCateName.value = "";
 			}
 			addCatePanel("none");
 		}
@@ -403,6 +405,8 @@ function addCateCheck(main,name){
 			if(confirm("确认在【"+main+"】分类下创建新列表【"+cateName+"】吗？")){
 				lists.push(new TaskList(main,cateName));
 				addList(lists[lists.length-1]);
+				delegateClickEvent(init.todoTaskItem,init.classToggle);
+				datainit.addCateName.value = "";
 			}
 			addCatePanel("none");
 		}
