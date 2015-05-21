@@ -40,7 +40,7 @@ TaskDetail.prototype = {
     content:
         "Nice to meet U !  欢迎使用 ToDo 应用 ~ (๑•̀ㅂ•́)و✧"
         +"<br>"+"<br>"
-        +"<i class='fa fa-flag fa-fw'></i>"+"[标题]：不超过10个汉字"
+        +"<i class='fa fa-flag fa-fw'></i>"+"[标题]：任务标题，不超过10个字"
         +"<br>"
         +"<i class='fa fa-calendar fa-fw'></i>"+"[时间]：格式为 [YYYY-MM-DD] ( 例：2015-01-01 )"
         +"<br>"
@@ -58,49 +58,32 @@ TaskDetail.prototype = {
     isDone: true
 };
 
-
-//var Task = function(taskDetail){
-//    this.id = 0;
-//    this.taskDetail = taskDetail;
-//    return {
-//        id:this.id,
-//        task:this.taskDetail
-//    };
-//};
-//
-//Task.prototype = {
-//    id:0,
-//    task:TaskDetail.prototype
-//};
-
-
 var defaultCate = Category.prototype;
 var defaultList = TaskList.prototype;
 var defaultDetail = TaskDetail.prototype;
 
 var cate1 = new Category("百度IFE项目");
 var list1 = new TaskList("百度IFE项目","task0001");
-var detail1 = new TaskDetail(["百度IFE项目","task0001"],"todo1",new Date(2015,4,1),"完成task0001作业",true);
-var detail2 = new TaskDetail(["百度IFE项目","task0001"],"todo2",new Date(2015,4,20),"重构task0001作业",false);
-var detail3 = new TaskDetail(["百度IFE项目","task0001"],"todo3",new Date(2015,4,10),"重构task0001作业",false);
+var list2 = new TaskList("百度IFE项目","task0002");
+var detail1 = new TaskDetail(["百度IFE项目","task0001"],"todo1",new Date(2015,4,1),"123完成task0001作业",true);
+var detail2 = new TaskDetail(["百度IFE项目","task0001"],"todo2",new Date(2015,4,20),"456重构task0001作业",false);
+var detail3 = new TaskDetail(["百度IFE项目","task0001"],"todo3",new Date(2015,4,10),"789重构task0001作业",false);
+var detail4 = new TaskDetail(["百度IFE项目","task0002"],"todo4",new Date(2015,4,18),"1234重构task0001作业",false);
 
-//var defaultTask = Task.prototype;
-//var task1 = new Task(detail1);
-//var task2 = new Task(detail2);
 
 //JSON转换
 var task1Str = JSON.stringify(detail1);
 var task1Obj = JSON.parse(task1Str);
 //console.log(task1Str,task1Obj);
 
-var tasks = [defaultDetail,detail1,detail2,detail3];
-var cates = [cate1];
-var lists = [list1];
+var tasks = [defaultDetail,detail1,detail2,detail3,detail4];
+var cates = [defaultCate,cate1];
+var lists = [defaultList,list1,list2];
 
 for(var i= 0,t=0;i<tasks.length;i++){
 	tasks[i].id += i;
 }
 console.log(tasks);
-//console.log(detail1,defaultDetail);
-//console.log(list1[0],list1[1]);
+console.log(cates);
+console.log(lists);
 

@@ -111,6 +111,7 @@ header .todo-title{
 	height: 45px;
 	line-height: 45px;
 	padding-left: 10px;
+	cursor: pointer;
 }
 
 .todo-category-detail{

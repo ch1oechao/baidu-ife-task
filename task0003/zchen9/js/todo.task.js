@@ -39,47 +39,31 @@ var datainit = {
 	todoAddTask : $("#todo-add-task"),
 	todoTotal : $("#todo-total-count"),
 	todoInventory : $(".todo-inventory-category")[0].children,
-	todoCateBtn :$("#todo-add-category")
+	todoCateBtn :$("#todo-add-category"),
+	todoCateAll:$(".todo-category-total")[0]
 };
 
 //初始化
-if(defaultDetail){
-	(function(){
-		addCate(defaultCate);
-		addList(defaultList);
-		addInventory(defaultDetail);
-		addContent(defaultDetail);
-		var listFirst = $(".todo-task-list")[0].getElementsByTagName("li")[0];
-		if(listFirst){
-			addClass(listFirst,"todo-task-selected");
-		}
-		var titleFirst = $("dd")[0];
-		if(titleFirst){
-			addClass(titleFirst,"todo-detail-selected");
-		}
-	})();
-}
+(function(){
+	for(var i = 0;i<cates.length;i++){
+		addCate(cates[i]);
+	}
+	for(var ii = 0;ii<lists.length;ii++){
+		addList(lists[ii]);
+	}
+	addInventory(tasks[0]);
+	addContent(tasks[0]);
 
-//function addTask(obj){
-//	addCate(obj);
-//	addList(obj);
-//	addInventory(obj);
-//}
-//
-//for(var i= 0 ;i<tasks.length;i++){
-//	addTask(tasks[i]);
-//}
+	//var listFirst = $(".todo-task-list")[0].getElementsByTagName("li")[0];
+	//if(listFirst){
+	//	addClass(listFirst,"todo-task-selected");
+	//}
+	//var titleFirst = $("dd")[0];
+	//if(titleFirst){
+	//	addClass(titleFirst,"todo-detail-selected");
+	//}
+})();
 
-//function todoCount(obj){
-//	for(var i=0;i<obj.length;i++){
-//		if(!obj[i].isDone){
-//			t++;
-//		}
-//	}
-//	return t;
-//}
-
-//console.log(formatTime(task1));
 
 function formatTime(obj){
 	var taskTime = obj.time;
@@ -96,10 +80,7 @@ function formatTime(obj){
 	}
 	return [year,month,date].join("-");
 }
-
-
-addCate(cate1);
-
+//添加主分类
 function addCate(obj){
 	if(obj.category){
 		var liCate = $("[data-cate-id="+obj.category+"]");
@@ -120,9 +101,7 @@ function addCate(obj){
 		}
 	}
 }
-
-addList(list1);
-
+//添加子列表
 function addList(obj){
 	var liCate = $("[data-cate-id="+obj[0]+"]");
 	if(obj[1]){
@@ -148,7 +127,7 @@ function addList(obj){
 
 	}
 }
-
+//添加子任务视图
 function addInventory(obj){
 	if(obj.cateList){
 		var taskInventory = $(".todo-inventory-detail")[0];
@@ -260,6 +239,10 @@ var todoTaskItem = (function(){
 	return todoItem;
 })();
 
+addClickEvent(datainit.todoCateAll,function(){
+	listInventory(tasks,"all","all");
+});
+
 delegateClickEvent(todoTaskItem,function(e){
 	e = e||window.event;
 	var target = e.target|| e.srcElement;
@@ -273,10 +256,10 @@ function listInventory(arr,list,isDone){
 	arr.sort(compare("time"));
 	if(typeof isDone === "string"){
 		for(var i=0;i<arr.length;i++){
-			if(arr[i].cateList[1] === list){
+			if(list === "all"){
 				addInventory(arr[i]);
 			}
-			if(list === "all"){
+			else if(arr[i].cateList[1] === list){
 				addInventory(arr[i]);
 			}
 		}
@@ -284,20 +267,20 @@ function listInventory(arr,list,isDone){
 	else if(typeof isDone === "boolean"){
 		if(isDone){
 			for(var ii=0;ii<arr.length;ii++){
-				if(arr[ii].isDone&&arr[ii].cateList[1] === list){
+				if(list === "all"){
 					addInventory(arr[ii]);
 				}
-				if(list === "all"){
-					addInventory(arr[i]);
+				else if(arr[ii].isDone&&arr[ii].cateList[1] === list){
+					addInventory(arr[ii]);
 				}
 			}
 		}else{
 			for(var iii=0;iii<arr.length;iii++){
-				if(!arr[iii].isDone&&arr[iii].cateList[1] === list){
+				if(list === "all"){
 					addInventory(arr[iii]);
 				}
-				if(list === "all"){
-					addInventory(arr[i]);
+				else if(!arr[iii].isDone&&arr[iii].cateList[1] === list){
+					addInventory(arr[iii]);
 				}
 			}
 		}
@@ -310,9 +293,6 @@ function listInventory(arr,list,isDone){
 		addContent(tasks[taskId]);
 	});
 }
-
-
-
 
 delegateClickEvent(datainit.todoInventory,function(e){
 	e =e || window.event;

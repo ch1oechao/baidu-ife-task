@@ -14,6 +14,9 @@ header{
 	background-color: #9BB2D1;
 	color: #FFF;
 }
+.todo-category-total:hover{
+    background-color: #7690B7;
+}
 .todo-category > a,
 .todo-inventory > a{
     background-color: #7690B4;
