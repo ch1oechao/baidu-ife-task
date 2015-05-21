@@ -1,6 +1,6 @@
 /**
- * Created by Chen on 2015-05-19.
- */
+* Created by Chen on 2015-05-19.
+*/
 
 var datainit = {
 	todoCateList : $(".todo-category-list")[0],
@@ -12,7 +12,6 @@ var datainit = {
 		var taskContent = $("#todo-default-content");
 		return [taskTitle,taskTime,taskContent];
 	})(),
-
 	todoEdit: (function(){
 		var taskTitle = $("#todo-task-title");
 		var taskTime = $("#todo-task-time");
@@ -27,10 +26,10 @@ var datainit = {
 	todoEditIcon : $(".fa-pencil-square-o")[0],
 	todoCheckIcon : $(".fa-check-square-o")[0],
 	todoUndoEle : (function(){
-	   var undoIcon = document.createElement("i");
-	   addClass(undoIcon,"fa fa-undo fa-2x");
-	   undoIcon.setAttribute("onclick","javascript:document.taskForm.reset()");
-	   return undoIcon;
+		var undoIcon = document.createElement("i");
+		addClass(undoIcon,"fa fa-undo fa-2x");
+		undoIcon.setAttribute("onclick","javascript:document.taskForm.reset()");
+		return undoIcon;
 	})(),
 	todoCheckEle : (function(){
 		var checkIcon = document.createElement("i");
@@ -38,42 +37,56 @@ var datainit = {
 		return checkIcon;
 	})(),
 	todoAddTask : $("#todo-add-task"),
-	todoTotal : $("#todo-total-count")
+	todoTotal : $("#todo-total-count"),
+	todoInventory : $(".todo-inventory-category")[0].children
+
 };
 
-
 //初始化
-if(defaultTask){
+if(defaultDetail){
 	(function(){
-		addContent(defaultTask);
+		addCate(defaultCate);
+		addList(defaultList);
+		addInventory(defaultDetail);
+		addContent(defaultDetail);
+		var listFirst = $(".todo-task-list")[0].getElementsByTagName("li")[0];
+		if(listFirst){
+			addClass(listFirst,"todo-task-selected");
+		}
+		var titleFirst = $("dd")[0];
+		if(titleFirst){
+			addClass(titleFirst,"todo-detail-selected");
+		}
 	})();
 }
 
-function addTask(obj){
-	addCate(obj);
-	addList(obj);
-	addInventory(obj);
-}
+//function addTask(obj){
+//	addCate(obj);
+//	addList(obj);
+//	addInventory(obj);
+//}
+//
+//for(var i= 0 ;i<tasks.length;i++){
+//	addTask(tasks[i]);
+//}
 
-for(var i= 0 ;i<tasks.length;i++){
-	addTask(tasks[i]);
-}
+//function todoCount(obj){
+//	for(var i=0;i<obj.length;i++){
+//		if(!obj[i].isDone){
+//			t++;
+//		}
+//	}
+//	return t;
+//}
 
-function todoCount(obj){
-	for(var i=0;i<obj.length;i++){
-		if(!obj[i].isDone){
-			t++;
-		}
-	}
-	return t;
-}
+//console.log(formatTime(task1));
 
 function formatTime(obj){
-	var taskDetail = obj.taskDetail;
-	if(taskDetail[1]){
-		var year = taskDetail[1].getFullYear();
-		var month = taskDetail[1].getMonth()+1;
-		var date = taskDetail[1].getDate();
+	var taskTime = obj.time;
+	if(taskTime){
+		var year = taskTime.getFullYear();
+		var month = taskTime.getMonth()+1;
+		var date = taskTime.getDate();
 		if(month<10){
 			month = "0"+month;
 		}
@@ -85,26 +98,34 @@ function formatTime(obj){
 }
 
 
+addCate(cate1);
+
 function addCate(obj){
-	if(obj){
+	if(obj.category){
 		var liCate = $("[data-cate-id="+obj.category+"]");
 		if(!liCate){
 			liCate = document.createElement("li");
 			liCate.setAttribute("data-cate-id",obj.category);
 			var spanCateDefault = document.createElement("span");
-			spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
-										+ obj.category
-										+" ("+todoCount(obj)+")"
-										+"<i class='fa fa-remove fa-fw'></i>";
+			if(obj.category === "默认分类"){
+				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
+					+ obj.category;
+			}else{
+				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
+					+ obj.category
+					+"<i class='fa fa-remove fa-fw'></i>";
+			}
 			liCate.appendChild(spanCateDefault);
 			datainit.todoCateList.appendChild(liCate);
 		}
 	}
 }
 
+addList(list1);
+
 function addList(obj){
-	var liCate = $("[data-cate-id="+obj.category+"]");
-	if(obj.taskList){
+	var liCate = $("[data-cate-id="+obj[0]+"]");
+	if(obj[1]){
 		if(!(liCate.getElementsByTagName("ul")[0])){
 			var ulTask = document.createElement("ul");
 			addClass(ulTask,"todo-task-list");
@@ -113,13 +134,13 @@ function addList(obj){
 		if(liCate.getElementsByTagName("ul")[0]){
 			ulTask = liCate.getElementsByTagName("ul")[0];
 			if(ulTask.hasAttribute("class","todo-task-list")){
-				var liList = $("[data-list-id="+obj.taskList+"]");
+				var liList = $("[data-list-id="+obj[1]+"]");
 				if(!liList){
 					var liTaskList = document.createElement("li");
-					liTaskList.setAttribute("data-list-id",obj.taskList);
+					liTaskList.setAttribute("data-list-id",obj[1]);
 					liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
-					+ obj.taskList
-					+"<i class='fa fa-remove fa-fw'></i>";
+						+ obj[1]
+						+"<i class='fa fa-remove fa-fw'></i>";
 					ulTask.appendChild(liTaskList);
 				}
 			}
@@ -129,32 +150,32 @@ function addList(obj){
 }
 
 function addInventory(obj){
-	if(obj.taskDetail){
-		var taskDetail = obj.taskDetail;
+	if(obj.cateList){
 		var taskInventory = $(".todo-inventory-detail")[0];
-		if(taskDetail[1]) {
-			var dtTimeStr = taskDetail[1] - 0;
+		if(obj.time) {
+			var dtTimeStr = obj.time - 0;
 			var dtTime = $("[data-list-time=" + dtTimeStr + "]");
 			if (dtTime) {
-				addTitle(taskDetail);
+				addTitle(obj);
 			}
 			if(!dtTime){
 				var dtTaskTime = document.createElement("dt");
 				dtTaskTime.innerHTML = "<time>"+formatTime(obj)+"</time>";
 				taskInventory.appendChild(dtTaskTime);
-				addTitle(taskDetail);
+				addTitle(obj);
 			}
 		}
-		function addTitle(taskDetail){
-			if (taskDetail[0]) {
+		function addTitle(obj){
+			if (obj.title) {
 				var ddTaskTitle = document.createElement("dd");
 				if(obj.isDone){
 					ddTaskTitle.setAttribute("data-task-done","1");
-					ddTaskTitle.innerHTML = taskDetail[0]+"<i class='fa fa-smile-o'></i>";
+					ddTaskTitle.innerHTML = obj.title+"<i class='fa fa-smile-o'></i>";
 				}else{
 					ddTaskTitle.setAttribute("data-task-done","0");
-					ddTaskTitle.innerHTML = taskDetail[0];
+					ddTaskTitle.innerHTML = obj.title;
 				}
+				ddTaskTitle.setAttribute("data-list-id",obj.cateList[1]);
 				ddTaskTitle.setAttribute("data-task-id",obj.id);
 				taskInventory.appendChild(ddTaskTitle);
 			}
@@ -163,11 +184,11 @@ function addInventory(obj){
 }
 
 function addContent(obj){
-	if(obj.taskDetail){
+	if(obj){
 		datainit.todoDefault[1].innerHTML = formatTime(obj);
 		datainit.todoDefault[0].setAttribute("data-task-id",obj.id);
-		datainit.todoDefault[0].innerHTML = obj.taskDetail[0];
-		datainit.todoDefault[2].innerHTML = obj.taskDetail[2];
+		datainit.todoDefault[0].innerHTML = obj.title;
+		datainit.todoDefault[2].innerHTML = obj.content;
 	}
 }
 
@@ -226,9 +247,109 @@ addClickEvent(datainit.todoCheckEle,function(){
 });
 
 
-delegateClickEvent(datainit.todoDetail,function(e){
+
+var todoTaskList =  $(".todo-task-list");
+var todoTaskItem = (function(){
+	var todoItem = [];
+	for(var j=0;j<todoTaskList.length;j++){
+		var todoTaskItem = todoTaskList[j].getElementsByTagName("li");
+		for(var i=0;i<todoTaskItem.length;i++){
+			todoItem.push(todoTaskItem[i]);
+		}
+	}
+	return todoItem;
+})();
+
+delegateClickEvent(todoTaskItem,function(e){
 	e = e||window.event;
 	var target = e.target|| e.srcElement;
-	var taskId = target.getAttribute("data-task-id");
-	addContent(tasks[taskId]);
+	var listId = target.getAttribute("data-list-id");
+	listInventory(tasks,listId,"all");
+	datainit.todoDetail = $("dd");
+	delegateClickEvent(datainit.todoDetail,function(e){
+		e = e||window.event;
+		var target = e.target|| e.srcElement;
+		var taskId = target.getAttribute("data-task-id");
+		addContent(tasks[taskId]);
+	});
 });
+
+function listInventory(arr,list,isDone){
+	var taskInventory = $(".todo-inventory-detail")[0];
+	taskInventory.innerHTML = "";
+	arr.sort(compare("time"));
+	if(typeof isDone === "string"){
+		for(var i=0;i<arr.length;i++){
+			if(arr[i].cateList[1] === list){
+				addInventory(arr[i]);
+			}
+			if(list === "all"){
+				addInventory(arr[i]);
+			}
+		}
+	}
+	else if(typeof isDone === "boolean"){
+		if(isDone){
+			for(var ii=0;ii<arr.length;ii++){
+				if(arr[ii].isDone&&arr[ii].cateList[1] === list){
+					addInventory(arr[ii]);
+				}
+				if(list === "all"){
+					addInventory(arr[i]);
+				}
+			}
+		}else{
+			for(var iii=0;iii<arr.length;iii++){
+				if(!arr[iii].isDone&&arr[iii].cateList[1] === list){
+					addInventory(arr[iii]);
+				}
+				if(list === "all"){
+					addInventory(arr[i]);
+				}
+			}
+		}
+	}
+}
+
+
+
+
+delegateClickEvent(datainit.todoInventory,function(e){
+	e =e || window.event;
+	var target = e.target|| e.srcElement;
+	var listSelected = $(".todo-task-selected")[0];
+	if(listSelected){
+		var listId = listSelected.getAttribute("data-list-id");
+	}else{
+		listId = "all";
+	}
+	switch (target.getAttribute("id")){
+		case "todo-all":
+			listInventory(tasks,listId,"all");
+			break;
+		case "todo-doing":
+			listInventory(tasks,listId,false);
+			break;
+		case "todo-done":
+			listInventory(tasks,listId,true);
+			break;
+	}
+});
+
+
+//时间排序
+function compare(properyName){
+	return function(obj1,obj2){
+		var val1 = obj1[properyName];
+		var val2 = obj2[properyName];
+		if(val1<val2){
+			return -1;
+		}else if(val1>val2){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+}
+
+

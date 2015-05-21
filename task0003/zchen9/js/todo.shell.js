@@ -49,5 +49,4 @@ window.onload = function(){
 	delegateClickEvent(init.todoTaskItem,init.classToggle);
 	delegateClickEvent(init.todoDetail,init.classToggle);
 	delegateClickEvent(init.todoInventory,init.classToggle);
-
 };

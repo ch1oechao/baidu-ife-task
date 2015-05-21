@@ -29,6 +29,8 @@ i.fa-remove{
 	margin-top: 2px;
 	line-height: inherit;
 	float: right;
+	cursor: pointer;
+	z-index: 101;
 }
 
 dd i.fa-smile-o{
@@ -149,6 +151,7 @@ header .todo-title{
 	padding: 2px 3px;
 	width: 100%;
 	z-index: 100;
+	cursor: pointer;
 }
 
 /*todo_inventory*/
