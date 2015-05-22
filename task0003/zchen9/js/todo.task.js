@@ -45,7 +45,9 @@ var datainit = {
 	addCateSelect : $("#add-cate-main"),
 	addCateName : $("#add-cate-name"),
 	addCateCancel : $("#add-cate-cancel"),
-	addCateCheck : $("#add-cate-check")
+	addCateCheck : $("#add-cate-check"),
+
+	removeList : $(".fa-trash-o")
 };
 
 //初始化
@@ -123,9 +125,15 @@ function addList(obj){
 				if(!liList){
 					var liTaskList = document.createElement("li");
 					liTaskList.setAttribute("data-list-id",obj[1]);
-					liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
-						+ obj[1]
-						+"<span class='remove-list'><i class='fa fa-trash-o'></i></span>";
+					if(obj[1]=="使用说明"){
+						liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
+							+ obj[1];
+					}else{
+						liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
+							+ obj[1]
+							+"<span class='remove-list'><i class='fa fa-trash-o'></i></span>";
+					}
+
 					ulTask.appendChild(liTaskList);
 					init.todoTaskItem.push(liTaskList);
 				}
@@ -169,6 +177,93 @@ function addInventory(obj){
 		}
 		delegateClickEvent(init.todoDetail,init.classToggle);
 	}
+}
+
+
+delegateClickEvent(datainit.removeList,function(e){
+	e = e||window.event;
+	var target = e.target|| e.srcElement;
+	if(target.parentNode.nodeName==="SPAN"){
+		var removeSpanClass = target.parentNode.getAttribute("class");
+		switch (removeSpanClass){
+			case "remove-list":
+				removeList(target.parentNode);
+				break;
+			case "remove-cate":
+				removeCate(target.parentNode);
+				break;
+		}
+	}
+});
+
+function removeCate(item){
+	if(item.parentNode.parentNode.nodeName === "LI"){
+		var liCate = item.parentNode.parentNode.getAttribute("data-cate-id");
+		if(confirm("是否删除分类【"+liCate+"】和所有子分类任务？删除后不可恢复╮(╯▽╰)╭")){
+
+		}
+	}
+
+}
+Array.prototype.indexOf = function(val) {
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] == val) return i;
+	}
+	return -1;
+};
+Array.prototype.remove = function(val) {
+	var index = this.indexOf(val);
+	if (index > -1) {
+		this.splice(index, 1);
+	}
+};
+function removeList(item){
+	if(item.parentNode.nodeName === "LI"){
+		var liList = item.parentNode.getAttribute("data-list-id");
+		if(confirm("是否删除列表【"+liList+"】和所有子任务？删除后不可恢复╮(╯▽╰)╭")){
+			console.log("删除分类"+liList);
+			//each(cates,function(item,i){
+			//	if(item.category == liCate){
+			//		console.log(item,i);
+			//		cates.remove(item);
+			//	}
+			//});
+			var removeItem = [];
+			each(lists,function(item,i){
+				if(item[1] == liList){
+					removeItem.push(item);
+				}
+			});
+			each(removeItem,function(item){
+				lists.remove(item);
+			});
+			removeItem = [];
+			each(tasks,function(item,i){
+				if(item.cateList[1] == liList){
+					removeItem.push(item);
+				}
+			});
+			each(removeItem,function(item){
+				tasks.remove(item);
+			});
+		}
+	}
+}
+//刷新分类视图
+function listCates(arr){
+	each(arr,function(item){
+		addCate(item);
+	});
+	delegateClickEvent(init.todoTaskItem,init.classToggle);
+	listInventory(tasks,"all","all");
+}
+//刷新子列表视图
+function listLists(arr){
+	each(arr,function(item){
+		addList(item);
+	});
+	delegateClickEvent(init.todoTaskItem,init.classToggle);
+	listInventory(tasks,"all","all");
 }
 
 //点击事件
@@ -252,10 +347,7 @@ addClickEvent(datainit.todoAddTask,function(){
 	});
 	delegateEleEvent(datainit.todoEdit,function(ele){
 		ele.style.display = "inline-block";
-		for(var i=0;i<datainit.todoEdit.length;i++){
-			datainit.todoEdit[i].value = "";
-		}
-
+		ele.value = "";
 	});
 });
 
@@ -305,6 +397,9 @@ var todoTaskItem = (function(){
 })();
 
 addClickEvent(datainit.todoCateAll,function(){
+	each(todoTaskItem,function(item){
+		removeClass(item,"todo-task-selected");
+	});
 	listInventory(tasks,"all","all");
 });
 
@@ -321,36 +416,52 @@ function listInventory(arr,list,isDone){
 	var taskInventory = $(".todo-inventory-detail")[0];
 	taskInventory.innerHTML = "";
 	arr.sort(compare("time"));
-	if(typeof isDone === "string"){
-		for(var i=0;i<arr.length;i++){
+	switch (typeof isDone){
+		case "string":
 			if(list === "all"){
-				addInventory(arr[i]);
+				each(arr,function(item){
+					addInventory(item);
+				});
+			}else{
+				for(var i=0;i<arr.length;i++){
+					if(arr[i].cateList[1] === list){
+						addInventory(arr[i]);
+					}
+				}
 			}
-			else if(arr[i].cateList[1] === list){
-				addInventory(arr[i]);
-			}
-		}
-	}
-	else if(typeof isDone === "boolean"){
-		if(isDone){
-			for(var ii=0;ii<arr.length;ii++){
+			break;
+		case "boolean":
+			if(isDone){
 				if(list === "all"){
-					addInventory(arr[ii]);
+					each(arr,function(item){
+						if(item.isDone){
+							addInventory(item);
+						}
+					});
 				}
-				else if(arr[ii].isDone&&arr[ii].cateList[1] === list){
-					addInventory(arr[ii]);
+				else{
+					for(var ii=0;ii<arr.length;ii++){
+						if(arr[ii].isDone&&arr[ii].cateList[1] === list){
+							addInventory(arr[ii]);
+						}
+					}
 				}
-			}
-		}else{
-			for(var iii=0;iii<arr.length;iii++){
+			}else{
 				if(list === "all"){
-					addInventory(arr[iii]);
-				}
-				else if(!arr[iii].isDone&&arr[iii].cateList[1] === list){
-					addInventory(arr[iii]);
+					each(arr,function(item){
+						if(!item.isDone){
+							addInventory(item);
+						}
+					});
+				}else{
+					for(var iii=0;iii<arr.length;iii++){
+						if(!arr[iii].isDone&&arr[iii].cateList[1] === list){
+							addInventory(arr[iii]);
+						}
+					}
 				}
 			}
-		}
+			break;
 	}
 	datainit.todoDetail = $("dd");
 	delegateClickEvent(datainit.todoDetail,function(e){

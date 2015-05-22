@@ -70,7 +70,7 @@ var list2 = new TaskList("百度IFE项目","task0002");
 var detail1 = new TaskDetail(["百度IFE项目","task0001"],"todo1",new Date(2015,4,1),"123完成task0001作业",true);
 var detail2 = new TaskDetail(["百度IFE项目","task0001"],"todo2",new Date(2015,4,20),"456重构task0001作业",false);
 var detail3 = new TaskDetail(["百度IFE项目","task0001"],"todo3",new Date(2015,4,10),"789重构task0001作业",false);
-var detail4 = new TaskDetail(["百度IFE项目","task0002"],"todo4",new Date(2015,4,18),"1234重构task0001作业",false);
+var detail4 = new TaskDetail(["百度IFE项目","task0002"],"todo4",new Date(2015,4,18),"1234完成task0002作业",true);
 
 
 //JSON转换
