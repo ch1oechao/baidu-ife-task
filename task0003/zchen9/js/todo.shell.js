@@ -366,6 +366,8 @@ function listCates(arr){
 	delegateClickEvent(init.todoTaskItem,taskItemClick);
 	//刷新未完成任务总数
 	init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+	//更新内容视图，默认任务内容
+	addContent(tasks[0]);
 }
 
 //刷新子列表视图
@@ -389,6 +391,9 @@ function listLists(arr){
 	delegateClickEvent(init.todoTaskItem,init.classToggle);
 	//刷新未完成任务总数
 	init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+	//更新内容视图，默认任务内容
+	addContent(tasks[0]);
+
 }
 
 /*--------------分类视图-新增分类弹窗---------------*/
@@ -769,25 +774,27 @@ addClickEvent(init.todoEditIcon,function(){
 				addClickEvent(init.todoCheckEle,function(){
 					//检查任务内容
 					if(checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2])){
-						//修改任务
-						var editTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
-						itemTask.title = editTask[0];
-						itemTask.time = editTask[1];
-						itemTask.content = editTask[2];
-						//更新清单视图
-						listInventory(tasks,itemTask.cateList[1],"all");
-						//更新未完成任务总数
-						init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
-						//更新内容视图
-						editIcon("check");
-						delegateEleEvent(init.todoDefault,function(ele){
-							ele.style.display = "inline";
-							init.todoDefault[init.todoDefault.length-1].style.display = "block";
-							addContent(itemTask);
-						});
-						delegateEleEvent(init.todoEdit,function(ele){
-							ele.style.display = "none";
-						});
+						if(confirm("任务编辑完成，确认提交吗？")){
+							//修改任务
+							var editTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
+							itemTask.title = editTask[0];
+							itemTask.time = editTask[1];
+							itemTask.content = editTask[2];
+							//更新清单视图
+							listInventory(tasks,itemTask.cateList[1],"all");
+							//更新未完成任务总数
+							init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+							//更新内容视图
+							editIcon("check");
+							delegateEleEvent(init.todoDefault,function(ele){
+								ele.style.display = "inline";
+								init.todoDefault[init.todoDefault.length-1].style.display = "block";
+								addContent(itemTask);
+							});
+							delegateEleEvent(init.todoEdit,function(ele){
+								ele.style.display = "none";
+							});
+						}
 					}
 				});
 			}
