@@ -41,6 +41,7 @@ var datainit = {
 	todoInventory : $(".todo-inventory-category")[0].children,
 	todoCateBtn :$("#todo-add-category"),
 	todoCateAll:$(".todo-category-total")[0],
+	todoAllBtn: $("#todo-all"),
 
 	addCateSelect : $("#add-cate-main"),
 	addCateName : $("#add-cate-name"),
@@ -307,6 +308,7 @@ addClickEvent(datainit.todoCheckIcon,function(){
 				if(confirm("又有一个任务完成了是吗~")){
 					tasks[i].isDone = true;
 					listInventory(tasks,tasks[i].cateList[1],"all");
+					delegateInitClass(datainit.todoAllBtn,"todo-inventory-selected");
 					alert("该任务已完成！o(≧v≦)o~~");
 				}
 			}
@@ -324,6 +326,7 @@ addClickEvent(datainit.todoEditIcon,function(){
 					if(confirm("该任务已完成！需要重置，进行编辑吗？")){
 						tasks[i].isDone = false;
 						listInventory(tasks,tasks[i].cateList[1],"all");
+						delegateInitClass(datainit.todoAllBtn,"todo-inventory-selected");
 						taskEdit();
 					}
 				}else{
