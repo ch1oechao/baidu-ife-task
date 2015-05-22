@@ -28,7 +28,6 @@ var datainit = {
 	todoUndoEle : (function(){
 		var undoIcon = document.createElement("i");
 		addClass(undoIcon,"fa fa-undo fa-2x");
-		//undoIcon.setAttribute("onclick","javascript:document.taskForm.reset()");
 		return undoIcon;
 	})(),
 	todoCheckEle : (function(){
@@ -106,6 +105,8 @@ function addCate(obj){
 			liCate.appendChild(spanCateDefault);
 			datainit.todoCateList.appendChild(liCate);
 		}
+		delegateClickEvent(init.todoTaskItem,init.classToggle);
+		delegateClickEvent(init.todoTaskItem,taskItemClick);
 	}
 }
 //添加子列表
@@ -144,6 +145,7 @@ function addList(obj){
 			}
 		}
 		delegateClickEvent(init.todoTaskItem,init.classToggle);
+		delegateClickEvent(init.todoTaskItem,taskItemClick);
 	}
 }
 //添加子任务视图
@@ -258,10 +260,11 @@ function listCates(arr){
 	});
 	delegateClickEvent(removeIcon(),removeClick);
 	listInventory(tasks,"all","all");
+	delegateClickEvent(init.todoTaskItem,taskItemClick);
 }
 //刷新子列表视图
 function listLists(arr){
-	each(todoTaskList,function(item){
+	each(init.todoTaskList,function(item){
 		item.innerHTML = "";
 	});
 	each(arr,function(item){
@@ -269,6 +272,7 @@ function listLists(arr){
 	});
 	delegateClickEvent(removeIcon(),removeClick);
 	listInventory(tasks,"all","all");
+	delegateClickEvent(init.todoTaskItem,taskItemClick);
 }
 
 //删除点击事件
@@ -536,35 +540,24 @@ function checkTime(time){
 	}
 }
 
-//分类视图中的任务项
-var todoTaskList =  $(".todo-task-list");
-var todoTaskItem = (function(){
-	var todoItem = [];
-	for(var j=0;j<todoTaskList.length;j++){
-		var todoTaskItem = todoTaskList[j].getElementsByTagName("li");
-		for(var i=0;i<todoTaskItem.length;i++){
-			todoItem.push(todoTaskItem[i]);
-		}
-	}
-	return todoItem;
-})();
-
 //点击查看所有任务事件
 addClickEvent(datainit.todoCateAll,function(){
-	each(todoTaskItem,function(item){
+	each(init.todoTaskItem,function(item){
 		removeClass(item,"todo-task-selected");
 	});
 	listInventory(tasks,"all","all");
 });
 //点击查看单项任务事件
-delegateClickEvent(todoTaskItem,function(e){
+delegateClickEvent(init.todoTaskItem,taskItemClick);
+
+function taskItemClick(e){
 	e = e||window.event;
 	var target = e.target|| e.srcElement;
 	if(target.nodeName.toLowerCase()=="li"){
 		var listId = target.getAttribute("data-list-id");
 		listInventory(tasks,listId,"all");
 	}
-});
+}
 //刷新任务清单视图事件
 function listInventory(arr,list,isDone){
 	var taskInventory = $(".todo-inventory-detail")[0];

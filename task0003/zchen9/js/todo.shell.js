@@ -14,6 +14,7 @@ var init = {
 	    }
 	    return todoItem;
     })(),
+	todoTaskList : $(".todo-task-list"),
     todoCateList:$(".todo-category-list")[0].getElementsByTagName("li"),
     todoDetail : (function(){
 	    var ddTitle = $("dd");

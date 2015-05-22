@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d9e07e3-3080-41bd-a627-f97f49337e95" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/css/todo.color.css" afterPath="$PROJECT_DIR$/zchen9/css/todo.color.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/js/todo.data.js" afterPath="$PROJECT_DIR$/zchen9/js/todo.data.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/js/todo.shell.js" afterPath="$PROJECT_DIR$/zchen9/js/todo.shell.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/js/todo.task.js" afterPath="$PROJECT_DIR$/zchen9/js/todo.task.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="task0003.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,58 +24,7 @@
     <favorites_list name="task0003" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zchen9/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="19.642857">
-              <caret line="39" column="49" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="todo.data.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/zchen9/js/todo.data.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3460803">
-              <caret line="50" column="69" selection-start-line="50" selection-start-column="69" selection-end-line="50" selection-end-column="69" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="todo.task.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zchen9/js/todo.task.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="454" column="38" selection-start-line="454" selection-start-column="38" selection-end-line="454" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="todo.shell.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zchen9/js/todo.shell.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="54" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="54" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="todo.util.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zchen9/js/todo.util.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="663" column="39" selection-start-line="663" selection-start-column="39" selection-end-line="663" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -87,10 +36,10 @@
         <option value="$PROJECT_DIR$/zchen9/index.html" />
         <option value="$PROJECT_DIR$/zchen9/css/todo.shell.css" />
         <option value="$PROJECT_DIR$/zchen9/js/todo.util.js" />
-        <option value="$PROJECT_DIR$/zchen9/js/todo.shell.js" />
         <option value="$PROJECT_DIR$/zchen9/css/todo.color.css" />
-        <option value="$PROJECT_DIR$/zchen9/js/todo.task.js" />
         <option value="$PROJECT_DIR$/zchen9/js/todo.data.js" />
+        <option value="$PROJECT_DIR$/zchen9/js/todo.shell.js" />
+        <option value="$PROJECT_DIR$/zchen9/js/todo.task.js" />
       </list>
     </option>
   </component>
@@ -102,9 +51,9 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="155" />
-    <option name="y" value="39" />
-    <option name="width" value="1254" />
+    <option name="x" value="147" />
+    <option name="y" value="34" />
+    <option name="width" value="1158" />
     <option name="height" value="710" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -276,10 +225,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="155" y="39" width="1254" height="710" extended-state="0" />
-    <editor active="true" />
+    <frame x="147" y="34" width="1158" height="710" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16365132" sideWeight="0.49913943" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17767857" sideWeight="0.49913943" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21501014" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -338,42 +287,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zchen9/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="19.642857">
-          <caret line="39" column="49" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zchen9/js/todo.shell.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="54" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zchen9/js/todo.util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="663" column="39" selection-start-line="663" selection-start-column="39" selection-end-line="663" selection-end-column="39" />
+          <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zchen9/js/todo.task.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="454" column="38" selection-start-line="454" selection-start-column="38" selection-end-line="454" selection-end-column="38" />
+        <state vertical-scroll-proportion="-9.554493">
+          <caret line="274" column="56" selection-start-line="274" selection-start-column="56" selection-end-line="274" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zchen9/js/todo.data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3460803">
-          <caret line="50" column="69" selection-start-line="50" selection-start-column="69" selection-end-line="50" selection-end-column="69" />
+        <state vertical-scroll-proportion="-0.61759084">
+          <caret line="52" column="63" selection-start-line="52" selection-start-column="63" selection-end-line="52" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zchen9/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1111112">
+          <caret line="39" column="49" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zchen9/js/todo.util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="11.898662">
+          <caret line="663" column="39" selection-start-line="663" selection-start-column="39" selection-end-line="663" selection-end-column="39" />
           <folding />
         </state>
       </provider>
