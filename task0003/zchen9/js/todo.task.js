@@ -2,10 +2,19 @@
 * Created by Chen on 2015-05-19.
 */
 
-var datainit = {
+var init = {
 	todoCateList : $(".todo-category-list")[0],
+
 	taskInventory : $(".todo-inventory-detail")[0],
-	todoDetail : $("dd"),
+	//todoDetail : $("dd"),
+	todoDetail : (function(){
+		var ddTitle = $("dd");
+		var ddTitles = [];
+		for(var i=0;i<ddTitle.length;i++){
+			ddTitles.push(ddTitle[i]);
+		}
+		return ddTitles;
+	})(),
 	todoDefault: (function(){
 		var taskTitle = $("#todo-default-title");
 		var taskTime = $("#todo-default-time");
@@ -46,6 +55,42 @@ var datainit = {
 	addCateName : $("#add-cate-name"),
 	addCateCancel : $("#add-cate-cancel"),
 	addCateCheck : $("#add-cate-check"),
+
+	todoTaskItem : (function(){
+	    var todoTaskList = $(".todo-task-list");
+	    var todoItem = [];
+	    for(var j=0;j<todoTaskList.length;j++){
+		    var todoTaskItem = todoTaskList[j].getElementsByTagName("li");
+		    for(var i=0;i<todoTaskItem.length;i++){
+			    todoItem.push(todoTaskItem[i]);
+		    }
+	    }
+	    return todoItem;
+    })(),
+    todoTaskList : $(".todo-task-list"),
+    classToggle : function(e){
+	    e = e||window.event;
+	    var target = e.target||e.srcElement;
+	    stopBubble(e);
+	    var classname = "";
+	    if(target.parentNode!=null){
+		    switch(target.parentNode.className){
+			    case "todo-inventory-detail":
+				    classname="todo-detail-selected";
+				    break;
+			    case "todo-inventory-category":
+				    classname="todo-inventory-selected";
+				    break;
+			    case "todo-task-list":
+				    classname="todo-task-selected";
+				    for(var j=0;j<init.todoTaskItem.length;j++){
+					    removeClass(init.todoTaskItem[j],classname);
+				    }
+				    break;
+		    }
+		    delegateInitClass(target,classname);
+	    }
+    }
 };
 
 //初始化
@@ -103,7 +148,7 @@ function addCate(obj){
 					+"<span class='remove-cate'><i class='fa fa-trash-o'></i></span>";
 			}
 			liCate.appendChild(spanCateDefault);
-			datainit.todoCateList.appendChild(liCate);
+			init.todoCateList.appendChild(liCate);
 		}
 		delegateClickEvent(init.todoTaskItem,init.classToggle);
 		delegateClickEvent(init.todoTaskItem,taskItemClick);
@@ -216,7 +261,7 @@ function removeCate(item){
 			each(removeItem,function(item){
 				tasks.remove(item);
 			});
-			datainit.addCateSelect.innerHTML = "";
+			init.addCateSelect.innerHTML = "";
 			listCates(cates);
 			listLists(lists);
 		}
@@ -253,7 +298,7 @@ function removeList(item){
 }
 //刷新分类视图
 function listCates(arr){
-	datainit.todoCateList.innerHTML = "";
+	init.todoCateList.innerHTML = "";
 	each(arr,function(item){
 		addCate(item);
 		addCateOption(item.category);
@@ -302,8 +347,8 @@ function removeClick(e){
 delegateClickEvent(removeIcon(),removeClick);
 
 //任务完成点击事件
-addClickEvent(datainit.todoCheckIcon,function(){
-	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
+addClickEvent(init.todoCheckIcon,function(){
+	var taskId = init.todoDefault[0].getAttribute("data-task-id");
 	for(var i=0;i<tasks.length;i++){
 		if(tasks[i].id == taskId){
 			if(tasks[i].isDone){
@@ -312,7 +357,7 @@ addClickEvent(datainit.todoCheckIcon,function(){
 				if(confirm("又有一个任务完成了是吗~【完成后不能再改喽~】")){
 					tasks[i].isDone = true;
 					listInventory(tasks,tasks[i].cateList[1],"all");
-					delegateInitClass(datainit.todoAllBtn,"todo-inventory-selected");
+					delegateInitClass(init.todoAllBtn,"todo-inventory-selected");
 					alert("该任务已完成！o(≧v≦)o~~");
 				}
 			}
@@ -321,8 +366,8 @@ addClickEvent(datainit.todoCheckIcon,function(){
 });
 
 //任务编辑点击事件
-addClickEvent(datainit.todoEditIcon,function(){
-	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
+addClickEvent(init.todoEditIcon,function(){
+	var taskId = init.todoDefault[0].getAttribute("data-task-id");
 		if(isTaskDefault(taskId)){
 			var itemTask = isTaskDefault(taskId);
 			if(itemTask.isDone){
@@ -353,26 +398,26 @@ function taskEdit(item){
 	if(confirm("确认编辑"+item.title+"任务吗？")){
 		//初始化编辑界面
 		editIcon("edit");
-		delegateEleEvent(datainit.todoDefault,function(ele){
+		delegateEleEvent(init.todoDefault,function(ele){
 			ele.style.display = "none";
 		});
-		delegateEleEvent(datainit.todoEdit,function(ele){
+		delegateEleEvent(init.todoEdit,function(ele){
 			ele.style.display = "inline-block";
-			for(var i=0;i<datainit.todoEdit.length;i++){
-				datainit.todoEdit[i].value = datainit.todoDefault[i].innerHTML;
+			for(var i=0;i<init.todoEdit.length;i++){
+				init.todoEdit[i].value = init.todoDefault[i].innerHTML;
 			}
 		});
 	}
 }
 
 //检查编辑后的任务内容
-//addClickEvent(datainit.todoCheckEle,console.log("a"));
+//addClickEvent(init.todoCheckEle,console.log("a"));
 
 function editOldTask(item){
 	//检查任务是否为空
-	if(checkTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2])){
+	if(checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2])){
 		//修改任务
-		var editTask = checkTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2]);
+		var editTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
 		item.title = editTask[0];
 		item.time = editTask[1];
 		item.content = editTask[2];
@@ -382,14 +427,14 @@ function editOldTask(item){
 		listInventory(tasks,item.id,"all");
 		//更新内容视图
 		editIcon("check");
-		delegateEleEvent(datainit.todoDefault,function(ele){
+		delegateEleEvent(init.todoDefault,function(ele){
 			ele.style.display = "inline";
-			datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
-			for(var i=0;i<datainit.todoDefault.length;i++){
-				datainit.todoDefault[i].innerHTML = datainit.todoEdit[i].value;
+			init.todoDefault[init.todoDefault.length-1].style.display = "block";
+			for(var i=0;i<init.todoDefault.length;i++){
+				init.todoDefault[i].innerHTML = init.todoEdit[i].value;
 			}
 		});
-		delegateEleEvent(datainit.todoEdit,function(ele){
+		delegateEleEvent(init.todoEdit,function(ele){
 			ele.style.display = "none";
 		});
 	}
@@ -400,24 +445,24 @@ function editOldTask(item){
 function editIcon(status){
 	switch (status){
 		case "edit":
-			datainit.todoEditIcon.style.display = "none";
-			datainit.todoCheckIcon.style.display = "none";
-			datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
-			datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
-			datainit.todoUndoEle.style.display = "block";
-			datainit.todoCheckEle.style.display = "block";
+			init.todoEditIcon.style.display = "none";
+			init.todoCheckIcon.style.display = "none";
+			init.todoSpecEdit.insertBefore(init.todoUndoEle,init.todoEditIcon);
+			init.todoSpecEdit.insertBefore(init.todoCheckEle,init.todoUndoEle);
+			init.todoUndoEle.style.display = "block";
+			init.todoCheckEle.style.display = "block";
 			break;
 		case "check":
-			datainit.todoEditIcon.style.display = "block";
-			datainit.todoCheckIcon.style.display = "block";
-			datainit.todoUndoEle.style.display = "none";
-			datainit.todoCheckEle.style.display = "none";
+			init.todoEditIcon.style.display = "block";
+			init.todoCheckIcon.style.display = "block";
+			init.todoUndoEle.style.display = "none";
+			init.todoCheckEle.style.display = "none";
 			break;
 	}
 }
 
 //添加新任务点击事件
-addClickEvent(datainit.todoAddTask,function(){
+addClickEvent(init.todoAddTask,function(){
 	//判断是否选中某一项任务列表
 	var taskSelected = $(".todo-task-selected")[0];
 	if(taskSelected&&taskSelected.nodeName=="LI"){
@@ -426,15 +471,15 @@ addClickEvent(datainit.todoAddTask,function(){
 			if(item[1] == dataListId){
 				if(confirm("将在【"+item[0]+"】分类下的【"+dataListId+"】列表新增任务~")){
 					editIcon("edit");
-					delegateEleEvent(datainit.todoDefault,function(ele){
+					delegateEleEvent(init.todoDefault,function(ele){
 						ele.style.display = "none";
 					});
-					delegateEleEvent(datainit.todoEdit,function(ele){
+					delegateEleEvent(init.todoEdit,function(ele){
 						ele.style.display = "inline-block";
 						ele.value = "";
 					});
 					//编辑任务新建完成点击事件
-					addClickEvent(datainit.todoCheckEle,addNewTask);
+					addClickEvent(init.todoCheckEle,addNewTask);
 				}
 			}
 		});
@@ -444,17 +489,17 @@ addClickEvent(datainit.todoAddTask,function(){
 });
 
 
-addClickEvent(datainit.todoUndoEle,reback);
+addClickEvent(init.todoUndoEle,reback);
 
 //取消编辑
 function reback(){
 	if(confirm("取消任务编辑吗？")){
-		var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
+		var taskId = init.todoDefault[0].getAttribute("data-task-id");
 		//更新内容视图
 		editIcon("check");
-		delegateEleEvent(datainit.todoDefault,function(ele){
+		delegateEleEvent(init.todoDefault,function(ele){
 			ele.style.display = "inline";
-			datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
+			init.todoDefault[init.todoDefault.length-1].style.display = "block";
 			//更新任务显示
 			each(tasks,function(item){
 				if(item.id == taskId){
@@ -462,7 +507,7 @@ function reback(){
 				}
 			});
 		});
-		delegateEleEvent(datainit.todoEdit,function(ele){
+		delegateEleEvent(init.todoEdit,function(ele){
 			ele.style.display = "none";
 		});
 	}
@@ -480,9 +525,9 @@ function addNewTask(){
 		});
 	}
 	//检查任务是否为空
-	if(checkTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2])){
+	if(checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2])){
 		//新建任务
-		var newTask = checkTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2]);
+		var newTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
 		tasks.push(new TaskDetail(cateList,newTask[0],newTask[1],newTask[2],false));
 		each(tasks,function(item,i){
 			item.id = i;
@@ -491,14 +536,14 @@ function addNewTask(){
 		listInventory(tasks,dataListId,"all");
 		//更新内容视图
 		editIcon("check");
-		delegateEleEvent(datainit.todoDefault,function(ele){
+		delegateEleEvent(init.todoDefault,function(ele){
 			ele.style.display = "inline";
-			datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
-			for(var i=0;i<datainit.todoDefault.length;i++){
-				datainit.todoDefault[i].innerHTML = datainit.todoEdit[i].value;
+			init.todoDefault[init.todoDefault.length-1].style.display = "block";
+			for(var i=0;i<init.todoDefault.length;i++){
+				init.todoDefault[i].innerHTML = init.todoEdit[i].value;
 			}
 		});
-		delegateEleEvent(datainit.todoEdit,function(ele){
+		delegateEleEvent(init.todoEdit,function(ele){
 			ele.style.display = "none";
 		});
 	}
@@ -541,7 +586,7 @@ function checkTime(time){
 }
 
 //点击查看所有任务事件
-addClickEvent(datainit.todoCateAll,function(){
+addClickEvent(init.todoCateAll,function(){
 	each(init.todoTaskItem,function(item){
 		removeClass(item,"todo-task-selected");
 	});
@@ -610,8 +655,8 @@ function listInventory(arr,list,isDone){
 			}
 			break;
 	}
-	datainit.todoDetail = $("dd");
-	delegateClickEvent(datainit.todoDetail,function(e){
+	init.todoDetail = $("dd");
+	delegateClickEvent(init.todoDetail,function(e){
 		e = e||window.event;
 		var target = e.target|| e.srcElement;
 		var taskId = target.getAttribute("data-task-id");
@@ -624,8 +669,9 @@ function listInventory(arr,list,isDone){
 
 }
 
+delegateClickEvent(init.todoInventory,init.classToggle);
 //任务清单菜单选项点击事件
-delegateClickEvent(datainit.todoInventory,function(e){
+delegateClickEvent(init.todoInventory,function(e){
 	e =e || window.event;
 	var target = e.target|| e.srcElement;
 	var listSelected = $(".todo-task-selected")[0];
@@ -663,18 +709,18 @@ function compare(properyName){
 	}
 }
 //新增分类点击事件
-addClickEvent(datainit.todoCateBtn,function(){
+addClickEvent(init.todoCateBtn,function(){
 	addCatePanel("block");
-	if(datainit.addCateCancel){
-		addClickEvent(datainit.addCateCancel,function(){
-			datainit.addCateName.value = "";
+	if(init.addCateCancel){
+		addClickEvent(init.addCateCancel,function(){
+			init.addCateName.value = "";
 			addCatePanel("none");
 		});
 	}
-	if(datainit.addCateCheck){
-		addClickEvent(datainit.addCateCheck,function(){
-			var mainCateName = datainit.addCateSelect.value;
-			var newCateName = datainit.addCateName.value;
+	if(init.addCateCheck){
+		addClickEvent(init.addCateCheck,function(){
+			var mainCateName = init.addCateSelect.value;
+			var newCateName = init.addCateName.value;
 			addCateCheck(mainCateName,newCateName);
 		});
 	}
@@ -690,7 +736,7 @@ function addCateCheck(main,name){
 				addCate(cates[cates.length-1]);
 				addCateOption(cates[cates.length-1].category);
 				delegateClickEvent(removeIcon(),removeClick);
-				datainit.addCateName.value = "";
+				init.addCateName.value = "";
 			}
 			addCatePanel("none");
 		}
@@ -700,7 +746,7 @@ function addCateCheck(main,name){
 				addList(lists[lists.length-1]);
 				delegateClickEvent(init.todoTaskItem,init.classToggle);
 				delegateClickEvent(removeIcon(),removeClick);
-				datainit.addCateName.value = "";
+				init.addCateName.value = "";
 			}
 			addCatePanel("none");
 		}
@@ -721,12 +767,12 @@ function getByteVal(val, max){
 		}
 		if (byteValLen > max){
 			alert("名称不能超过十位汉字！请重新想个简短的名字吧~");
-			datainit.addCateName.value = "";
+			init.addCateName.value = "";
 			return false;
 		}
 		if(byteValLen == 0){
 			alert("名称不能为空！快起个名字吧~");
-			datainit.addCateName.value = "";
+			init.addCateName.value = "";
 			return false;
 		}
 		returnValue += val[i];
@@ -742,7 +788,7 @@ function addCateOption(cate){
 	var cateOption = document.createElement("option");
 	cateOption.setAttribute("value",cate);
 	cateOption.innerHTML = cate;
-	datainit.addCateSelect.appendChild(cateOption);
+	init.addCateSelect.appendChild(cateOption);
 }
 //添加新增分类选框
 function addCatePanel(display){
@@ -761,9 +807,9 @@ function addCatePanel(display){
 //更新任务详细内容
 function addContent(obj){
 	if(obj){
-		datainit.todoDefault[1].innerHTML = formatTime(obj);
-		datainit.todoDefault[0].setAttribute("data-task-id",obj.id);
-		datainit.todoDefault[0].innerHTML = obj.title;
-		datainit.todoDefault[2].innerHTML = obj.content;
+		init.todoDefault[1].innerHTML = formatTime(obj);
+		init.todoDefault[0].setAttribute("data-task-id",obj.id);
+		init.todoDefault[0].innerHTML = obj.title;
+		init.todoDefault[2].innerHTML = obj.content;
 	}
 }
