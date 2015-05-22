@@ -182,7 +182,7 @@ function addInventory(obj){
 		delegateClickEvent(init.todoDetail,init.classToggle);
 	}
 }
-
+//删除分类
 function removeCate(item){
 	if(item.parentNode.parentNode.nodeName === "LI"){
 		var liCate = item.parentNode.parentNode.getAttribute("data-cate-id");
@@ -220,7 +220,7 @@ function removeCate(item){
 		}
 	}
 }
-
+//删除列表
 function removeList(item){
 	if(item.parentNode.nodeName === "LI"&&hasClass(item.parentNode,"todo-task-selected")){
 		var liList = item.parentNode.getAttribute("data-list-id");
@@ -271,7 +271,7 @@ function listLists(arr){
 	listInventory(tasks,"all","all");
 }
 
-//点击事件
+//删除点击事件
 function removeIcon(){
 	var removeListIcon = $(".fa-trash-o");
 	var removeItem =[];
@@ -295,9 +295,9 @@ function removeClick(e){
 		}
 	}
 }
-
 delegateClickEvent(removeIcon(),removeClick);
 
+//任务完成点击事件
 addClickEvent(datainit.todoCheckIcon,function(){
 	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
 	for(var i=0;i<tasks.length;i++){
@@ -316,6 +316,7 @@ addClickEvent(datainit.todoCheckIcon,function(){
 	}
 });
 
+//任务编辑点击事件
 addClickEvent(datainit.todoEditIcon,function(){
 
 	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
@@ -346,6 +347,7 @@ function isTaskDefault(i){
 	return true;
 }
 
+//任务编辑事件
 function taskEdit(){
 	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
 	if(isTaskDefault(taskId)){
@@ -366,7 +368,7 @@ function taskEdit(){
 		});
 	}
 }
-
+//添加新任务点击事件
 addClickEvent(datainit.todoAddTask,function(){
 	datainit.todoEditIcon.style.display = "none";
 	datainit.todoCheckIcon.style.display = "none";
@@ -383,6 +385,7 @@ addClickEvent(datainit.todoAddTask,function(){
 	});
 });
 
+//编辑任务完成点击事件
 addClickEvent(datainit.todoCheckEle,function(){
 	if(checkNewTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2])){
 		datainit.todoEditIcon.style.display = "block";
@@ -402,7 +405,7 @@ addClickEvent(datainit.todoCheckEle,function(){
 	}
 
 });
-
+//检查任务内容
 function checkNewTask(title,time,content){
 	if(title.value == ""||time.value == ""||content.value == ""){
 		alert("请仔细检查任务，查看是否填写完整~");
@@ -414,7 +417,7 @@ function checkNewTask(title,time,content){
 	}
 }
 
-
+//分类视图中的任务项
 var todoTaskList =  $(".todo-task-list");
 var todoTaskItem = (function(){
 	var todoItem = [];
@@ -427,13 +430,14 @@ var todoTaskItem = (function(){
 	return todoItem;
 })();
 
+//点击查看所有任务事件
 addClickEvent(datainit.todoCateAll,function(){
 	each(todoTaskItem,function(item){
 		removeClass(item,"todo-task-selected");
 	});
 	listInventory(tasks,"all","all");
 });
-
+//点击查看单项任务事件
 delegateClickEvent(todoTaskItem,function(e){
 	e = e||window.event;
 	var target = e.target|| e.srcElement;
@@ -442,7 +446,7 @@ delegateClickEvent(todoTaskItem,function(e){
 		listInventory(tasks,listId,"all");
 	}
 });
-
+//刷新任务清单视图事件
 function listInventory(arr,list,isDone){
 	var taskInventory = $(".todo-inventory-detail")[0];
 	taskInventory.innerHTML = "";
@@ -508,7 +512,7 @@ function listInventory(arr,list,isDone){
 
 }
 
-
+//任务清单菜单选项点击事件
 delegateClickEvent(datainit.todoInventory,function(e){
 	e =e || window.event;
 	var target = e.target|| e.srcElement;
@@ -546,7 +550,7 @@ function compare(properyName){
 		}
 	}
 }
-
+//新增分类点击事件
 addClickEvent(datainit.todoCateBtn,function(){
 	addCatePanel("block");
 	if(datainit.addCateCancel){
@@ -628,7 +632,7 @@ function addCateOption(cate){
 	cateOption.innerHTML = cate;
 	datainit.addCateSelect.appendChild(cateOption);
 }
-
+//添加新增分类选框
 function addCatePanel(display){
 	var addCatePanel = $(".add-cate-panel")[0];
 	if(addCatePanel){
@@ -637,12 +641,12 @@ function addCatePanel(display){
 		var oWidth = addCatePanel.offsetWidth;
 		var oHeight = addCatePanel.offsetHeight;
 		addCatePanel.style.position = "absolute";
-		addCatePanel.style.left = (cWidth-oWidth)/3 +"px";
-		addCatePanel.style.top = (cHeight-oHeight)/3 +"px";
+		addCatePanel.style.left = Math.round((cWidth-oWidth)/3.2) +"px";
+		addCatePanel.style.top = Math.round((cHeight-oHeight)/3.2) +"px";
 		addCatePanel.style.display = display;
 	}
 }
-
+//更新任务详细内容
 function addContent(obj){
 	if(obj){
 		datainit.todoDefault[1].innerHTML = formatTime(obj);
