@@ -44,17 +44,19 @@ TaskDetail.prototype = {
         +"<br>"
         +"<i class='fa fa-calendar fa-fw'></i>"+"[时间]：格式为 [YYYY-MM-DD] ( 例：2015-01-01 )"
         +"<br>"
-        +"<i class='fa fa-check-square-o fa-fw'></i>"+"[完成]：点击视为完成任务"
+        +"<i class='fa fa-check-square-o fa-fw'></i>"+"[完成]：视为又有一个任务被KO啦"
         +"<br>"
-        +"<i class='fa fa-pencil-square-o fa-fw'></i>"+"[编辑]：点击可以编辑任务标题、时间、内容"
+        +"<i class='fa fa-pencil-square-o fa-fw'></i>"+"[编辑]：编辑任务标题、时间、内容"
         +"<br>"
-        +"<i class='fa fa-undo fa-fw'></i>"+"[重置]：编辑状态时，点击可以重置任务"
+        +"<i class='fa fa-undo fa-fw'></i>"+"[重置]：编辑状态时，可重置任务"
         +"<br>"
-        +"<i class='fa fa-check fa-fw'></i>"+"[完成]：编辑状态时，点击为完成编辑"
+        +"<i class='fa fa-check fa-fw'></i>"+"[完成]：编辑状态时，为完成编辑"
         +"<br>"
         +"<i class='fa fa-plus fa-fw'></i>"+"[添加]：可以添加新分类或者添加新任务"
         +"<br>"
-        +"<i class='fa fa-smile-o fa-fw'></i>"+"[笑脸]：标明该任务已完成 :)",
+        +"<i class='fa fa-smile-o fa-fw'></i>"+"[笑脸]：标明该任务已完成 :)"
+        +"<br>"
+        +"<i class='fa fa-trash-o fa-fw'></i>"+"[删除]：删除列表或分类，删除后不能恢复，请谨慎~",
     isDone: true
 };
 

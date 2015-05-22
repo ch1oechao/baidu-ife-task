@@ -11,7 +11,7 @@ html,body {
 }
 
 .fa-fw{
-	/*margin: 0 5px;*/
+	margin: 0 5px;
 }
 
 .fa-2x{
@@ -25,9 +25,16 @@ span:hover i.fa-trash-o{
 	color: #294B7C;
 	cursor: pointer;
 }
-i.fa-trash-o{
+span.remove-cate > i,
+span.remove-list > i{
 	opacity: 0;
-	float: right;
+}
+
+.remove-cate,
+.remove-list{
+	position: absolute;
+	right: 0;
+	margin-right: 1em;
 }
 
 dd i.fa-smile-o{
@@ -195,6 +202,7 @@ header .todo-title{
 	display: block;
 	margin-left: -56%;
 	height: 100%;
+	min-width: 720px;
 }
 
 .todo-spec-title{
@@ -241,6 +249,8 @@ header .todo-title{
 	color: #E58193;
 	margin-top: 90px;
 	padding: 2em;
+	width: 90%;
+	word-wrap:break-word;
 }
 
 .todo-spec-content i{
@@ -252,12 +262,13 @@ header .todo-title{
 	padding-top: 1em;
 	padding-left: 2em;
 	resize: none;
-	width: 580px;
+	width: 90%;
 	overflow-y: hidden;
 	height: 300px;
 	margin-top: 90px;
 	border: none;
 	outline: none;
+	word-wrap:break-word;
 }
 
 /*addCatePanel*/

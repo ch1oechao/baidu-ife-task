@@ -99,7 +99,8 @@ function addCate(obj){
 					+ obj.category;
 			}else{
 				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
-					+ obj.category;
+					+ obj.category
+					+"<span class='remove-cate'><i class='fa fa-trash-o'></i></span>";
 			}
 			liCate.appendChild(spanCateDefault);
 			datainit.todoCateList.appendChild(liCate);
@@ -123,7 +124,8 @@ function addList(obj){
 					var liTaskList = document.createElement("li");
 					liTaskList.setAttribute("data-list-id",obj[1]);
 					liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
-						+ obj[1];
+						+ obj[1]
+						+"<span class='remove-list'><i class='fa fa-trash-o'></i></span>";
 					ulTask.appendChild(liTaskList);
 					init.todoTaskItem.push(liTaskList);
 				}
@@ -309,8 +311,10 @@ addClickEvent(datainit.todoCateAll,function(){
 delegateClickEvent(todoTaskItem,function(e){
 	e = e||window.event;
 	var target = e.target|| e.srcElement;
-	var listId = target.getAttribute("data-list-id");
-	listInventory(tasks,listId,"all");
+	if(target.nodeName.toLowerCase()=="li"){
+		var listId = target.getAttribute("data-list-id");
+		listInventory(tasks,listId,"all");
+	}
 });
 
 function listInventory(arr,list,isDone){
