@@ -67,11 +67,20 @@ var init = {
 		var todoItem = [];
 		for(var j=0;j<todoTaskList.length;j++){
 			var todoTaskItem = todoTaskList[j].getElementsByTagName("li");
-			for(var i=0;i<todoTaskItem.length;i++){
-				todoItem.push(todoTaskItem[i]);
-			}
+			each(todoTaskItem,function(item){
+				todoItem.push(item);
+			});
 		}
 		return todoItem;
+	})(),
+	//返回所有删除图标项
+	removeIcon : (function(){
+		var removeListIcon = $(".fa-trash-o");
+		var removeItem =[];
+		each(removeListIcon,function(item){
+			removeItem.push(item);
+		});
+		return removeItem;
 	})(),
 	//各分类下的子列表<ul>
 	todoTaskList : $(".todo-task-list"),
@@ -125,6 +134,8 @@ var init = {
 	if(titleFirst){
 		addClass(titleFirst,"todo-detail-selected");
 	}
+	//初始化未完成任务总数
+	init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
 
 	//初始化切换样式点击事件
 	//任务清单筛选项
@@ -135,7 +146,20 @@ var init = {
 	delegateClickEvent(init.todoDetail,init.classToggle);
 
 })();
+
+
 /*--------------分类视图---------------*/
+
+//计算未完成任务
+function todoCount(arr){
+	var count = 0;
+	each(arr,function(item){
+		if(!item.isDone){
+			count++;
+		}
+	})
+	return count;
+}
 
 //添加主分类
 function addCate(obj){
@@ -154,13 +178,23 @@ function addCate(obj){
 					+ obj.category;
 			}else{
 				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
-					+ obj.category
-					+"<span class='remove-cate'><i class='fa fa-trash-o'></i></span>";
+					+ obj.category;
+				var removeSpan = document.createElement("span");
+				addClass(removeSpan,"remove-cate");
+				var  removeItem = document.createElement("i");
+				addClass(removeItem,"fa fa-trash-o");
+				removeSpan.appendChild(removeItem);
+				spanCateDefault.appendChild(removeSpan);
+				//更新删除图标
+				init.removeIcon.push(removeItem);
+
 			}
 			liCate.appendChild(spanCateDefault);
 			//添加分类项
 			init.todoCateList.appendChild(liCate);
 		}
+		//遍历删除图标点击事件监听
+		delegateClickEvent(init.removeIcon,removeClick);
 	}
 }
 //添加子列表
@@ -188,8 +222,15 @@ function addList(obj){
 							+ obj[1];
 					}else{
 						liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
-							+ obj[1]
-							+"<span class='remove-cate'><i class='fa fa-trash-o'></i></span>";
+							+ obj[1];
+						var removeSpan = document.createElement("span");
+						addClass(removeSpan,"remove-list");
+						var  removeItem = document.createElement("i");
+						addClass(removeItem,"fa fa-trash-o");
+						removeSpan.appendChild(removeItem);
+						liTaskList.appendChild(removeSpan);
+						//更新删除图标
+						init.removeIcon.push(removeItem);
 					}
 					ulTask.appendChild(liTaskList);
 					//更新列表项
@@ -202,21 +243,11 @@ function addList(obj){
 		delegateClickEvent(init.todoTaskItem,init.classToggle);
 		//更新清单任务视图
 		delegateClickEvent(init.todoTaskItem,taskItemClick);
+		//遍历删除图标点击事件监听
+		delegateClickEvent(init.removeIcon,removeClick);
 	}
 }
 
-//遍历删除图标点击事件监听
-delegateClickEvent(removeIcon(),removeClick);
-
-//返回所有删除图标项
-function removeIcon(){
-	var removeListIcon = $(".fa-trash-o");
-	var removeItem =[];
-	for(var ii=0;ii<removeListIcon.length;ii++){
-		removeItem.push(removeListIcon[ii]);
-	}
-	return removeItem;
-}
 //添加删除图标点击事件
 function removeClick(e){
 	e = e||window.event;
@@ -317,7 +348,7 @@ function listCates(arr){
 	//初始化分类视图
 	init.todoCateList.innerHTML = "";
 	//初始化新增分类弹窗下的下拉菜单内容
-	init.addCateSelect.innerHTML = "";
+	initSelect();
 
 	//添加更新后的对象数组
 	each(arr,function(item){
@@ -328,11 +359,13 @@ function listCates(arr){
 	});
 
 	//更新删除图标监听事件
-	delegateClickEvent(removeIcon(),removeClick);
+	delegateClickEvent(init.removeIcon,removeClick);
 	//更新任务清单视图
 	listInventory(tasks,"all","all");
 	//更新任务项点击事件监听
 	delegateClickEvent(init.todoTaskItem,taskItemClick);
+	//刷新未完成任务总数
+	init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
 }
 
 //刷新子列表视图
@@ -347,13 +380,15 @@ function listLists(arr){
 	});
 
 	//更新删除图标监听事件
-	delegateClickEvent(removeIcon(),removeClick);
+	delegateClickEvent(init.removeIcon,removeClick);
 	//更新任务清单视图
 	listInventory(tasks,"all","all");
 	//更新任务项点击更新清单视图事件
 	delegateClickEvent(init.todoTaskItem,taskItemClick);
 	//更新任务项点击切换样式事件
 	delegateClickEvent(init.todoTaskItem,init.classToggle);
+	//刷新未完成任务总数
+	init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
 }
 
 /*--------------分类视图-新增分类弹窗---------------*/
@@ -403,12 +438,16 @@ function addCateCheck(main,name){
 				cates.push(new Category(cateName));
 				//刷新分类视图
 				listCates(cates);
+				//刷新列表视图
+				listLists(lists);
 			}
 		}
 		else{
 			if(confirm("确认在【"+main+"】分类下创建新列表【"+cateName+"】吗？")){
 				//新增列表对象
 				lists.push(new TaskList(main,cateName));
+				//刷新分类视图
+				listCates(cates);
 				//刷新列表视图
 				listLists(lists);
 			}
@@ -536,6 +575,8 @@ function addNewTask(){
 		each(tasks,function(item,i){
 			item.id = i;
 		});
+		//更新未完成任务总数
+		init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
 		//更新清单视图
 		listInventory(tasks,dataListId,"all");
 		//更新内容视图
@@ -689,6 +730,8 @@ addClickEvent(init.todoCheckIcon,function(){
 					tasks[i].isDone = true;
 					//刷新任务清单视图
 					listInventory(tasks,tasks[i].cateList[1],"all");
+					//刷新未完成任务总数
+					init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
 					//初始化清单筛选项
 					delegateInitClass(init.todoAllBtn,"todo-inventory-selected");
 					alert("该任务已完成！o(≧v≦)o~~");
@@ -930,4 +973,12 @@ function getByteVal(val, max){
 		returnValue += val[i];
 	}
 	return returnValue;
+}
+//初始化下拉框选项
+function initSelect(){
+	init.addCateSelect.innerHTML = "";
+	var defaultOption = document.createElement("option");
+	defaultOption.setAttribute("value","null");
+	defaultOption.innerHTML = "新增主分类";
+	init.addCateSelect.appendChild(defaultOption);
 }

@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d9e07e3-3080-41bd-a627-f97f49337e95" name="Default" comment="">
-      <change type="DELETED" beforePath="G:\Github\baidu-ife-task\task0003\zchen9\js\todo.task.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/index.html" afterPath="$PROJECT_DIR$/zchen9/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/js/todo.shell.js" afterPath="$PROJECT_DIR$/zchen9/js/todo.shell.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="task0003.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,8 +26,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zchen9/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.928572">
-              <caret line="86" column="44" selection-start-line="86" selection-start-column="44" selection-end-line="86" selection-end-column="44" />
+            <state vertical-scroll-proportion="-7.178571">
+              <caret line="70" column="19" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="55" />
               <folding>
                 <element signature="n#style#0;n#i#0;n#span#1;n#div#0;n#form#0;n#section#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#1;n#span#1;n#div#0;n#form#0;n#section#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -44,8 +41,8 @@
       <file leaf-file-name="todo.shell.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zchen9/js/todo.shell.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="32.079712">
-              <caret line="932" column="1" selection-start-line="932" selection-start-column="1" selection-end-line="932" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.5513308">
+              <caret line="577" column="19" selection-start-line="577" selection-start-column="19" selection-end-line="577" selection-end-column="19" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -67,8 +64,8 @@
         <option value="$PROJECT_DIR$/zchen9/css/todo.color.css" />
         <option value="$PROJECT_DIR$/zchen9/js/todo.data.js" />
         <option value="$PROJECT_DIR$/zchen9/js/todo.task.js" />
-        <option value="$PROJECT_DIR$/zchen9/js/todo.shell.js" />
         <option value="$PROJECT_DIR$/zchen9/index.html" />
+        <option value="$PROJECT_DIR$/zchen9/js/todo.shell.js" />
       </list>
     </option>
   </component>
@@ -80,10 +77,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="26" />
-    <option name="y" value="19" />
-    <option name="width" value="1262" />
-    <option name="height" value="739" />
+    <option name="x" value="166" />
+    <option name="y" value="44" />
+    <option name="width" value="1159" />
+    <option name="height" value="713" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -254,10 +251,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="26" y="19" width="1262" height="739" extended-state="0" />
+    <frame x="166" y="44" width="1159" height="713" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1625817" sideWeight="0.49913943" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17752007" sideWeight="0.49913943" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21501014" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -334,8 +331,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zchen9/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.928572">
-          <caret line="86" column="44" selection-start-line="86" selection-start-column="44" selection-end-line="86" selection-end-column="44" />
+        <state vertical-scroll-proportion="-7.178571">
+          <caret line="70" column="19" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="55" />
           <folding>
             <element signature="n#style#0;n#i#0;n#span#1;n#div#0;n#form#0;n#section#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#1;n#span#1;n#div#0;n#form#0;n#section#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -347,8 +344,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zchen9/js/todo.shell.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="32.079712">
-          <caret line="932" column="1" selection-start-line="932" selection-start-column="1" selection-end-line="932" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.5513308">
+          <caret line="577" column="19" selection-start-line="577" selection-start-column="19" selection-end-line="577" selection-end-column="19" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
