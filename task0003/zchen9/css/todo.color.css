@@ -46,7 +46,7 @@ header{
 }
 .todo-inventory-category li:hover,
 .todo-inventory-selected{
-    background-color: #F7EACE;
+    background-color: #F7F0D8;
 }
 .todo-inventory-detail > dt{
     background-color: #F7EACE;

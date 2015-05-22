@@ -28,7 +28,7 @@ var datainit = {
 	todoUndoEle : (function(){
 		var undoIcon = document.createElement("i");
 		addClass(undoIcon,"fa fa-undo fa-2x");
-		undoIcon.setAttribute("onclick","javascript:document.taskForm.reset()");
+		//undoIcon.setAttribute("onclick","javascript:document.taskForm.reset()");
 		return undoIcon;
 	})(),
 	todoCheckEle : (function(){
@@ -305,7 +305,7 @@ addClickEvent(datainit.todoCheckIcon,function(){
 			if(tasks[i].isDone){
 				alert("该任务已完成！o(≧v≦)o~~");
 			}else{
-				if(confirm("又有一个任务完成了是吗~")){
+				if(confirm("又有一个任务完成了是吗~【完成后不能再改喽~】")){
 					tasks[i].isDone = true;
 					listInventory(tasks,tasks[i].cateList[1],"all");
 					delegateInitClass(datainit.todoAllBtn,"todo-inventory-selected");
@@ -318,45 +318,37 @@ addClickEvent(datainit.todoCheckIcon,function(){
 
 //任务编辑点击事件
 addClickEvent(datainit.todoEditIcon,function(){
-
 	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
 		if(isTaskDefault(taskId)){
-			for(var i=0;i<tasks.length;i++){
-				if(tasks[i].id == taskId){
-				if(tasks[i].isDone){
-					if(confirm("该任务已完成！需要重置，进行编辑吗？")){
-						tasks[i].isDone = false;
-						listInventory(tasks,tasks[i].cateList[1],"all");
-						delegateInitClass(datainit.todoAllBtn,"todo-inventory-selected");
-						taskEdit();
-					}
-				}else{
-					taskEdit();
-				}
+			var itemTask = isTaskDefault(taskId);
+			if(itemTask.isDone){
+				alert("该任务已完成，不能编辑喽(～￣▽￣)～");
+			}else{
+				taskEdit(itemTask);
 			}
 		}
-	}
 });
 
 //判断是否为默认文本
 function isTaskDefault(i){
+	var taskItem = "";
 	if(i==0){
-		alert("我是【使用说明】(～￣▽￣)～，不要动我喔~");
+		alert("我是【使用说明】(～￣▽￣)～，不要调戏我~");
 		return false;
+	}else{
+		each(tasks,function(item){
+			if(item.id == i){
+				taskItem = item;
+			}
+		});
+		return taskItem;
 	}
-	return true;
 }
-
 //任务编辑事件
-function taskEdit(){
-	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
-	if(isTaskDefault(taskId)){
-		datainit.todoEditIcon.style.display = "none";
-		datainit.todoCheckIcon.style.display = "none";
-		datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
-		datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
-		datainit.todoUndoEle.style.display = "block";
-		datainit.todoCheckEle.style.display = "block";
+function taskEdit(item){
+	if(confirm("确认编辑"+item.title+"任务吗？")){
+		//初始化编辑界面
+		editIcon("edit");
 		delegateEleEvent(datainit.todoDefault,function(ele){
 			ele.style.display = "none";
 		});
@@ -368,30 +360,24 @@ function taskEdit(){
 		});
 	}
 }
-//添加新任务点击事件
-addClickEvent(datainit.todoAddTask,function(){
-	datainit.todoEditIcon.style.display = "none";
-	datainit.todoCheckIcon.style.display = "none";
-	datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
-	datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
-	datainit.todoUndoEle.style.display = "block";
-	datainit.todoCheckEle.style.display = "block";
-	delegateEleEvent(datainit.todoDefault,function(ele){
-		ele.style.display = "none";
-	});
-	delegateEleEvent(datainit.todoEdit,function(ele){
-		ele.style.display = "inline-block";
-		ele.value = "";
-	});
-});
 
-//编辑任务完成点击事件
-addClickEvent(datainit.todoCheckEle,function(){
-	if(checkNewTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2])){
-		datainit.todoEditIcon.style.display = "block";
-		datainit.todoCheckIcon.style.display = "block";
-		datainit.todoUndoEle.style.display = "none";
-		datainit.todoCheckEle.style.display = "none";
+//检查编辑后的任务内容
+//addClickEvent(datainit.todoCheckEle,console.log("a"));
+
+function editOldTask(item){
+	//检查任务是否为空
+	if(checkTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2])){
+		//修改任务
+		var editTask = checkTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2]);
+		item.title = editTask[0];
+		item.time = editTask[1];
+		item.content = editTask[2];
+		console.log(item);
+		console.log(tasks);
+		//更新清单视图
+		listInventory(tasks,item.id,"all");
+		//更新内容视图
+		editIcon("check");
 		delegateEleEvent(datainit.todoDefault,function(ele){
 			ele.style.display = "inline";
 			datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
@@ -403,17 +389,150 @@ addClickEvent(datainit.todoCheckEle,function(){
 			ele.style.display = "none";
 		});
 	}
+}
 
+
+//编辑任务时图标切换
+function editIcon(status){
+	switch (status){
+		case "edit":
+			datainit.todoEditIcon.style.display = "none";
+			datainit.todoCheckIcon.style.display = "none";
+			datainit.todoSpecEdit.insertBefore(datainit.todoUndoEle,datainit.todoEditIcon);
+			datainit.todoSpecEdit.insertBefore(datainit.todoCheckEle,datainit.todoUndoEle);
+			datainit.todoUndoEle.style.display = "block";
+			datainit.todoCheckEle.style.display = "block";
+			break;
+		case "check":
+			datainit.todoEditIcon.style.display = "block";
+			datainit.todoCheckIcon.style.display = "block";
+			datainit.todoUndoEle.style.display = "none";
+			datainit.todoCheckEle.style.display = "none";
+			break;
+	}
+}
+
+//添加新任务点击事件
+addClickEvent(datainit.todoAddTask,function(){
+	//判断是否选中某一项任务列表
+	var taskSelected = $(".todo-task-selected")[0];
+	if(taskSelected&&taskSelected.nodeName=="LI"){
+		var dataListId = taskSelected.getAttribute("data-list-id");
+		each(lists,function(item){
+			if(item[1] == dataListId){
+				if(confirm("将在【"+item[0]+"】分类下的【"+dataListId+"】列表新增任务~")){
+					editIcon("edit");
+					delegateEleEvent(datainit.todoDefault,function(ele){
+						ele.style.display = "none";
+					});
+					delegateEleEvent(datainit.todoEdit,function(ele){
+						ele.style.display = "inline-block";
+						ele.value = "";
+					});
+					//编辑任务新建完成点击事件
+					addClickEvent(datainit.todoCheckEle,addNewTask);
+				}
+			}
+		});
+	}else{
+		alert("【新增任务】需要选中【目标分类】喔~╰(￣▽￣)╭");
+	}
 });
-//检查任务内容
-function checkNewTask(title,time,content){
+
+
+addClickEvent(datainit.todoUndoEle,reback);
+
+//取消编辑
+function reback(){
+	if(confirm("取消任务编辑吗？")){
+		var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
+		//更新内容视图
+		editIcon("check");
+		delegateEleEvent(datainit.todoDefault,function(ele){
+			ele.style.display = "inline";
+			datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
+			//更新任务显示
+			each(tasks,function(item){
+				if(item.id == taskId){
+					addContent(item);
+				}
+			});
+		});
+		delegateEleEvent(datainit.todoEdit,function(ele){
+			ele.style.display = "none";
+		});
+	}
+}
+
+function addNewTask(){
+	var cateList = [];
+	var taskSelected = $(".todo-task-selected")[0];
+	if(taskSelected&&taskSelected.nodeName=="LI"){
+		var dataListId = taskSelected.getAttribute("data-list-id");
+		each(lists,function(item) {
+			if (item[1] == dataListId) {
+				cateList = [item[0],dataListId];
+			}
+		});
+	}
+	//检查任务是否为空
+	if(checkTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2])){
+		//新建任务
+		var newTask = checkTask(datainit.todoEdit[0],datainit.todoEdit[1],datainit.todoEdit[2]);
+		tasks.push(new TaskDetail(cateList,newTask[0],newTask[1],newTask[2],false));
+		each(tasks,function(item,i){
+			item.id = i;
+		});
+		//更新清单视图
+		listInventory(tasks,dataListId,"all");
+		//更新内容视图
+		editIcon("check");
+		delegateEleEvent(datainit.todoDefault,function(ele){
+			ele.style.display = "inline";
+			datainit.todoDefault[datainit.todoDefault.length-1].style.display = "block";
+			for(var i=0;i<datainit.todoDefault.length;i++){
+				datainit.todoDefault[i].innerHTML = datainit.todoEdit[i].value;
+			}
+		});
+		delegateEleEvent(datainit.todoEdit,function(ele){
+			ele.style.display = "none";
+		});
+	}
+}
+
+//检查新建任务内容
+function checkTask(title,time,content){
+	var timeRex = /^(\d{4})\-(\d{2})\-(\d{2})$/;
 	if(title.value == ""||time.value == ""||content.value == ""){
 		alert("请仔细检查任务，查看是否填写完整~");
 		return false;
 	}
+	if(getByteVal(title.value,20)){
+		var taskTitle = getByteVal(title.value,20);
+	}else{
+		return false;
+	}
+	if(timeRex.test(time.value)&&checkTime(time.value)){
+		var taskTime = checkTime(time.value);
+	}else{
+		return false;
+	}
+	return [taskTitle,taskTime,content.value];
+}
+//检查时间
+function checkTime(time){
+	var dates = time.split("-");
+	var year = parseInt(dates[0]);
+	var month = parseInt(dates[1]-1);
+	var day = parseInt(dates[2]);
+	var curDate = new Date();
+	var taskDate = new Date(year,month,day);
+	if(curDate > taskDate){
+		alert("任务完成日期太超前啦");
+		return false;
+	}
 	else{
-		console.log("任务OK");
-		return true;
+		return taskDate;
 	}
 }
 
@@ -597,7 +716,7 @@ function addCateCheck(main,name){
 
 //http://www.cnblogs.com/gossip/archive/2010/10/13/1849896.html
 //返回val在规定字节长度max内的值
-function getByteVal(val, max) {
+function getByteVal(val, max){
 	var returnValue = '';
 	var byteValLen = 0;
 	for (var i = 0; i < val.length; i++) {
@@ -608,12 +727,12 @@ function getByteVal(val, max) {
 			byteValLen += 1;
 		}
 		if (byteValLen > max){
-			alert("分类名不能超过十位汉字！请重新想个简短的名字吧~");
+			alert("名称不能超过十位汉字！请重新想个简短的名字吧~");
 			datainit.addCateName.value = "";
 			return false;
 		}
 		if(byteValLen == 0){
-			alert("分类名不能为空！给列表起个名字吧~");
+			alert("名称不能为空！快起个名字吧~");
 			datainit.addCateName.value = "";
 			return false;
 		}

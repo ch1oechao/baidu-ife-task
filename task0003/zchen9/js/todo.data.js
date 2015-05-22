@@ -48,7 +48,7 @@ TaskDetail.prototype = {
         +"<br>"
         +"<i class='fa fa-pencil-square-o fa-fw'></i>"+"[编辑]：编辑任务标题、时间、内容"
         +"<br>"
-        +"<i class='fa fa-undo fa-fw'></i>"+"[重置]：编辑状态时，可重置任务"
+        +"<i class='fa fa-undo fa-fw'></i>"+"[重置]：编辑状态时，可取消编辑，恢复原任务内容"
         +"<br>"
         +"<i class='fa fa-check fa-fw'></i>"+"[完成]：编辑状态时，为完成编辑"
         +"<br>"
@@ -82,9 +82,10 @@ var tasks = [defaultDetail,detail1,detail2,detail3,detail4];
 var cates = [defaultCate,cate1];
 var lists = [defaultList,list1,list2];
 
-for(var i= 0,t=0;i<tasks.length;i++){
-	tasks[i].id += i;
-}
+each(tasks,function(item,i){
+   item.id = i;
+});
+
 console.log(tasks);
 console.log(cates);
 console.log(lists);
