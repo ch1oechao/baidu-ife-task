@@ -744,17 +744,55 @@ addClickEvent(init.todoCheckIcon,function(){
 //任务编辑点击事件监听
 addClickEvent(init.todoEditIcon,function(){
 	var taskId = init.todoDefault[0].getAttribute("data-task-id");
-		//判断对象
-		if(isTaskDefault(taskId)){
-			//获取对象
-			var itemTask = isTaskDefault(taskId);
-			if(itemTask.isDone){
-				alert("该任务已完成，不能编辑喽(～￣▽￣)～");
-			}else{
-				//编辑任务
-				taskEdit(itemTask);
+	//判断对象
+	if(isTaskDefault(taskId)){
+		//获取对象
+		var itemTask = isTaskDefault(taskId);
+		if(itemTask.isDone){
+			alert("该任务已完成，不能编辑喽(～￣▽￣)～");
+		}else{
+			////编辑任务
+			//taskEdit(itemTask);
+			if(confirm("确认编辑"+itemTask.title+"任务吗？")){
+				//初始化编辑界面
+				editIcon("edit");
+				delegateEleEvent(init.todoDefault,function(ele){
+					ele.style.display = "none";
+				});
+				delegateEleEvent(init.todoEdit,function(ele){
+					ele.style.display = "inline-block";
+					for(var i=0;i<init.todoEdit.length;i++){
+						init.todoEdit[i].value = init.todoDefault[i].innerHTML;
+					}
+				});
+				//检查编辑后的任务内容
+				addClickEvent(init.todoCheckEle,function(){
+					//检查任务内容
+					if(checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2])){
+						//修改任务
+						var editTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
+						itemTask.title = editTask[0];
+						itemTask.time = editTask[1];
+						itemTask.content = editTask[2];
+						//更新清单视图
+						listInventory(tasks,itemTask.cateList[1],"all");
+						//更新未完成任务总数
+						init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+						//更新内容视图
+						editIcon("check");
+						delegateEleEvent(init.todoDefault,function(ele){
+							ele.style.display = "inline";
+							init.todoDefault[init.todoDefault.length-1].style.display = "block";
+							addContent(itemTask);
+						});
+						delegateEleEvent(init.todoEdit,function(ele){
+							ele.style.display = "none";
+						});
+					}
+				});
 			}
 		}
+	}
 });
 
 //判断是否为默认任务
@@ -771,51 +809,6 @@ function isTaskDefault(i){
 			}
 		});
 		return taskItem;
-	}
-}
-//任务编辑响应事件
-function taskEdit(item){
-	if(confirm("确认编辑"+item.title+"任务吗？")){
-		//初始化编辑界面
-		editIcon("edit");
-		delegateEleEvent(init.todoDefault,function(ele){
-			ele.style.display = "none";
-		});
-		delegateEleEvent(init.todoEdit,function(ele){
-			ele.style.display = "inline-block";
-			for(var i=0;i<init.todoEdit.length;i++){
-				init.todoEdit[i].value = init.todoDefault[i].innerHTML;
-			}
-		});
-	}
-}
-
-//检查编辑后的任务内容
-//addClickEvent(init.todoCheckEle,console.log("a"));
-function editOldTask(item){
-	//检查任务内容
-	if(checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2])){
-		//修改任务
-		var editTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
-		item.title = editTask[0];
-		item.time = editTask[1];
-		item.content = editTask[2];
-		//更新清单视图
-		listInventory(tasks,item.id,"all");
-		//更新内容视图
-		editIcon("check");
-		delegateEleEvent(init.todoDefault,function(ele){
-			ele.style.display = "inline";
-			init.todoDefault[init.todoDefault.length-1].style.display = "block";
-			//for(var i=0;i<init.todoDefault.length;i++){
-			//	init.todoDefault[i].innerHTML = init.todoEdit[i].value;
-			//}
-			//更新任务内容
-			addContent(item);
-		});
-		delegateEleEvent(init.todoEdit,function(ele){
-			ele.style.display = "none";
-		});
 	}
 }
 
