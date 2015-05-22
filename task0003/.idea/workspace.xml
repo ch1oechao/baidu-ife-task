@@ -4,6 +4,7 @@
     <list default="true" id="3d9e07e3-3080-41bd-a627-f97f49337e95" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/js/todo.data.js" afterPath="$PROJECT_DIR$/zchen9/js/todo.data.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/js/todo.task.js" afterPath="$PROJECT_DIR$/zchen9/js/todo.task.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zchen9/js/todo.util.js" afterPath="$PROJECT_DIR$/zchen9/js/todo.util.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="task0003.iws" />
@@ -39,7 +40,7 @@
         <entry file="file://$PROJECT_DIR$/zchen9/js/todo.data.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="72" column="103" selection-start-line="72" selection-start-column="103" selection-end-line="72" selection-end-column="103" />
+              <caret line="58" column="58" selection-start-line="58" selection-start-column="58" selection-end-line="58" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -48,8 +49,8 @@
       <file leaf-file-name="todo.task.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zchen9/js/todo.task.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.948244">
-              <caret line="461" column="17" selection-start-line="461" selection-start-column="17" selection-end-line="461" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.37254903">
+              <caret line="215" column="50" selection-start-line="215" selection-start-column="50" selection-end-line="215" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -69,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/zchen9/js/todo.util.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="659" column="39" selection-start-line="659" selection-start-column="39" selection-end-line="659" selection-end-column="39" />
+              <caret line="696" column="2" selection-start-line="696" selection-start-column="2" selection-end-line="696" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -87,9 +88,9 @@
         <option value="$PROJECT_DIR$/zchen9/index.html" />
         <option value="$PROJECT_DIR$/zchen9/css/todo.color.css" />
         <option value="$PROJECT_DIR$/zchen9/css/todo.shell.css" />
-        <option value="$PROJECT_DIR$/zchen9/js/todo.util.js" />
-        <option value="$PROJECT_DIR$/zchen9/js/todo.data.js" />
         <option value="$PROJECT_DIR$/zchen9/js/todo.shell.js" />
+        <option value="$PROJECT_DIR$/zchen9/js/todo.data.js" />
+        <option value="$PROJECT_DIR$/zchen9/js/todo.util.js" />
         <option value="$PROJECT_DIR$/zchen9/js/todo.task.js" />
       </list>
     </option>
@@ -102,10 +103,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="170" />
-    <option name="y" value="31" />
+    <option name="x" value="157" />
+    <option name="y" value="16" />
     <option name="width" value="1187" />
-    <option name="height" value="728" />
+    <option name="height" value="748" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -276,7 +277,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="170" y="31" width="1187" height="728" extended-state="0" />
+    <frame x="157" y="16" width="1187" height="748" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17319408" sideWeight="0.49913943" order="0" side_tool="false" content_ui="combo" />
@@ -349,7 +350,7 @@
     <entry file="file://$PROJECT_DIR$/zchen9/js/todo.data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="72" column="103" selection-start-line="72" selection-start-column="103" selection-end-line="72" selection-end-column="103" />
+          <caret line="58" column="58" selection-start-line="58" selection-start-column="58" selection-end-line="58" selection-end-column="58" />
           <folding />
         </state>
       </provider>
@@ -357,7 +358,7 @@
     <entry file="file://$PROJECT_DIR$/zchen9/js/todo.util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="659" column="39" selection-start-line="659" selection-start-column="39" selection-end-line="659" selection-end-column="39" />
+          <caret line="696" column="2" selection-start-line="696" selection-start-column="2" selection-end-line="696" selection-end-column="2" />
           <folding />
         </state>
       </provider>
@@ -372,8 +373,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zchen9/js/todo.task.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.948244">
-          <caret line="461" column="17" selection-start-line="461" selection-start-column="17" selection-end-line="461" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.37254903">
+          <caret line="215" column="50" selection-start-line="215" selection-start-column="50" selection-end-line="215" selection-end-column="50" />
           <folding />
         </state>
       </provider>

@@ -56,7 +56,7 @@ TaskDetail.prototype = {
         +"<br>"
         +"<i class='fa fa-smile-o fa-fw'></i>"+"[笑脸]：标明该任务已完成 :)"
         +"<br>"
-        +"<i class='fa fa-trash-o fa-fw'></i>"+"[删除]：删除列表或分类，删除后不能恢复，请谨慎~",
+        +"<i class='fa fa-trash-o fa-fw'></i>"+"[删除]：删除选中的列表或分类，删除后不能恢复，请谨慎~",
     isDone: true
 };
 

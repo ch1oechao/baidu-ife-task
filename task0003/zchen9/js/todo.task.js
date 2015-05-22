@@ -46,8 +46,6 @@ var datainit = {
 	addCateName : $("#add-cate-name"),
 	addCateCancel : $("#add-cate-cancel"),
 	addCateCheck : $("#add-cate-check"),
-
-	removeList : $(".fa-trash-o")
 };
 
 //初始化
@@ -122,7 +120,7 @@ function addList(obj){
 			ulTask = liCate.getElementsByTagName("ul")[0];
 			if(ulTask.hasAttribute("class","todo-task-list")){
 				var liList = $("[data-list-id="+obj[1]+"]");
-				if(!liList){
+				if(!liList||liList.nodeName!="LI"){
 					var liTaskList = document.createElement("li");
 					liTaskList.setAttribute("data-list-id",obj[1]);
 					if(obj[1]=="使用说明"){
@@ -130,10 +128,15 @@ function addList(obj){
 							+ obj[1];
 					}else{
 						liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
-							+ obj[1]
-							+"<span class='remove-list'><i class='fa fa-trash-o'></i></span>";
+							+ obj[1];
+						var removeSpan = document.createElement("span");
+						addClass(removeSpan,"remove-list");
+						var removeIcon = document.createElement("i");
+						addClass(removeIcon,"fa fa-trash-o");
+						removeSpan.appendChild(removeIcon);
+						liTaskList.appendChild(removeSpan);
+						//removeItem.push(removeIcon);
 					}
-
 					ulTask.appendChild(liTaskList);
 					init.todoTaskItem.push(liTaskList);
 				}
@@ -179,55 +182,48 @@ function addInventory(obj){
 	}
 }
 
-
-delegateClickEvent(datainit.removeList,function(e){
-	e = e||window.event;
-	var target = e.target|| e.srcElement;
-	if(target.parentNode.nodeName==="SPAN"){
-		var removeSpanClass = target.parentNode.getAttribute("class");
-		switch (removeSpanClass){
-			case "remove-list":
-				removeList(target.parentNode);
-				break;
-			case "remove-cate":
-				removeCate(target.parentNode);
-				break;
-		}
-	}
-});
-
 function removeCate(item){
 	if(item.parentNode.parentNode.nodeName === "LI"){
 		var liCate = item.parentNode.parentNode.getAttribute("data-cate-id");
 		if(confirm("是否删除分类【"+liCate+"】和所有子分类任务？删除后不可恢复╮(╯▽╰)╭")){
-
+			var removeItem = [];
+			each(cates,function(item){
+				if(item.category == liCate){
+					removeItem.push(item);
+				}
+			});
+			each(removeItem,function(item){
+				cates.remove(item);
+			});
+			removeItem = [];
+			each(lists,function(item,i){
+				if(item[0] == liCate){
+					removeItem.push(item);
+				}
+			});
+			each(removeItem,function(item){
+				lists.remove(item);
+			});
+			removeItem = [];
+			each(tasks,function(item,i){
+				if(item.cateList[0] == liCate){
+					removeItem.push(item);
+				}
+			});
+			each(removeItem,function(item){
+				tasks.remove(item);
+			});
+			datainit.addCateSelect.innerHTML = "";
+			listCates(cates);
+			listLists(lists);
 		}
 	}
-
 }
-Array.prototype.indexOf = function(val) {
-	for (var i = 0; i < this.length; i++) {
-		if (this[i] == val) return i;
-	}
-	return -1;
-};
-Array.prototype.remove = function(val) {
-	var index = this.indexOf(val);
-	if (index > -1) {
-		this.splice(index, 1);
-	}
-};
+
 function removeList(item){
-	if(item.parentNode.nodeName === "LI"){
+	if(item.parentNode.nodeName === "LI"&&hasClass(item.parentNode,"todo-task-selected")){
 		var liList = item.parentNode.getAttribute("data-list-id");
 		if(confirm("是否删除列表【"+liList+"】和所有子任务？删除后不可恢复╮(╯▽╰)╭")){
-			console.log("删除分类"+liList);
-			//each(cates,function(item,i){
-			//	if(item.category == liCate){
-			//		console.log(item,i);
-			//		cates.remove(item);
-			//	}
-			//});
 			var removeItem = [];
 			each(lists,function(item,i){
 				if(item[1] == liList){
@@ -246,27 +242,60 @@ function removeList(item){
 			each(removeItem,function(item){
 				tasks.remove(item);
 			});
+			listLists(lists);
 		}
+	}else{
+		alert("选中列表后才能删除~");
 	}
 }
 //刷新分类视图
 function listCates(arr){
+	datainit.todoCateList.innerHTML = "";
 	each(arr,function(item){
 		addCate(item);
+		addCateOption(item.category);
 	});
-	delegateClickEvent(init.todoTaskItem,init.classToggle);
+	delegateClickEvent(removeIcon(),removeClick);
 	listInventory(tasks,"all","all");
 }
 //刷新子列表视图
 function listLists(arr){
+	each(todoTaskList,function(item){
+		item.innerHTML = "";
+	});
 	each(arr,function(item){
 		addList(item);
 	});
-	delegateClickEvent(init.todoTaskItem,init.classToggle);
+	delegateClickEvent(removeIcon(),removeClick);
 	listInventory(tasks,"all","all");
 }
 
 //点击事件
+function removeIcon(){
+	var removeListIcon = $(".fa-trash-o");
+	var removeItem =[];
+	for(var ii=0;ii<removeListIcon.length;ii++){
+		removeItem.push(removeListIcon[ii]);
+	}
+	return removeItem;
+}
+function removeClick(e){
+	e = e||window.event;
+	var target = e.target|| e.srcElement;
+	if(target.parentNode.nodeName==="SPAN"){
+		var removeSpanClass = target.parentNode.getAttribute("class");
+		switch (removeSpanClass){
+			case "remove-list":
+				removeList(target.parentNode);
+				break;
+			case "remove-cate":
+				removeCate(target.parentNode);
+				break;
+		}
+	}
+}
+
+delegateClickEvent(removeIcon(),removeClick);
 
 addClickEvent(datainit.todoCheckIcon,function(){
 	var taskId = datainit.todoDefault[0].getAttribute("data-task-id");
@@ -381,7 +410,6 @@ function checkNewTask(title,time,content){
 		return true;
 	}
 }
-
 
 
 var todoTaskList =  $(".todo-task-list");
@@ -520,6 +548,7 @@ addClickEvent(datainit.todoCateBtn,function(){
 	addCatePanel("block");
 	if(datainit.addCateCancel){
 		addClickEvent(datainit.addCateCancel,function(){
+			datainit.addCateName.value = "";
 			addCatePanel("none");
 		});
 	}
@@ -541,6 +570,7 @@ function addCateCheck(main,name){
 				cates.push(new Category(cateName));
 				addCate(cates[cates.length-1]);
 				addCateOption(cates[cates.length-1].category);
+				delegateClickEvent(removeIcon(),removeClick);
 				datainit.addCateName.value = "";
 			}
 			addCatePanel("none");
@@ -550,6 +580,7 @@ function addCateCheck(main,name){
 				lists.push(new TaskList(main,cateName));
 				addList(lists[lists.length-1]);
 				delegateClickEvent(init.todoTaskItem,init.classToggle);
+				delegateClickEvent(removeIcon(),removeClick);
 				datainit.addCateName.value = "";
 			}
 			addCatePanel("none");
@@ -574,15 +605,20 @@ function getByteVal(val, max) {
 			datainit.addCateName.value = "";
 			return false;
 		}
+		if(byteValLen == 0){
+			alert("分类名不能为空！给列表起个名字吧~");
+			datainit.addCateName.value = "";
+			return false;
+		}
 		returnValue += val[i];
 	}
 	return returnValue;
 }
 
 //下拉框添加主分类选项
-for(var i=0;i<cates.length;i++){
-	addCateOption(cates[i].category);
-}
+each(cates,function(item){
+	addCateOption(item.category);
+});
 function addCateOption(cate){
 	var cateOption = document.createElement("option");
 	cateOption.setAttribute("value",cate);
