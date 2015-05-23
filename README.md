@@ -18,3 +18,10 @@
 * [[查看demo]](http://zchen9.github.io/baidu-ife-task/task0002/zchen9/task0002.html)
 
 * [[学习笔记]](http://zchen9.github.io/baidu-ife/2015/05/07/baidu-ife-task0002-Note.html)
+
+###task0003
+
+- [[查看demo]](http://www.chen9.info/baidu-ife-task/task0003/zchen9/)
+
+
+- [[任务笔记]](http://www.chen9.info/)
