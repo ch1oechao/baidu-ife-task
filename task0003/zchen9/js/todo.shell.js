@@ -200,7 +200,7 @@ function addCate(obj){
 			if(obj.category === "默认分类"){
 				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
 					+ obj.category
-				    +"("+todoCount("cates",obj.category)+")";
+					+"("+todoCount("cates",obj.category)+")";
 			}else{
 				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
 					+ obj.category
@@ -363,7 +363,10 @@ function removeList(item){
 			each(removeItem,function(item){
 				tasks.remove(item);
 			});
-			//刷新列表项
+
+			//刷新分类视图
+			listCates(cates);
+			//刷新列表视图
 			listLists(lists);
 		}
 	}else{
@@ -521,15 +524,15 @@ function addInventory(obj){
 	if(obj.cateList){
 		//添加时间
 		if(obj.time) {
-			var dtTimeStr = formatTime(obj,"string").split("-");
-			var dtTime = $("[data-list-time=" + dtTimeStr[0]+dtTimeStr[1]+dtTimeStr[2] + "]");
+			var dtTimeStr = obj.time - 0;
+			var dtTime = $("[data-list-time=" + dtTimeStr + "]");
 			if (dtTime) {
 				addTitle(obj);
 			}
 			if(!dtTime){
 				var dtTaskTime = document.createElement("dt");
-				dtTaskTime.setAttribute("data-list-time",dtTimeStr[0]+dtTimeStr[1]+dtTimeStr[2]);
-				dtTaskTime.innerHTML = "<time>"+formatTime(obj,"string")+"</time>";
+				dtTaskTime.setAttribute("data-list-time",dtTimeStr);
+				dtTaskTime.innerHTML = "<time>"+formatTime(obj)+"</time>";
 				init.taskInventory.appendChild(dtTaskTime);
 				addTitle(obj);
 			}
@@ -742,7 +745,7 @@ delegateClickEvent(init.todoInventory,function(e){
 //更新任务详细内容
 function addContent(obj){
 	if(obj){
-		init.todoDefault[1].innerHTML = formatTime(obj,"string");
+		init.todoDefault[1].innerHTML = formatTime(obj);
 		init.todoDefault[0].setAttribute("data-task-id",obj.id);
 		init.todoDefault[0].innerHTML = obj.title;
 		init.todoDefault[2].innerHTML = obj.content;
@@ -813,14 +816,14 @@ addClickEvent(init.todoEditIcon,function(){
 					itemTask.title = editTask[0];
 					itemTask.time = editTask[1];
 					itemTask.content = editTask[2];
+					//更新清单视图
+					listInventory(tasks,itemTask.cateList[1],"all");
 					//更新未完成任务总数
 					init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
 					//刷新分类视图
 					listCates(cates);
 					//刷新列表视图
 					listLists(lists);
-					//更新清单视图
-					listInventory(tasks,itemTask.cateList[1],"all");
 					//更新内容视图
 					editIcon("check");
 					delegateEleEvent(init.todoDefault,function(ele){
@@ -881,22 +884,23 @@ function reback(){
 /*--------------一些方法---------------*/
 
 //格式化输出对象中的时间
-function formatTime(obj,type){
-	if(obj.time){
-		var taskTimes = obj.time.substr(0,10);
-		var times = taskTimes.split("-");
-		console.log(taskTimes);
-		switch (type){
-			case "string":
-				//将格式化时间字符串数组
-				return [times[0],times[1],times[2]];
-			break;
-			case "time":
-				//将格式化时间字符串转化为时间
-				return [parseInt(times[0]),parseInt(times[1]),parseInt(times[2])];
-			}
+function formatTime(obj) {
+	var taskTime = obj.time;
+	if (taskTime) {
+		var year = taskTime.getFullYear();
+		var month = taskTime.getMonth() + 1;
+		var date = taskTime.getDate();
+		if (month < 10) {
+			month = "0" + month;
+		}
+		if (date < 10) {
+			date = "0" + date;
+		}
+
+		return [year, month, date].join("-");
 	}
 }
+
 
 //添加新增分类选框
 function addCatePanel(display){
@@ -915,17 +919,15 @@ function addCatePanel(display){
 
 //时间排序
 function compare(properyName){
-	if(properyName == "time"){
-		return function(obj1,obj2){
-			var val1 = obj1[properyName];
-			var val2 = obj2[properyName];
-			if(val1<val2){
-				return -1;
-			}else if(val1>val2){
-				return 1;
-			}else{
-				return 0;
-			}
+	return function(obj1,obj2) {
+		var val1 = obj1[properyName];
+		var val2 = obj2[properyName];
+		if (val1 < val2) {
+			return -1;
+		} else if (val1 > val2) {
+			return 1;
+		} else {
+			return 0;
 		}
 	}
 }
@@ -956,7 +958,7 @@ function checkTask(title,time,content){
 function checkTime(time){
 	var dates = time.split("-");
 	var year = parseInt(dates[0]);
-	var month = parseInt(dates[1]);
+	var month = parseInt(dates[1]-1);
 	var day = parseInt(dates[2]);
 	var curDate = new Date();
 	var taskDate = new Date(year,month,day);
