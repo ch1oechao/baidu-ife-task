@@ -534,71 +534,67 @@ function addInventory(obj){
 addClickEvent(init.todoAddTask,function(){
 	//判断是否选中某一项任务列表
 	var taskSelected = $(".todo-task-selected")[0];
+	var cateList = [];
 	if(taskSelected&&taskSelected.nodeName=="LI"){
 		var dataListId = taskSelected.getAttribute("data-list-id");
-		each(lists,function(item){
-			if(item[1] == dataListId){
-				if(confirm("将在【"+item[0]+"】分类下的【"+dataListId+"】列表新增任务~")){
-					//初始化编辑界面
-					editIcon("edit");
+		//使用说明下默认不建立子任务
+		if(dataListId == "使用说明"){
+			alert("【使用说明】不能新建子任务啦~");
+		}else{
+			each(lists,function(item){
+				if(item[1] == dataListId){
+					if(confirm("将在【"+item[0]+"】分类下的【"+dataListId+"】列表新增任务~")){
+						//初始化编辑界面
+						editIcon("edit");
+						delegateEleEvent(init.todoDefault,function(ele){
+							ele.style.display = "none";
+						});
+						delegateEleEvent(init.todoEdit,function(ele){
+							ele.style.display = "inline-block";
+							ele.value = "";
+						});
+					}
+					cateList = [item[0],dataListId];
+				}
+			});
+		}
+		//编辑任务新建完成点击事件
+		init.todoCheckEle.onclick = function(){
+			if(checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2])){
+				if(confirm("确认新建【"+init.todoEdit[0].value+"】任务吗？")){
+					//新建任务
+					var newTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
+					//新增任务对象
+					tasks.push(new TaskDetail(cateList,newTask[0],newTask[1],newTask[2],false));
+					//遍历对象id
+					each(tasks,function(item,i){
+						item.id = i;
+					});
+					//更新未完成任务总数
+					init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+					//更新清单视图
+					listInventory(tasks,dataListId,"all");
+					//更新内容视图
+					editIcon("check");
 					delegateEleEvent(init.todoDefault,function(ele){
-						ele.style.display = "none";
+						ele.style.display = "inline";
+						init.todoDefault[init.todoDefault.length-1].style.display = "block";
+						each(tasks,function(item){
+							if(item.id == tasks.length-1){
+								addContent(item);
+							}
+						});
 					});
 					delegateEleEvent(init.todoEdit,function(ele){
-						ele.style.display = "inline-block";
-						ele.value = "";
+						ele.style.display = "none";
 					});
-					//编辑任务新建完成点击事件
-					addClickEvent(init.todoCheckEle,addNewTask);
 				}
 			}
-		});
+		};
 	}else{
 		alert("【新增任务】需要选中【目标分类】喔~╰(￣▽￣)╭");
 	}
 });
-
-//添加新任务对象事件
-function addNewTask(){
-	var cateList = [];
-	var taskSelected = $(".todo-task-selected")[0];
-	if(taskSelected&&taskSelected.nodeName=="LI"){
-		var dataListId = taskSelected.getAttribute("data-list-id");
-		each(lists,function(item) {
-			if (item[1] == dataListId) {
-				cateList = [item[0],dataListId];
-			}
-		});
-	}
-	//检查任务是否为空
-	if(checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2])){
-		//新建任务
-		var newTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
-		//新增任务对象
-		tasks.push(new TaskDetail(cateList,newTask[0],newTask[1],newTask[2],false));
-		//遍历对象id
-		each(tasks,function(item,i){
-			item.id = i;
-		});
-		//更新未完成任务总数
-		init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
-		//更新清单视图
-		listInventory(tasks,dataListId,"all");
-		//更新内容视图
-		editIcon("check");
-		delegateEleEvent(init.todoDefault,function(ele){
-			ele.style.display = "inline";
-			init.todoDefault[init.todoDefault.length-1].style.display = "block";
-			for(var i=0;i<init.todoDefault.length;i++){
-				init.todoDefault[i].innerHTML = init.todoEdit[i].value;
-			}
-		});
-		delegateEleEvent(init.todoEdit,function(ele){
-			ele.style.display = "none";
-		});
-	}
-}
-
 
 //刷新任务清单视图事件
 function listInventory(arr,list,isDone){
@@ -728,9 +724,9 @@ addClickEvent(init.todoCheckIcon,function(){
 		if(tasks[i].id == taskId){
 			//检查任务是否完成
 			if(tasks[i].isDone){
-				alert("该任务已完成！o(≧v≦)o~~");
+				alert("该任务已经完成啦！o(≧v≦)o~~");
 			}else{
-				if(confirm("又有一个任务完成了是吗~【完成后不能再改喽~】")){
+				if(confirm("任务完成后不能修改啦~")){
 					//确认任务完成
 					tasks[i].isDone = true;
 					//刷新任务清单视图
@@ -739,7 +735,6 @@ addClickEvent(init.todoCheckIcon,function(){
 					init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
 					//初始化清单筛选项
 					delegateInitClass(init.todoAllBtn,"todo-inventory-selected");
-					alert("该任务已完成！o(≧v≦)o~~");
 				}
 			}
 		}
@@ -757,7 +752,6 @@ addClickEvent(init.todoEditIcon,function(){
 			alert("该任务已完成，不能编辑喽(～￣▽￣)～");
 		}else{
 			////编辑任务
-			//taskEdit(itemTask);
 			if(confirm("确认编辑"+itemTask.title+"任务吗？")){
 				//初始化编辑界面
 				editIcon("edit");
@@ -770,35 +764,35 @@ addClickEvent(init.todoEditIcon,function(){
 						init.todoEdit[i].value = init.todoDefault[i].innerHTML;
 					}
 				});
-				//检查编辑后的任务内容
-				addClickEvent(init.todoCheckEle,function(){
-					//检查任务内容
-					if(checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2])){
-						if(confirm("任务编辑完成，确认提交吗？")){
-							//修改任务
-							var editTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
-							itemTask.title = editTask[0];
-							itemTask.time = editTask[1];
-							itemTask.content = editTask[2];
-							//更新清单视图
-							listInventory(tasks,itemTask.cateList[1],"all");
-							//更新未完成任务总数
-							init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
-							//更新内容视图
-							editIcon("check");
-							delegateEleEvent(init.todoDefault,function(ele){
-								ele.style.display = "inline";
-								init.todoDefault[init.todoDefault.length-1].style.display = "block";
-								addContent(itemTask);
-							});
-							delegateEleEvent(init.todoEdit,function(ele){
-								ele.style.display = "none";
-							});
-						}
-					}
-				});
 			}
 		}
+		//检查编辑后的任务内容
+		init.todoCheckEle.onclick = function(){
+			//检查任务内容
+			if(checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2])){
+				if(confirm("任务编辑完成，确认提交吗？")){
+					//修改任务
+					var editTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
+					itemTask.title = editTask[0];
+					itemTask.time = editTask[1];
+					itemTask.content = editTask[2];
+					//更新清单视图
+					listInventory(tasks,itemTask.cateList[1],"all");
+					//更新未完成任务总数
+					init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+					//更新内容视图
+					editIcon("check");
+					delegateEleEvent(init.todoDefault,function(ele){
+						ele.style.display = "inline";
+						init.todoDefault[init.todoDefault.length-1].style.display = "block";
+						addContent(itemTask);
+					});
+					delegateEleEvent(init.todoEdit,function(ele){
+						ele.style.display = "none";
+					});
+				}
+			}
+		};
 	}
 });
 
