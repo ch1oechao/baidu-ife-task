@@ -1,6 +1,6 @@
 html,body {
     background-color: #FCF5F0;
-	color: #22273B;
+    color: #22273B;
 }
 header{
     background-color: #547095;
@@ -8,11 +8,11 @@ header{
 }
 .todo-category{
     background-color: #EDF0F0;
-	color: #294B7C;
+    color: #294B7C;
 }
 .todo-category-total{
-	background-color: #9BB2D1;
-	color: #FFF;
+    background-color: #9BB2D1;
+    color: #FFF;
 }
 .todo-category-total:hover{
     background-color: #7690B7;
@@ -34,12 +34,12 @@ header{
     color: #FFF;
 }
 .todo-task-list > li:hover, {
-	background-color: #C5D2DA;
-	color: #FFF;
+    background-color: #C5D2DA;
+    color: #FFF;
 }
 .todo-inventory {
     background-color: #F7F2E5;
-	color: #986700;
+    color: #986700;
 }
 .todo-inventory-category{
     background-color: #F5DEAD;
@@ -58,7 +58,7 @@ header{
 }
 
 .todo-spec{
-	color: #90001A;
+    color: #90001A;
 }
 .todo-spec-title{
     background-color: #FCB2BF;

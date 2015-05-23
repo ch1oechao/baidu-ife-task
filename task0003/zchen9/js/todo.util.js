@@ -142,17 +142,17 @@ function isMobilePhone(phone) {
  * @class
  */
 function addClass(element,value) {
-	//判断className属性是否为空
-	if(!element.className) {
-		element.className = value;
-	}
-	else {
-		//若不为空，把空格和新的class设置值追加到className属性上去
-		newClassName = element.className;
-		newClassName += " ";
-		newClassName += value;
-		element.className = newClassName;
-	}
+    //判断className属性是否为空
+    if(!element.className) {
+        element.className = value;
+    }
+    else {
+        //若不为空，把空格和新的class设置值追加到className属性上去
+        newClassName = element.className;
+        newClassName += " ";
+        newClassName += value;
+        element.className = newClassName;
+    }
 }
 
 /**
@@ -619,68 +619,68 @@ function stopDefault( e ) {
 
 // 兼容IE FF的getElementsByTagName办法
 var getElementsByTagName = function(tag,name) {
-	var returns = document.getElementsByName(name);
-	if (returns.length > 0) return returns;
-	returns = [];
-	var e = document.getElementsByTagName(tag);
-	for (var i = 0; i < e.length; i++) {
-		if (e[i].getAttribute("name") == name) {
-			returns[returns.length] = e[i];
-		}
-	}
-	return returns;
+    var returns = document.getElementsByName(name);
+    if (returns.length > 0) return returns;
+    returns = [];
+    var e = document.getElementsByTagName(tag);
+    for (var i = 0; i < e.length; i++) {
+        if (e[i].getAttribute("name") == name) {
+            returns[returns.length] = e[i];
+        }
+    }
+    return returns;
 };
 
 
 //getNextElement() —— 获取下一个元素节点
 function getNextElement(node) {
-	if(node.nodeType == 1) {
-		return node;
-	}
-	if(node.nextSibling) {
-		return getNextElement(node.nextSibling);
-	}
-	return null;
+    if(node.nodeType == 1) {
+        return node;
+    }
+    if(node.nextSibling) {
+        return getNextElement(node.nextSibling);
+    }
+    return null;
 }
 
 function delegateEleEvent(ele,listener){
-	for(var i = 0,len=ele.length;i<len;i++){
-		listener(ele[i]);
-	}
+    for(var i = 0,len=ele.length;i<len;i++){
+        listener(ele[i]);
+    }
 }
 
 function delegateEleMouseEvent(ele,event,listener){
-	for(var i = 0,len=ele.length;i<len;i++){
-		addEvent(ele[i],event,listener);
-	}
+    for(var i = 0,len=ele.length;i<len;i++){
+        addEvent(ele[i],event,listener);
+    }
 }
 
 function delegateClickEvent(ele,listener){
-	for(var i = 0,len=ele.length;i<len;i++){
-		addClickEvent(ele[i],listener);
-	}
+    for(var i = 0,len=ele.length;i<len;i++){
+        addClickEvent(ele[i],listener);
+    }
 }
 function delegateInitClass(ele,classname){
-	var eles = ele.parentNode.children;
-	for(var i = 0,len=eles.length;i<len;i++){
-		removeClass(eles[i],classname);
-	}
-	addClass(ele,classname);
+    var eles = ele.parentNode.children;
+    for(var i = 0,len=eles.length;i<len;i++){
+        removeClass(eles[i],classname);
+    }
+    addClass(ele,classname);
 }
 
 //addLoadEvent() —— 共享onload事件
 
 function addLoadEvent(func) {
-	var oldonload = window.onload;
-	if(typeof window.onload != 'function') {
-		window.onload = func;
-	}
-	else {
-		window.onload = function(){
-			oldonload();
-			func();
-		}
-	}
+    var oldonload = window.onload;
+    if(typeof window.onload != 'function') {
+        window.onload = func;
+    }
+    else {
+        window.onload = function(){
+            oldonload();
+            func();
+        }
+    }
 }
 
 Array.prototype.indexOf = function(val) {
