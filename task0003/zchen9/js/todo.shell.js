@@ -163,7 +163,7 @@ function todoCount(arr,type){
 				}
 			});
 			return count;
-			//break;
+			break;
 		//列表下任务数
 		case "lists":
 			each(tasks,function(item){
@@ -172,7 +172,7 @@ function todoCount(arr,type){
 				}
 			});
 			return count;
-			//break;
+			break;
 		//分类下任务数
 		case "cates":
 			each(tasks,function(item){
@@ -181,7 +181,7 @@ function todoCount(arr,type){
 				}
 			});
 			return count;
-			//break;
+			break;
 	}
 }
 
@@ -521,14 +521,15 @@ function addInventory(obj){
 	if(obj.cateList){
 		//添加时间
 		if(obj.time) {
-			var dtTimeStr = obj.time - 0;
-			var dtTime = $("[data-list-time=" + dtTimeStr + "]");
+			var dtTimeStr = formatTime(obj,"string").split("-");
+			var dtTime = $("[data-list-time=" + dtTimeStr[0]+dtTimeStr[1]+dtTimeStr[2] + "]");
 			if (dtTime) {
 				addTitle(obj);
 			}
 			if(!dtTime){
 				var dtTaskTime = document.createElement("dt");
-				dtTaskTime.innerHTML = "<time>"+formatTime(obj)+"</time>";
+				dtTaskTime.setAttribute("data-list-time",dtTimeStr[0]+dtTimeStr[1]+dtTimeStr[2]);
+				dtTaskTime.innerHTML = "<time>"+formatTime(obj,"string")+"</time>";
 				init.taskInventory.appendChild(dtTaskTime);
 				addTitle(obj);
 			}
@@ -741,7 +742,7 @@ delegateClickEvent(init.todoInventory,function(e){
 //更新任务详细内容
 function addContent(obj){
 	if(obj){
-		init.todoDefault[1].innerHTML = formatTime(obj);
+		init.todoDefault[1].innerHTML = formatTime(obj,"string");
 		init.todoDefault[0].setAttribute("data-task-id",obj.id);
 		init.todoDefault[0].innerHTML = obj.title;
 		init.todoDefault[2].innerHTML = obj.content;
@@ -879,21 +880,22 @@ function reback(){
 
 /*--------------一些方法---------------*/
 
-//格式化输出对象中的时间[YYYY-MM-DD]
-function formatTime(obj){
-	var taskTime = obj.time;
-	if(taskTime){
-		var year = taskTime.getFullYear();
-		var month = taskTime.getMonth()+1;
-		var date = taskTime.getDate();
-		if(month<10){
-			month = "0"+month;
-		}
-		if(date<10){
-			date = "0"+date;
-		}
+//格式化输出对象中的时间
+function formatTime(obj,type){
+	if(obj.time){
+		var taskTimes = obj.time.substr(0,10);
+		var times = taskTimes.split("-");
+		console.log(taskTimes);
+		switch (type){
+			case "string":
+				//将格式化时间字符串数组
+				return [times[0],times[1],times[2]];
+			break;
+			case "time":
+				//将格式化时间字符串转化为时间
+				return [parseInt(times[0]),parseInt(times[1]),parseInt(times[2])];
+			}
 	}
-	return [year,month,date].join("-");
 }
 
 //添加新增分类选框
@@ -913,18 +915,21 @@ function addCatePanel(display){
 
 //时间排序
 function compare(properyName){
-	return function(obj1,obj2){
-		var val1 = obj1[properyName];
-		var val2 = obj2[properyName];
-		if(val1<val2){
-			return -1;
-		}else if(val1>val2){
-			return 1;
-		}else{
-			return 0;
+	if(properyName == "time"){
+		return function(obj1,obj2){
+			var val1 = obj1[properyName];
+			var val2 = obj2[properyName];
+			if(val1<val2){
+				return -1;
+			}else if(val1>val2){
+				return 1;
+			}else{
+				return 0;
+			}
 		}
 	}
 }
+
 
 //检查编辑任务内容
 function checkTask(title,time,content){
@@ -951,7 +956,7 @@ function checkTask(title,time,content){
 function checkTime(time){
 	var dates = time.split("-");
 	var year = parseInt(dates[0]);
-	var month = parseInt(dates[1]-1);
+	var month = parseInt(dates[1]);
 	var day = parseInt(dates[2]);
 	var curDate = new Date();
 	var taskDate = new Date(year,month,day);

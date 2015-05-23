@@ -76,7 +76,6 @@ var detail4 = new TaskDetail(["百度IFE项目","task0002"],"todo4",new Date(201
 //JSON转换
 var task1Str = JSON.stringify(detail1);
 var task1Obj = JSON.parse(task1Str);
-//console.log(task1Str,task1Obj);
 
 var tasks = [defaultDetail,detail1,detail2,detail3,detail4];
 var cates = [defaultCate,cate1];
@@ -86,7 +85,49 @@ each(tasks,function(item,i){
    item.id = i;
 });
 
-console.log(tasks);
-console.log(cates);
-console.log(lists);
+//本地存储
+console.log(localTodoData("tasks"));
+console.log(localTodoData("lists"));
+console.log(localTodoData("cates"));
+
+function localTodoData(arr){
+    try{
+        if(window.localStorage){
+            var storage = window.localStorage;
+            var localTask = [];
+            var localList = [];
+            var localCate = [];
+
+            switch (arr){
+                //所有任务
+                case "tasks":
+                    each(tasks,function(item,i){
+                        storage.setItem(i,JSON.stringify(item));
+                        localTask.push(JSON.parse(storage.getItem(i)));
+                    });
+                    return localTask;
+                    break;
+                //列表项
+                case "lists":
+                    each(lists,function(item){
+                        storage.setItem(item[1],JSON.stringify(item));
+                        localList.push(JSON.parse(storage.getItem(item[1])));
+                    });
+                    return localList;
+                    break;
+                //分类项
+                case "cates":
+                    each(cates,function(item){
+                        storage.setItem(item.category,JSON.stringify(item));
+                        localCate.push(JSON.parse(storage.getItem(item.category)));
+                    });
+                    return localCate;
+                    break;
+            }
+
+        }
+    }catch(e){
+        console.log(e);
+    }
+}
 
