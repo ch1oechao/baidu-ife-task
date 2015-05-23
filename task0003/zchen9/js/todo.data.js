@@ -73,10 +73,6 @@ var detail3 = new TaskDetail(["百度IFE项目","task0001"],"todo3",new Date(201
 var detail4 = new TaskDetail(["百度IFE项目","task0002"],"todo4",new Date(2015,4,18),"1234完成task0002作业",true);
 
 
-//JSON转换
-var task1Str = JSON.stringify(detail1);
-var task1Obj = JSON.parse(task1Str);
-
 var tasks = [defaultDetail,detail1,detail2,detail3,detail4];
 var cates = [defaultCate,cate1];
 var lists = [defaultList,list1,list2];
@@ -86,10 +82,17 @@ each(tasks,function(item,i){
 });
 
 //本地存储
-console.log(localTodoData("tasks"));
-console.log(localTodoData("lists"));
-console.log(localTodoData("cates"));
+var data = {
+    tasks: localTodoData("tasks"),
+    lists: localTodoData("lists"),
+    cates: localTodoData("cates")
+};
 
+console.log(data.tasks);
+console.log(data.lists);
+console.log(data.cates);
+
+//本地数据初始化
 function localTodoData(arr){
     try{
         if(window.localStorage){
@@ -131,3 +134,59 @@ function localTodoData(arr){
     }
 }
 
+//获取本地数据 输入key值
+//console.log(getData("百度IFE项目"));
+
+function getData(key){
+    try{
+        if(window.localStorage){
+            var storage = window.localStorage;
+            return JSON.parse(storage.getItem(key));
+        }
+    }catch(e){
+        console.log(e);
+    }
+}
+
+//添加本地数据 输入对象和类型
+
+//addData(cates[0],"cates");
+//addData(lists[0],"lists");
+//addData(tasks[0],"tasks");
+
+function addData(obj,type){
+    try{
+        if(window.localStorage){
+            var storage = window.localStorage;
+            switch (type){
+                case "cates":
+                    storage.setItem(obj.category,JSON.stringify(obj));
+                    break;
+                case "lists":
+                    storage.setItem(obj[1],JSON.stringify(obj));
+                    break;
+                case "tasks":
+                    storage.setItem(obj.id,JSON.stringify(obj));
+            }
+        }
+    }catch(e){
+        console.log(e);
+    }
+}
+
+//移除本地数据 输入key值
+
+function removedata(key){
+    try{
+        if(window.localStorage){
+            var storage = window.localStorage;
+            storage.removeItem(key);
+        }
+    }catch(e){
+        console.log(e);
+    }
+}
+
+//JSON转换
+var task1Str = JSON.stringify(detail1);
+var task1Obj = JSON.parse(task1Str);
