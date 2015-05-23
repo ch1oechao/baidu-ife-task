@@ -118,12 +118,12 @@ var init = {
 //初始化显示内容
 (function(){
 	//添加所有已存在分类
-	each(cates,addCate);
+	each(data.cates,addCate);
 	//添加所有已存在列表
-	each(lists,addList);
+	each(data.lists,addList);
 	//添加默认任务清单和内容
-	addInventory(tasks[0]);
-	addContent(tasks[0]);
+	addInventory(data.tasks[0]);
+	addContent(data.tasks[0]);
 	//初始化默认选中任务列表
 	var listFirst = $(".todo-task-list")[0].getElementsByTagName("li")[0];
 	if(listFirst){
@@ -135,7 +135,7 @@ var init = {
 		addClass(titleFirst,"todo-detail-selected");
 	}
 	//初始化未完成任务总数
-	init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
+	init.todoTotal.innerHTML = "("+todoCount("data.tasks","all")+")";
 
 	//初始化切换样式点击事件
 	//任务清单筛选项
@@ -156,8 +156,8 @@ function todoCount(arr,type){
 	//判断数组类型
 	switch (arr){
 		//所有任务数
-		case "tasks":
-			each(tasks,function(item){
+		case "data.tasks":
+			each(data.tasks,function(item){
 				if(!item.isDone){
 					count++;
 				}
@@ -165,8 +165,8 @@ function todoCount(arr,type){
 			return count;
 			break;
 		//列表下任务数
-		case "lists":
-			each(tasks,function(item){
+		case "data.lists":
+			each(data.tasks,function(item){
 				if(!item.isDone&&item.cateList[1]==type){
 					count++;
 				}
@@ -174,8 +174,8 @@ function todoCount(arr,type){
 			return count;
 			break;
 		//分类下任务数
-		case "cates":
-			each(tasks,function(item){
+		case "data.cates":
+			each(data.tasks,function(item){
 				if(!item.isDone&&item.cateList[0]==type){
 					count++;
 				}
@@ -200,11 +200,11 @@ function addCate(obj){
 			if(obj.category === "默认分类"){
 				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
 					+ obj.category
-					+"("+todoCount("cates",obj.category)+")";
+					+"("+todoCount("data.cates",obj.category)+")";
 			}else{
 				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
 					+ obj.category
-					+"("+todoCount("cates",obj.category)+")";
+					+"("+todoCount("data.cates",obj.category)+")";
 				var removeSpan = document.createElement("span");
 				addClass(removeSpan,"remove-cate");
 				var  removeItem = document.createElement("i");
@@ -246,11 +246,11 @@ function addList(obj){
 					if(obj[1]=="使用说明"){
 						liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
 							+ obj[1]
-							+"("+todoCount("lists",obj[1])+")";
+							+"("+todoCount("data.lists",obj[1])+")";
 					}else{
 						liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
 							+ obj[1]
-							+"("+todoCount("lists",obj[1])+")";
+							+"("+todoCount("data.lists",obj[1])+")";
 						var removeSpan = document.createElement("span");
 						addClass(removeSpan,"remove-list");
 						var  removeItem = document.createElement("i");
@@ -301,40 +301,40 @@ function removeCate(item){
 		if(confirm("是否删除主分类【"+liCate+"】和所有子列表任务？删除后不可恢复╮(╯▽╰)╭")){
 			//删除分类对象
 			var removeItem = [];
-			each(cates,function(item){
+			each(data.cates,function(item){
 				if(item.category == liCate){
 					removeItem.push(item);
 				}
 			});
 			each(removeItem,function(item){
-				cates.remove(item);
+				data.cates.remove(item);
 			});
 			//删除分类下相关列表
 			removeItem = [];
-			each(lists,function(item,i){
+			each(data.lists,function(item,i){
 				if(item[0] == liCate){
 					removeItem.push(item);
 				}
 			});
 			each(removeItem,function(item){
-				lists.remove(item);
+				data.lists.remove(item);
 			});
 			//删除分类和列表相关任务
 			removeItem = [];
-			each(tasks,function(item,i){
+			each(data.tasks,function(item,i){
 				if(item.cateList[0] == liCate){
 					removeItem.push(item);
 				}
 			});
 			each(removeItem,function(item){
-				tasks.remove(item);
+				data.tasks.remove(item);
 			});
 
 
 			//刷新分类视图下分类项
-			listCates(cates);
+			listCates(data.cates);
 			//刷新分类视图下列表项
-			listLists(lists);
+			listLists(data.lists);
 		}
 	}
 }
@@ -345,29 +345,29 @@ function removeList(item){
 		if(confirm("是否删除列表【"+liList+"】和所有子任务？删除后不可恢复╮(╯▽╰)╭")){
 			//删除列表对象
 			var removeItem = [];
-			each(lists,function(item,i){
+			each(data.lists,function(item,i){
 				if(item[1] == liList){
 					removeItem.push(item);
 				}
 			});
 			each(removeItem,function(item){
-				lists.remove(item);
+				data.lists.remove(item);
 			});
 			//删除列表相关任务
 			removeItem = [];
-			each(tasks,function(item,i){
+			each(data.tasks,function(item,i){
 				if(item.cateList[1] == liList){
 					removeItem.push(item);
 				}
 			});
 			each(removeItem,function(item){
-				tasks.remove(item);
+				data.tasks.remove(item);
 			});
 
 			//刷新分类视图
-			listCates(cates);
+			listCates(data.cates);
 			//刷新列表视图
-			listLists(lists);
+			listLists(data.lists);
 		}
 	}else{
 		alert("选中列表后才能删除~");
@@ -392,13 +392,13 @@ function listCates(arr){
 	//更新删除图标监听事件
 	delegateClickEvent(init.removeIcon,removeClick);
 	//更新任务清单视图
-	listInventory(tasks,"all","all");
+	listInventory(data.tasks,"all","all");
 	//更新任务项点击事件监听
 	delegateClickEvent(init.todoTaskItem,taskItemClick);
 	//刷新未完成任务总数
-	init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
+	init.todoTotal.innerHTML = "("+todoCount("data.tasks","all")+")";
 	//更新内容视图，默认任务内容
-	addContent(tasks[0]);
+	addContent(data.tasks[0]);
 }
 
 //刷新子列表视图
@@ -415,15 +415,15 @@ function listLists(arr){
 	//更新删除图标监听事件
 	delegateClickEvent(init.removeIcon,removeClick);
 	//更新任务清单视图
-	listInventory(tasks,"all","all");
+	listInventory(data.tasks,"all","all");
 	//更新任务项点击更新清单视图事件
 	delegateClickEvent(init.todoTaskItem,taskItemClick);
 	//更新任务项点击切换样式事件
 	delegateClickEvent(init.todoTaskItem,init.classToggle);
 	//刷新未完成任务总数
-	init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
+	init.todoTotal.innerHTML = "("+todoCount("data.tasks","all")+")";
 	//更新内容视图，默认任务内容
-	addContent(tasks[0]);
+	addContent(data.tasks[0]);
 
 }
 
@@ -452,7 +452,7 @@ addClickEvent(init.todoCateBtn,function(){
 });
 
 //初始化下拉框添加主分类选项
-each(cates,function(item){
+each(data.cates,function(item){
 	addCateOption(item.category);
 });
 function addCateOption(cate){
@@ -471,21 +471,25 @@ function addCateCheck(main,name){
 		if(main === "null"){
 			if(confirm("确认创建新分类【"+cateName+"】吗？")){
 				//新增分类对象
-				cates.push(new Category(cateName));
+				data.cates.push(new Category(cateName));
+				//更新本地数据
+				setData(data.cates,"cates");
 				//刷新分类视图
-				listCates(cates);
+				listCates(data.cates);
 				//刷新列表视图
-				listLists(lists);
+				listLists(data.lists);
 			}
 		}
 		else{
 			if(confirm("确认在【"+main+"】分类下创建新列表【"+cateName+"】吗？")){
 				//新增列表对象
-				lists.push(new TaskList(main,cateName));
+				data.lists.push(new TaskList(main,cateName));
+				//更新本地数据
+				setData(data.lists,"lists");
 				//刷新分类视图
-				listCates(cates);
+				listCates(data.cates);
 				//刷新列表视图
-				listLists(lists);
+				listLists(data.lists);
 			}
 		}
 		//清空输入框内容
@@ -502,7 +506,7 @@ addClickEvent(init.todoCateAll,function(){
 	each(init.todoTaskItem,function(item){
 		removeClass(item,"todo-task-selected");
 	});
-	listInventory(tasks,"all","all");
+	listInventory(data.tasks,"all","all");
 });
 
 
@@ -513,7 +517,7 @@ function taskItemClick(e){
 	var target = e.target|| e.srcElement;
 	if(target.nodeName.toLowerCase()=="li"){
 		var listId = target.getAttribute("data-list-id");
-		listInventory(tasks,listId,"all");
+		listInventory(data.tasks,listId,"all");
 	}
 }
 
@@ -524,7 +528,7 @@ function addInventory(obj){
 	if(obj.cateList){
 		//添加时间
 		if(obj.time) {
-			var dtTimeStr = obj.time - 0;
+			var dtTimeStr = new Date(obj.time) - 0;
 			var dtTime = $("[data-list-time=" + dtTimeStr + "]");
 			if (dtTime) {
 				addTitle(obj);
@@ -573,7 +577,7 @@ addClickEvent(init.todoAddTask,function(){
 		if(dataListId == "使用说明"){
 			alert("【使用说明】不能新建子任务啦~");
 		}else{
-			each(lists,function(item){
+			each(data.lists,function(item){
 				if(item[1] == dataListId){
 					if(confirm("将在【"+item[0]+"】分类下的【"+dataListId+"】列表新增任务~")){
 						//初始化编辑界面
@@ -597,26 +601,28 @@ addClickEvent(init.todoAddTask,function(){
 					//新建任务
 					var newTask = checkTask(init.todoEdit[0],init.todoEdit[1],init.todoEdit[2]);
 					//新增任务对象
-					tasks.push(new TaskDetail(cateList,newTask[0],newTask[1],newTask[2],false));
+					data.tasks.push(new TaskDetail(cateList,newTask[0],newTask[1],newTask[2],false));
 					//遍历对象id
-					each(tasks,function(item,i){
+					each(data.tasks,function(item,i){
 						item.id = i;
 					});
+					//更新本地数据
+					setData(data.tasks,"tasks");
 					//更新未完成任务总数
-					init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
+					init.todoTotal.innerHTML = "("+todoCount("data.tasks","all")+")";
 					//刷新分类视图
-					listCates(cates);
+					listCates(data.cates);
 					//刷新列表视图
-					listLists(lists);
+					listLists(data.lists);
 					//更新清单视图
-					listInventory(tasks,dataListId,"all");
+					listInventory(data.tasks,dataListId,"all");
 					//更新内容视图
 					editIcon("check");
 					delegateEleEvent(init.todoDefault,function(ele){
 						ele.style.display = "inline";
 						init.todoDefault[init.todoDefault.length-1].style.display = "block";
-						each(tasks,function(item){
-							if(item.id == tasks.length-1){
+						each(data.tasks,function(item){
+							if(item.id == data.tasks.length-1){
 								addContent(item);
 							}
 						});
@@ -709,7 +715,7 @@ function showTaskDetail(e){
 	e = e||window.event;
 	var target = e.target|| e.srcElement;
 	var taskId = target.getAttribute("data-task-id");
-	each(tasks,function(item){
+	each(data.tasks,function(item){
 		if(item.id == taskId){
 			addContent(item);
 		}
@@ -728,13 +734,13 @@ delegateClickEvent(init.todoInventory,function(e){
 	}
 	switch (target.getAttribute("id")){
 		case "todo-all":
-			listInventory(tasks,listId,"all");
+			listInventory(data.tasks,listId,"all");
 			break;
 		case "todo-doing":
-			listInventory(tasks,listId,false);
+			listInventory(data.tasks,listId,false);
 			break;
 		case "todo-done":
-			listInventory(tasks,listId,true);
+			listInventory(data.tasks,listId,true);
 			break;
 	}
 });
@@ -756,23 +762,23 @@ function addContent(obj){
 addClickEvent(init.todoCheckIcon,function(){
 	var taskId = init.todoDefault[0].getAttribute("data-task-id");
 	//根据标题中的【data-task-id】属性确定对应任务对象
-	for(var i=0;i<tasks.length;i++){
-		if(tasks[i].id == taskId){
+	for(var i=0;i<data.tasks.length;i++){
+		if(data.tasks[i].id == taskId){
 			//检查任务是否完成
-			if(tasks[i].isDone){
+			if(data.tasks[i].isDone){
 				alert("该任务已经完成啦！o(≧v≦)o~~");
 			}else{
 				if(confirm("任务完成后不能修改啦~")){
 					//确认任务完成
-					tasks[i].isDone = true;
+					data.tasks[i].isDone = true;
 					//刷新任务清单视图
-					listInventory(tasks,tasks[i].cateList[1],"all");
+					listInventory(data.tasks,data.tasks[i].cateList[1],"all");
 					//刷新未完成任务总数
-					init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
+					init.todoTotal.innerHTML = "("+todoCount("data.tasks","all")+")";
 					//刷新分类视图
-					listCates(cates);
+					listCates(data.cates);
 					//刷新列表视图
-					listLists(lists);
+					listLists(data.lists);
 					//初始化清单筛选项
 					delegateInitClass(init.todoAllBtn,"todo-inventory-selected");
 				}
@@ -817,13 +823,13 @@ addClickEvent(init.todoEditIcon,function(){
 					itemTask.time = editTask[1];
 					itemTask.content = editTask[2];
 					//更新清单视图
-					listInventory(tasks,itemTask.cateList[1],"all");
+					listInventory(data.tasks,itemTask.cateList[1],"all");
 					//更新未完成任务总数
-					init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
+					init.todoTotal.innerHTML = "("+todoCount("data.tasks","all")+")";
 					//刷新分类视图
-					listCates(cates);
+					listCates(data.cates);
 					//刷新列表视图
-					listLists(lists);
+					listLists(data.lists);
 					//更新内容视图
 					editIcon("check");
 					delegateEleEvent(init.todoDefault,function(ele){
@@ -848,7 +854,7 @@ function isTaskDefault(i){
 		return false;
 	}else{
 		//根据id查找该任务对象
-		each(tasks,function(item){
+		each(data.tasks,function(item){
 			if(item.id == i){
 				taskItem = item;
 			}
@@ -869,7 +875,7 @@ function reback(){
 			ele.style.display = "inline";
 			init.todoDefault[init.todoDefault.length-1].style.display = "block";
 			//更新任务内容
-			each(tasks,function(item){
+			each(data.tasks,function(item){
 				if(item.id == taskId){
 					addContent(item);
 				}
@@ -885,7 +891,7 @@ function reback(){
 
 //格式化输出对象中的时间
 function formatTime(obj) {
-	var taskTime = obj.time;
+	var taskTime = new Date(obj.time);
 	if (taskTime) {
 		var year = taskTime.getFullYear();
 		var month = taskTime.getMonth() + 1;

@@ -81,61 +81,62 @@ each(tasks,function(item,i){
    item.id = i;
 });
 
-//本地存储
+
+
+//本地存储数据
+
+//var task = localTodoData("tasks");
+//var list =  localTodoData("lists");
+//var cate = localTodoData("cates");
+//
+//console.log(task);
+//console.log(list);
+//console.log(cate);
+
+
+
+//本地数据初始化
+(function(){
+    try{
+        if(window.localStorage){
+            var storage = window.localStorage;
+            storage.setItem("tasks",JSON.stringify(tasks));
+            storage.setItem("cates",JSON.stringify(cates));
+            storage.setItem("lists",JSON.stringify(lists));
+        }
+    }catch(e){
+        console.log(e);
+    }
+})();
+//(function(){
+//    try{
+//        if(window.localStorage){
+//            var storage = window.localStorage;
+//            each(tasks,function(item,i){
+//                storage.setItem(i,JSON.stringify(item));
+//            });
+//            each(lists,function(item){
+//                storage.setItem(item[1],JSON.stringify(item));
+//            });
+//            each(cates,function(item){
+//                storage.setItem(item.category,JSON.stringify(item));
+//            });
+//        }
+//    }catch(e){
+//        console.log(e);
+//    }
+//})();
+
+//获取本地对象 输入key值
 var data = {
-    tasks: localTodoData("tasks"),
-    lists: localTodoData("lists"),
-    cates: localTodoData("cates")
+    tasks: getData("tasks"),
+    lists: getData("lists"),
+    cates: getData("cates")
 };
 
 console.log(data.tasks);
 console.log(data.lists);
 console.log(data.cates);
-
-//本地数据初始化
-function localTodoData(arr){
-    try{
-        if(window.localStorage){
-            var storage = window.localStorage;
-            var localTask = [];
-            var localList = [];
-            var localCate = [];
-
-            switch (arr){
-                //所有任务
-                case "tasks":
-                    each(tasks,function(item,i){
-                        storage.setItem(i,JSON.stringify(item));
-                        localTask.push(JSON.parse(storage.getItem(i)));
-                    });
-                    return localTask;
-                    break;
-                //列表项
-                case "lists":
-                    each(lists,function(item){
-                        storage.setItem(item[1],JSON.stringify(item));
-                        localList.push(JSON.parse(storage.getItem(item[1])));
-                    });
-                    return localList;
-                    break;
-                //分类项
-                case "cates":
-                    each(cates,function(item){
-                        storage.setItem(item.category,JSON.stringify(item));
-                        localCate.push(JSON.parse(storage.getItem(item.category)));
-                    });
-                    return localCate;
-                    break;
-            }
-
-        }
-    }catch(e){
-        console.log(e);
-    }
-}
-
-//获取本地数据 输入key值
-//console.log(getData("百度IFE项目"));
 
 function getData(key){
     try{
@@ -148,25 +149,25 @@ function getData(key){
     }
 }
 
-//添加本地数据 输入对象和类型
+//添加或修改本地数据 输入对象和类型
 
 //addData(cates[0],"cates");
 //addData(lists[0],"lists");
 //addData(tasks[0],"tasks");
 
-function addData(obj,type){
+function setData(obj,type){
     try{
         if(window.localStorage){
             var storage = window.localStorage;
             switch (type){
                 case "cates":
-                    storage.setItem(obj.category,JSON.stringify(obj));
+                    storage.setItem("cates",JSON.stringify(obj));
                     break;
                 case "lists":
-                    storage.setItem(obj[1],JSON.stringify(obj));
+                    storage.setItem("lists",JSON.stringify(obj));
                     break;
                 case "tasks":
-                    storage.setItem(obj.id,JSON.stringify(obj));
+                    storage.setItem("tasks",JSON.stringify(obj));
             }
         }
     }catch(e){
@@ -175,6 +176,7 @@ function addData(obj,type){
 }
 
 //移除本地数据 输入key值
+//removedata(1);
 
 function removedata(key){
     try{
