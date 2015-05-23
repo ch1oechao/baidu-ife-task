@@ -41,8 +41,8 @@
       <file leaf-file-name="todo.shell.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zchen9/js/todo.shell.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.3657587">
-              <caret line="577" column="38" selection-start-line="577" selection-start-column="38" selection-end-line="577" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.33186814">
+              <caret line="137" column="44" selection-start-line="137" selection-start-column="35" selection-end-line="137" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -75,8 +75,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="139" />
-    <option name="y" value="34" />
+    <option name="x" value="165" />
+    <option name="y" value="43" />
     <option name="width" value="1159" />
     <option name="height" value="701" />
   </component>
@@ -231,7 +231,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="139" y="34" width="1159" height="701" extended-state="0" />
+    <frame x="165" y="43" width="1159" height="701" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17752007" sideWeight="0.49913943" order="0" side_tool="false" content_ui="combo" />
@@ -323,8 +323,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zchen9/js/todo.shell.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.3657587">
-          <caret line="577" column="38" selection-start-line="577" selection-start-column="38" selection-end-line="577" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.33186814">
+          <caret line="137" column="44" selection-start-line="137" selection-start-column="35" selection-end-line="137" selection-end-column="44" />
           <folding />
         </state>
       </provider>

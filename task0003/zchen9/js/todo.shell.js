@@ -135,7 +135,7 @@ var init = {
 		addClass(titleFirst,"todo-detail-selected");
 	}
 	//初始化未完成任务总数
-	init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+	init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
 
 	//初始化切换样式点击事件
 	//任务清单筛选项
@@ -151,14 +151,38 @@ var init = {
 /*--------------分类视图---------------*/
 
 //计算未完成任务
-function todoCount(arr){
+function todoCount(arr,type){
 	var count = 0;
-	each(arr,function(item){
-		if(!item.isDone){
-			count++;
-		}
-	})
-	return count;
+	//判断数组类型
+	switch (arr){
+		//所有任务数
+		case "tasks":
+			each(tasks,function(item){
+				if(!item.isDone){
+					count++;
+				}
+			});
+			return count;
+			//break;
+		//列表下任务数
+		case "lists":
+			each(tasks,function(item){
+				if(!item.isDone&&item.cateList[1]==type){
+					count++;
+				}
+			});
+			return count;
+			//break;
+		//分类下任务数
+		case "cates":
+			each(tasks,function(item){
+				if(!item.isDone&&item.cateList[0]==type){
+					count++;
+				}
+			});
+			return count;
+			//break;
+	}
 }
 
 //添加主分类
@@ -175,10 +199,12 @@ function addCate(obj){
 			//默认分类默认不能删除
 			if(obj.category === "默认分类"){
 				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
-					+ obj.category;
+					+ obj.category
+				    +"("+todoCount("cates",obj.category)+")";
 			}else{
 				spanCateDefault.innerHTML = "<i class='fa fa-folder-open fa-fw'></i>"
-					+ obj.category;
+					+ obj.category
+					+"("+todoCount("cates",obj.category)+")";
 				var removeSpan = document.createElement("span");
 				addClass(removeSpan,"remove-cate");
 				var  removeItem = document.createElement("i");
@@ -219,10 +245,12 @@ function addList(obj){
 					//默认任务<使用说明>不能删除
 					if(obj[1]=="使用说明"){
 						liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
-							+ obj[1];
+							+ obj[1]
+							+"("+todoCount("lists",obj[1])+")";
 					}else{
 						liTaskList.innerHTML = "<i class='fa fa-file-o fa-fw'></i>"
-							+ obj[1];
+							+ obj[1]
+							+"("+todoCount("lists",obj[1])+")";
 						var removeSpan = document.createElement("span");
 						addClass(removeSpan,"remove-list");
 						var  removeItem = document.createElement("i");
@@ -365,7 +393,7 @@ function listCates(arr){
 	//更新任务项点击事件监听
 	delegateClickEvent(init.todoTaskItem,taskItemClick);
 	//刷新未完成任务总数
-	init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+	init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
 	//更新内容视图，默认任务内容
 	addContent(tasks[0]);
 }
@@ -390,7 +418,7 @@ function listLists(arr){
 	//更新任务项点击切换样式事件
 	delegateClickEvent(init.todoTaskItem,init.classToggle);
 	//刷新未完成任务总数
-	init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+	init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
 	//更新内容视图，默认任务内容
 	addContent(tasks[0]);
 
@@ -571,7 +599,11 @@ addClickEvent(init.todoAddTask,function(){
 						item.id = i;
 					});
 					//更新未完成任务总数
-					init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+					init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
+					//刷新分类视图
+					listCates(cates);
+					//刷新列表视图
+					listLists(lists);
 					//更新清单视图
 					listInventory(tasks,dataListId,"all");
 					//更新内容视图
@@ -732,7 +764,11 @@ addClickEvent(init.todoCheckIcon,function(){
 					//刷新任务清单视图
 					listInventory(tasks,tasks[i].cateList[1],"all");
 					//刷新未完成任务总数
-					init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
+					init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
+					//刷新分类视图
+					listCates(cates);
+					//刷新列表视图
+					listLists(lists);
 					//初始化清单筛选项
 					delegateInitClass(init.todoAllBtn,"todo-inventory-selected");
 				}
@@ -776,10 +812,14 @@ addClickEvent(init.todoEditIcon,function(){
 					itemTask.title = editTask[0];
 					itemTask.time = editTask[1];
 					itemTask.content = editTask[2];
+					//更新未完成任务总数
+					init.todoTotal.innerHTML = "("+todoCount("tasks","all")+")";
+					//刷新分类视图
+					listCates(cates);
+					//刷新列表视图
+					listLists(lists);
 					//更新清单视图
 					listInventory(tasks,itemTask.cateList[1],"all");
-					//更新未完成任务总数
-					init.todoTotal.innerHTML = "("+todoCount(tasks)+")";
 					//更新内容视图
 					editIcon("check");
 					delegateEleEvent(init.todoDefault,function(ele){
