@@ -1,5 +1,6 @@
 /***
 * @author:zchen9(zhao.zchen9@gmail.com)
+ *
 */
 /*--------------初始化变量、默认视图--------------*/
 
@@ -294,6 +295,15 @@ function removeClick(e){
     }
 }
 
+function updateData(){
+    //更新本地分类数据
+    setData("cates",data.cates);
+    //更新本地列表数据
+    setData("lists",data.lists);
+    //更新本地任务数据
+    setData("tasks",data.tasks);
+}
+
 //删除主分类
 function removeCate(item){
     if(item.parentNode.parentNode.nodeName === "LI"){
@@ -310,7 +320,7 @@ function removeCate(item){
                 data.cates.remove(item);
             });
             //删除分类下相关列表
-            removeItem = [];
+            removeItem.length = 0;
             each(data.lists,function(item,i){
                 if(item[0] == liCate){
                     removeItem.push(item);
@@ -320,7 +330,7 @@ function removeCate(item){
                 data.lists.remove(item);
             });
             //删除分类和列表相关任务
-            removeItem = [];
+            removeItem.length = 0;
             each(data.tasks,function(item,i){
                 if(item.cateList[0] == liCate){
                     removeItem.push(item);
@@ -330,7 +340,8 @@ function removeCate(item){
                 data.tasks.remove(item);
             });
 
-
+            //刷新本地数据
+            updateData();
             //刷新分类视图下分类项
             listCates(data.cates);
             //刷新分类视图下列表项
@@ -354,7 +365,7 @@ function removeList(item){
                 data.lists.remove(item);
             });
             //删除列表相关任务
-            removeItem = [];
+            removeItem.length = 0;
             each(data.tasks,function(item,i){
                 if(item.cateList[1] == liList){
                     removeItem.push(item);
@@ -364,6 +375,8 @@ function removeList(item){
                 data.tasks.remove(item);
             });
 
+            //刷新本地数据
+            updateData();
             //刷新分类视图
             listCates(data.cates);
             //刷新列表视图
@@ -472,8 +485,9 @@ function addCateCheck(main,name){
             if(confirm("确认创建新分类【"+cateName+"】吗？")){
                 //新增分类对象
                 data.cates.push(new Category(cateName));
-                //更新本地数据
-                setData(data.cates,"cates");
+
+                //刷新本地数据
+                updateData();
                 //刷新分类视图
                 listCates(data.cates);
                 //刷新列表视图
@@ -484,8 +498,9 @@ function addCateCheck(main,name){
             if(confirm("确认在【"+main+"】分类下创建新列表【"+cateName+"】吗？")){
                 //新增列表对象
                 data.lists.push(new TaskList(main,cateName));
-                //更新本地数据
-                setData(data.lists,"lists");
+
+                //刷新本地数据
+                updateData();
                 //刷新分类视图
                 listCates(data.cates);
                 //刷新列表视图
@@ -606,8 +621,8 @@ addClickEvent(init.todoAddTask,function(){
                     each(data.tasks,function(item,i){
                         item.id = i;
                     });
-                    //更新本地数据
-                    setData(data.tasks,"tasks");
+                    //刷新本地数据
+                    updateData();
                     //更新未完成任务总数
                     init.todoTotal.innerHTML = "("+todoCount("data.tasks","all")+")";
                     //刷新分类视图
@@ -771,6 +786,8 @@ addClickEvent(init.todoCheckIcon,function(){
                 if(confirm("任务完成后不能修改啦~")){
                     //确认任务完成
                     data.tasks[i].isDone = true;
+                    //刷新本地数据
+                    updateData();
                     //刷新任务清单视图
                     listInventory(data.tasks,data.tasks[i].cateList[1],"all");
                     //刷新未完成任务总数
@@ -822,6 +839,8 @@ addClickEvent(init.todoEditIcon,function(){
                     itemTask.title = editTask[0];
                     itemTask.time = editTask[1];
                     itemTask.content = editTask[2];
+                    //刷新本地数据
+                    updateData();
                     //更新清单视图
                     listInventory(data.tasks,itemTask.cateList[1],"all");
                     //更新未完成任务总数
@@ -894,7 +913,7 @@ function formatTime(obj) {
     var taskTime = new Date(obj.time);
     if (taskTime) {
         var year = taskTime.getFullYear();
-        var month = taskTime.getMonth() + 1;
+        var month = taskTime.getMonth()+1;
         var date = taskTime.getDate();
         if (month < 10) {
             month = "0" + month;

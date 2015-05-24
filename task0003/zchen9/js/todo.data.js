@@ -1,5 +1,6 @@
-/**
- * Created by Chen on 2015-05-19.
+/***
+ * @author:zchen9(zhao.zchen9@gmail.com)
+ *
  */
 
 var Category = function(category){
@@ -67,65 +68,22 @@ var defaultDetail = TaskDetail.prototype;
 var cate1 = new Category("百度IFE项目");
 var list1 = new TaskList("百度IFE项目","task0001");
 var list2 = new TaskList("百度IFE项目","task0002");
-var detail1 = new TaskDetail(["百度IFE项目","task0001"],"todo1",new Date(2015,4,1),"123完成task0001作业",true);
-var detail2 = new TaskDetail(["百度IFE项目","task0001"],"todo2",new Date(2015,4,20),"456重构task0001作业",false);
-var detail3 = new TaskDetail(["百度IFE项目","task0001"],"todo3",new Date(2015,4,10),"789重构task0001作业",false);
-var detail4 = new TaskDetail(["百度IFE项目","task0002"],"todo4",new Date(2015,4,18),"1234完成task0002作业",true);
+var list3 = new TaskList("百度IFE项目","task0003");
+var detail1 = new TaskDetail(["百度IFE项目","task0001"],"todo1",new Date(2015,3,1),"完成task0001作业",true);
+var detail2 = new TaskDetail(["百度IFE项目","task0001"],"todo2",new Date(2015,3,20),"重构task0001作业",false);
+var detail3 = new TaskDetail(["百度IFE项目","task0002"],"todo3",new Date(2015,3,25),"完成task0002作业",true);
+var detail4 = new TaskDetail(["百度IFE项目","task0002"],"todo4",new Date(2015,4,5),"重构task0002作业",false);
+var detail5 = new TaskDetail(["百度IFE项目","task0003"],"todo5",new Date(2015,4,25),"完成task0003作业",true);
 
-
-var tasks = [defaultDetail,detail1,detail2,detail3,detail4];
+//初始数据
 var cates = [defaultCate,cate1];
-var lists = [defaultList,list1,list2];
+var lists = [defaultList,list1,list2,list3];
+var tasks = [defaultDetail,detail1,detail2,detail3,detail4,detail5];
 
 each(tasks,function(item,i){
    item.id = i;
 });
 
-
-
-//本地存储数据
-
-//var task = localTodoData("tasks");
-//var list =  localTodoData("lists");
-//var cate = localTodoData("cates");
-//
-//console.log(task);
-//console.log(list);
-//console.log(cate);
-
-
-
-//本地数据初始化
-(function(){
-    try{
-        if(window.localStorage){
-            var storage = window.localStorage;
-            storage.setItem("tasks",JSON.stringify(tasks));
-            storage.setItem("cates",JSON.stringify(cates));
-            storage.setItem("lists",JSON.stringify(lists));
-        }
-    }catch(e){
-        console.log(e);
-    }
-})();
-//(function(){
-//    try{
-//        if(window.localStorage){
-//            var storage = window.localStorage;
-//            each(tasks,function(item,i){
-//                storage.setItem(i,JSON.stringify(item));
-//            });
-//            each(lists,function(item){
-//                storage.setItem(item[1],JSON.stringify(item));
-//            });
-//            each(cates,function(item){
-//                storage.setItem(item.category,JSON.stringify(item));
-//            });
-//        }
-//    }catch(e){
-//        console.log(e);
-//    }
-//})();
 
 //获取本地对象 输入key值
 var data = {
@@ -134,40 +92,27 @@ var data = {
     cates: getData("cates")
 };
 
-console.log(data.tasks);
-console.log(data.lists);
-console.log(data.cates);
 
 function getData(key){
     try{
         if(window.localStorage){
             var storage = window.localStorage;
-            return JSON.parse(storage.getItem(key));
-        }
-    }catch(e){
-        console.log(e);
-    }
-}
-
-//添加或修改本地数据 输入对象和类型
-
-//addData(cates[0],"cates");
-//addData(lists[0],"lists");
-//addData(tasks[0],"tasks");
-
-function setData(obj,type){
-    try{
-        if(window.localStorage){
-            var storage = window.localStorage;
-            switch (type){
-                case "cates":
-                    storage.setItem("cates",JSON.stringify(obj));
-                    break;
-                case "lists":
-                    storage.setItem("lists",JSON.stringify(obj));
-                    break;
-                case "tasks":
-                    storage.setItem("tasks",JSON.stringify(obj));
+            if(storage.getItem(key)){
+                return JSON.parse(storage.getItem(key));
+            }else{
+                switch (key){
+                    case "cates":
+                        storage.setItem("cates",JSON.stringify(cates));
+                        return JSON.parse(storage.getItem("cates"));
+                        break;
+                    case "lists":
+                        storage.setItem("lists",JSON.stringify(lists));
+                        return JSON.parse(storage.getItem("lists"));
+                        break;
+                    case "tasks":
+                        storage.setItem("tasks",JSON.stringify(tasks));
+                        return JSON.parse(storage.getItem("tasks"));
+                }
             }
         }
     }catch(e){
@@ -175,20 +120,25 @@ function setData(obj,type){
     }
 }
 
-//移除本地数据 输入key值
-//removedata(1);
-
-function removedata(key){
+//添加或修改本地数据 输入key和val
+function setData(key,val){
     try{
         if(window.localStorage){
             var storage = window.localStorage;
-            storage.removeItem(key);
+            if(storage.getItem(key)){
+                switch (key){
+                    case "cates":
+                        storage.setItem("cates",JSON.stringify(val));
+                        break;
+                    case "lists":
+                        storage.setItem("lists",JSON.stringify(val));
+                        break;
+                    case "tasks":
+                        storage.setItem("tasks",JSON.stringify(val));
+                }
+            }
         }
     }catch(e){
         console.log(e);
     }
 }
-
-//JSON转换
-var task1Str = JSON.stringify(detail1);
-var task1Obj = JSON.parse(task1Str);
