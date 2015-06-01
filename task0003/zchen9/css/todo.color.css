@@ -2,91 +2,104 @@ html,body {
     background-color: #FCF5F0;
     color: #22273B;
 }
-header{
+
+header {
     background-color: #547095;
     color: #FFF;
 }
-.todo-category{
+
+.todo-category {
     background-color: #EDF0F0;
     color: #294B7C;
 }
-.todo-category-total{
+
+.todo-category-total {
     background-color: #9BB2D1;
     color: #FFF;
 }
-.todo-category-total:hover{
+
+.todo-category-total:hover {
     background-color: #7690B7;
 }
+
 .todo-category > a,
-.todo-inventory > a{
+.todo-inventory > a {
     background-color: #7690B4;
     color: #FFF;
 }
 
 .todo-category > a:hover,
-.todo-inventory > a:hover{
+.todo-inventory > a:hover {
     background-color: #547095;
     color: #FFF;
 }
+
 .todo-task-list > li:hover,
-.todo-task-selected{
+.todo-task-selected {
     background-color: #B7C6DE;
     color: #FFF;
 }
-.todo-task-list > li:hover, {
-    background-color: #C5D2DA;
-    color: #FFF;
-}
+
 .todo-inventory {
     background-color: #F7F2E5;
     color: #986700;
 }
-.todo-inventory-category{
+
+.todo-inventory-category {
     background-color: #F5DEAD;
 }
+
 .todo-inventory-category li:hover,
-.todo-inventory-selected{
+.todo-inventory-selected {
     background-color: #F7F0D8;
 }
-.todo-inventory-detail > dt{
+
+.todo-inventory-detail > dt {
     background-color: #F7EACE;
 }
+
 .todo-inventory-detail dd:hover,
-.todo-detail-selected{
-    color: #EAB23E;
+.todo-detail-selected {
     background-color: #FFF;
+    color: #EAB23E;
 }
 
-.todo-spec{
+.todo-spec {
     color: #90001A;
 }
-.todo-spec-title{
+
+.todo-spec-title {
     background-color: #FCB2BF;
 }
-.todo-spec-edit > i:hover{
+
+.todo-spec-edit > i:hover {
     color: #FFF;
 }
-.todo-spec-time{
+
+.todo-spec-time {
     background-color: #FAD1D8;
 }
-.todo-spec-content > textarea{
+
+.todo-spec-content > textarea {
     background-color: #FCF5F5;
 }
 
 /*addCatePanel*/
-.add-cate-panel{
+.add-cate-panel {
     color: #FFF;
     background-color: #9BB2D1;
 }
-.add-cate-panel > h3{
-    color: #294B7C;
-}
-.add-cate-btn > span{
-    background-color: #294B7C;
-    color: #FFF;
-}
-.add-cate-btn > span:hover{
-    background-color: #FFF;
+
+.add-cate-panel > h3 {
     color: #294B7C;
 }
 
+.add-cate-btn > span {
+    background-color: #294B7C;
+    color: #FFF;
+}
+
+.add-cate-btn > span:hover {
+    background-color: #FFF;
+    color: #294B7C;
+}

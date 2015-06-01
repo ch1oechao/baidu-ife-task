@@ -643,23 +643,28 @@ function getNextElement(node) {
     return null;
 }
 
+//遍历元素监听事件
 function delegateEleEvent(ele,listener){
     for(var i = 0,len=ele.length;i<len;i++){
         listener(ele[i]);
     }
 }
 
+//遍历元素添加鼠标事件
 function delegateEleMouseEvent(ele,event,listener){
     for(var i = 0,len=ele.length;i<len;i++){
         addEvent(ele[i],event,listener);
     }
 }
 
+//遍历元素添加点击事件
 function delegateClickEvent(ele,listener){
     for(var i = 0,len=ele.length;i<len;i++){
         addClickEvent(ele[i],listener);
     }
 }
+
+//遍历元素初始化样式
 function delegateInitClass(ele,classname){
     var eles = ele.parentNode.children;
     for(var i = 0,len=eles.length;i<len;i++){
@@ -669,7 +674,6 @@ function delegateInitClass(ele,classname){
 }
 
 //addLoadEvent() —— 共享onload事件
-
 function addLoadEvent(func) {
     var oldonload = window.onload;
     if(typeof window.onload != 'function') {
@@ -683,12 +687,15 @@ function addLoadEvent(func) {
     }
 }
 
+//添加数组原型方法 查找指定位置的元素
 Array.prototype.indexOf = function(val) {
     for (var i = 0; i < this.length; i++) {
         if (this[i] == val) return i;
     }
     return -1;
 };
+
+//添加数组原型方法 去除指定位置的元素
 Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
     if (index > -1) {
