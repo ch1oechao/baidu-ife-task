@@ -6,7 +6,8 @@
 /**
  * 判断arr是否为一个数组，返回一个bool值
  *
- * @class
+ * @param {Array} arr 传入一个数组
+ * @return {boolean} bool值 true表示是数组，false表示不是数组
  */
 function isArray(arr){
     //方法一
@@ -20,7 +21,8 @@ function isArray(arr){
 /**
  * 判断fn是否为一个函数，返回一个bool值
  *
- * @class
+ * @param {Function} fn 传入一个函数
+ * @return {boolean} bool值 true表示是函数，false表示不是函数
  */
 
 function isFunction(fn){
@@ -35,13 +37,14 @@ function isFunction(fn){
  * 使用递归来实现一个深度克隆，可以复制一个目标对象，返回一个完整拷贝
  * 被复制的对象类型会被限制为数字、字符串、布尔、日期、数组、Object对象。不会包含函数、正则对象等
  *
- * @class
+ * @param {Array|Object} src 传入数组或对象
+ * @return {Array|Object} tar 返回src克隆对象
  */
 
-function cloneObject(src) {
+function cloneObject(src){
     var tar = src.constructor === Array ? [] : {};
-    for ( var i in src ) {
-        if ( src.hasOwnProperty(i) ) {
+    for (var i in src) {
+        if (src.hasOwnProperty(i)) {
             tar[i] = typeof src[i] === "object" ? cloneObject(src[i]) : src[i];
         }
     }
@@ -50,15 +53,16 @@ function cloneObject(src) {
 /**
  * 对数组进行去重操作，只考虑数组中元素为数字或字符串，返回一个去重后的数组
  *
- * @class
+ * @param {Array} arr 传入一个数组
+ * @return {Array} temp 返回一个重新排序且去掉重复元素的数组
  */
 //方法1
-function uniqArray(arr) {
+function uniqArray(arr){
     var temp = [];
-    if(arr instanceof Array){
+    if (arr instanceof Array) {
         arr.sort();
-        for(var i=0;i<arr.length;i++){
-            if(arr[i] !== arr[i+1]){
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] !== arr[i + 1]) {
                 temp.push(arr[i]);
             }
         }
@@ -66,13 +70,13 @@ function uniqArray(arr) {
     return temp;
 }
 //方法2
-//function uniqArray(arr) {
+//function uniqArray(arr){
 //  var temp = [];
-//  if(arr instanceof Array){
-//      for(var i=0; i<arr.length; i++){
+//  if (arr instanceof Array) {
+//      for (var i = 0; i < arr.length; i++) {
 //          temp.push(arr[i]);
-//          for(var j=i+1; j<=arr.length; j++){
-//              if(arr[i]===arr[j]){
+//          for (var j = i + 1; j <= arr.length; j++) {
+//              if (arr[i] === arr[j]) {
 //                  temp.pop(arr[j]);
 //              }
 //          }
@@ -84,19 +88,21 @@ function uniqArray(arr) {
 /**
  * 对字符串头尾进行空格字符的去除、包括全角半角空格、Tab等，返回一个字符串
  *
- * @class
+ * @param {string} str 传递一个字符串
+ * @return {string} 返回去掉空格的字符串
  */
-function trim(str) {
+function trim(str){
     return str.replace( /\s+/g, "" );
 }
 
 /**
  * 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
  *
- * @class
+ * @param {Array} arr 传递一个数组
+ * @param {Function} fn 传递一个函数
  */
-function each(arr, fn) {
-    for( var i=0; i < arr.length; i++ ) {
+function each(arr, fn){
+    for (var i = 0; i < arr.length; i++){
         fn(arr[i], i);
     }
 }
@@ -104,9 +110,10 @@ function each(arr, fn) {
 /**
  * 获取一个对象里面第一层元素的数量，返回一个整数
  *
- * @class
+ * @param {Object} obj 传递一个对象
+ * @return {number} count 返回对象第一层元素的数量
  */
-function getObjectLength(obj) {
+function getObjectLength(obj){
     var count = 0;
     if (obj instanceof Object) {
         for (var i in obj) {
@@ -119,19 +126,24 @@ function getObjectLength(obj) {
 /**
  * 判断是否为邮箱地址
  *
- * @class
+ * @param {string} EmailStr 传递一个邮箱地址字符串
+ * @return {boolean} 返回是否为邮箱地址的布尔值
  */
-function isEmail(emailStr) {
+function isEmail(emailStr){
     var emReg = /^([a-zA-Z0-9\_\-\.])+@([a-zA-Z0-9\_\-\.])+([a-zA-Z0-9]){2,4}$/gi;
-    return emReg.test( emailStr );
+    return emReg.test(emailStr);
 }
 
 /**
  * 判断是否为手机号
  *
- * @class
+ * @param {string|Array} phone 传递一个手机号字符串或数字
+ * @return {boolean} 返回是否为电话号码的布尔值
  */
-function isMobilePhone(phone) {
+function isMobilePhone(phone){
+    if (phone instanceof Number) {
+        phone = phone + "";
+    }
     var phoneReg = /^\d{11}$/g;
     return phoneReg.test(phone);
 }
@@ -139,9 +151,12 @@ function isMobilePhone(phone) {
 /**
  * 为element增加一个样式名为newClassName的新样式
  *
- * @class
+ * @param {Object} element 传入一个DOM节点元素
+ * @param {string} newClassName 传入新的样式名称
+ * 
+ * 这个方法有误，但是task0002基于它写的，所以不好改动，在其他用Util.js时已经更改
  */
-function addClass(element, newClassName) {
+function addClass(element, newClassName){
     try{
         element.setAttribute("class", newClassName);
     }
@@ -150,135 +165,181 @@ function addClass(element, newClassName) {
     }
 }
 
+//正确添加className的方法
+// function addClass(element,value) {
+//     //判断className属性是否为空
+//     if(!element.className) {
+//         element.className = value;
+//     }
+//     else {
+//         //若不为空，把空格和新的class设置值追加到className属性上去
+//         newClassName = element.className;
+//         newClassName += " ";
+//         newClassName += value;
+//         element.className = newClassName;
+//     }
+// }
+
+
 /**
  * 移除element中的样式oldClassName
  *
- * @class
+ * @param {Object} element 传入一个DOM节点元素
+ * @param {string} oldClassName 传入需要删除的样式名称
  */
-function removeClass(element, oldClassName) {
-    if ( element.className == oldClassName ) {
-        try{
+function removeClass(element, oldClassName){
+    if (element.className == oldClassName) {
+        try {
             element.removeAttribute("class");
         }
-        catch( ex ) {
+        catch (ex) {
             element.className = "";
         }
     }
 }
+// 摘自笔记
+// function removeClass(el, cls) {
+//   var reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
+//   el.className = el.className.replace(reg, " ").replace(/(^\s*)|(\s*$)/g,"");
+// }
+
 
 /**
  * 判断siblingNode和element是否为同一个父元素下的同一级的元素，返回bool值
  *
- * @class
+ * @param {Object} element 传入一个DOM节点元素
+ * @param {Object} siblingNode 传入另一个可能同级的DOM节点元素
+ * @return {boolean} 返回bool值，true为是同级节点，false为不是同级节点
  */
-function isSiblingNode( element, siblingNode ) {
+function isSiblingNode(element, siblingNode){
     var nodes = element.parentNode.childNodes;
     for (var i = 0; i < nodes.length; i++) {
         if ( nodes[i] === siblingNode ) {
             return true;
         }
     }
+    return false;
 }
 
 /**
  * 获取element相对于浏览器窗口的位置，返回一个对象{x, y}
  *
- * @class
+ * @param {Object} element 传入一个DOM节点元素
+ * 
+ * http://www.cnblogs.com/leejersey/p/4127714.html
  */
-function getPosition( element ) {
-    var actualLeft = elemnt.offsetLeft;
-    var actualTop = element.offsetTop;
-    var current = element.offsetParent;
+function getPosition(element){
+    var posRect = element.getBoundingClientRect();
+    var docTop = document.documentElement.clientTop;
+    var docLeft = document.documentElement.clientLeft;
 
-    while ( current !== null ) {
-        actualLeft += current.offsetLeft;
-        actualTop += current.offsetTop;
-        current = current.offsetParent;
-    }
-
-    return { x : actualLeft, y : actualTop };
+    return { x: posRect.top - docTop ,
+             y: posRect.left - docLeft
+           }
 }
 
 /**
  * 实现一个简单的$()选择器
  *
- * @class
+ * @param {string} selector 传入选择器字符串
+ * @return {Object} 返回选择器对应节点
  */
 function $(selector) {
-
+    //将传入的选择器以空格符隔开生成数组
     var selItem = selector.split(" ");
-
-    if ( selItem.length === 1 ) {
+    //如果数组长度为1，表示选择器只传入一个样式
+    if (selItem.length === 1) {
+        // 将数组转变成字符串
         var aitem = selItem.toString();
-        switch ( aitem.substr(0, 1) ) {
+        // 通过switch取字符串第一个字符来判断选择器类型
+        switch (aitem.substr(0, 1)) {
+            //为id选择器
             case "#":
-                return document.getElementById( aitem.substr(1) );
+                return document.getElementById(aitem.substr(1));
                 break;
+            //为class选择器
             case ".":
                 if (document.getElementsByClassName) {
                     return document.getElementsByClassName(aitem.substr(1))
-                }else {
-                    var nodes = document.getElementsByTagName("*"),ret = [];
+                }
+                else {
+                    //获取全部元素
+                    var nodes = document.getElementsByTagName("*");
+                    var tar = [];
                     for(i = 0; i < nodes.length; i++) {
+                        //遍历全部元素节点，若节点有传入的选择器属性则存入数组
                         if(hasClass(nodes[i],aitem.substr(1))){
-                            ret.push(nodes[i])
+                            tar.push(nodes[i])
                         }
                     }
-                    return ret;
+                    return tar;
                 }
                 break;
+            //为指定属性名选择器
             case "[":
-                if ( aitem.charAt( aitem.length - 1 ) === "]" ) {
-
-                    var item = aitem.substring( 1, aitem.length - 1 );
+                //检查[]是否完整
+                if (aitem.charAt(aitem.length - 1) === "]") {
+                    //取[]中间的字符串
+                    var item = aitem.substring(1, aitem.length - 1);
                     var elements = document.getElementsByTagName("*");
-
-                    if ( item.indexOf("=")  != -1 ) {
+                    //查找字符串中是否有=号
+                    if (item.indexOf("=") != -1) {
+                        //若有=号，将字符串以=号分隔成数组
                         var items = item.split("=");
-                        for ( var j = 0; j < elements.length; j++) {
-                            if ( elements[j].getAttribute( items[0] ) === items[1] ) {
+                        //遍历所有元素
+                        for (var j = 0; j < elements.length; j++) {
+                            //判断是否有节点拥有传入的属性名，且属性值一致，若找到则返回该节点
+                            if (elements[j].getAttribute( items[0] ) === items[1]) {
                                 return elements[j];
                             }
                         }
                     }
+                    //若字符串无=号
                     else {
-                        for ( var i=0; i < elements.length; i++ ) {
-                            if ( elements[i].hasAttribute( item ) ) {
+                        for ( var i = 0; i < elements.length; i++ ) {
+                            //返回匹配该属性名的第一个节点
+                            if (elements[i].hasAttribute(item)) {
                                 return elements[i];
                             }
                         }
                     }
                 }
-                else
-                {
+                // 如果[]不完整，则抛出错误
+                else {
                     throw Error( "']' is missing !" );
                 }
                 break;
+            //默认排除以上选择器，返回元素名选择器
             default :
-                return document.getElementsByTagName( aitem );
+                return document.getElementsByTagName(aitem);
         }
     }
+    //若传入的字符串含有多个选择器
+    //以下并没有考虑getElementsByClassName的兼容...
     else {
-        for ( var k = 1; k < selItem.length; i++ ) {
+        for (var k = 1; k < selItem.length; i++) {
             
-            if ( selItem[0].substr(0, 1) == "#" ) {
-                var itemId = document.getElementById( selItem[0].substr(1) );
-                switch ( selItem[k].substr(0,1) ) {
+            if (selItem[0].substr(0, 1) == "#") {
+                var itemId = document.getElementById(selItem[0].substr(1));
+                switch (selItem[k].substr(0,1)) {
                     case ".":
-                        return itemId.getElementsByClassName( selItem[k].substr(1) )[0];
+                        return itemId.getElementsByClassName(selItem[k].substr(1))[0];
                         break;
                     default :
-                        return itemId.getElementsByTagName( selItem[k] );
+                        return itemId.getElementsByTagName(selItem[k]);
                 }
             }
-            else if ( selItem[0].substr(0, 1) == "." ) {
-                var itemClass = document.getElementsByClassName( selItem[0].substr(1) );
-                switch ( selItem[k].substr(0, 1) ) {
+            else if (selItem[0].substr(0, 1) == ".") {
+                var itemClass = document.getElementsByClassName(selItem[0].substr(1));
+                switch (selItem[k].substr(0, 1)) {
                     case "#":
-                        return itemClass.getElementById( selItem[k].substr(1) );
+                        return itemClass.getElementById(selItem[k].substr(1));
+                        break;
+                    case ".":
+                        return itemClass.getElementsByClassName(selItem[k].substr(1))[0];
                         break;
                     default :
-                        return itemId.getElementsByTagName( selItem[k] );
+                        return itemId.getElementsByTagName(selItem[k]);
                 }
             }
         }
@@ -288,12 +349,14 @@ function $(selector) {
 /**
  * 判断class属性
  *
- * @class
+ * @param {Object} tagStr 传入目标DON元素节点
+ * @param {string} classStr 传入节点可能匹配的className
+ * @rerun {boolean} 返回是否匹配className的bool值
  */
-function hasClass(tagStr,classStr){
-    var arr=tagStr.className.split(/\s+/ ); //这个正则表达式是因为class可以有多个,判断是否包含
-    for (var i=0;i<arr.length;i++){
-        if (arr[i]==classStr){
+function hasClass(tagStr, classStr){
+    var arr = tagStr.className.split(/\s+/g); //这个正则表达式是因为class可以有多个,判断是否包含
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == classStr) {
             return true ;
         }
     }
@@ -303,17 +366,19 @@ function hasClass(tagStr,classStr){
 /**
  * 给一个element绑定一个针对event事件的响应，响应函数为listener
  *
- * @class
+ * @param {Object} element 传入DOM节点元素
+ * @param {string} event 传入事件字符串
+ * @param {string | Function} listener 传入函数名称或直接传入匿名函数 
  */
 function addEvent(element, event, listener) {
-    if ( element.addEventListener ) {
-        element.addEventListener( event, listener, false );
+    if (element.addEventListener) {
+        element.addEventListener(event, listener, false);
     }
-    else if ( element.attachEvent ) {
-        element.attachEvent( "on" + event, listener );
+    else if (element.attachEvent) {
+        element.attachEvent("on" + event, listener);
     }
     else {
-        element[ "on" + event ] = listener;
+        element["on" + event] = listener;
     }
 
 }
@@ -321,7 +386,9 @@ function addEvent(element, event, listener) {
 /**
  * 移除element对象对于event事件发生时执行listener的响应，当listener为空时，移除所有响应函数
  *
- * @class
+ * @param {Object} element 传入DOM节点元素
+ * @param {string} event 传入事件字符串
+ * @param {string | Function} listener 传入函数名称或直接传入匿名函数 
  */
 function removeEvent(element, event, listener) {
     if ( element.removeEventListener ) {
@@ -338,7 +405,8 @@ function removeEvent(element, event, listener) {
 /**
  * 实现对click事件的绑定
  *
- * @class
+ * @param {Object} element 传入DOM节点元素
+ * @param {string | Function} listener 传入函数名称或直接传入匿名函数 
  */
 function addClickEvent(element, listener) {
     if ( element.addEventListener ) {
@@ -354,13 +422,14 @@ function addClickEvent(element, listener) {
 /**
  * 实现对于按Enter键时的事件绑定
  *
- * @class
+ * @param {Object} element 传入DOM节点元素
+ * @param {string | Function} listener 传入函数名称或直接传入匿名函数 
  */
 function addEnterEvent(element, listener) {
     var e = event ? event : window.event;
     var ele = element ? e.target : e.srcElement;
     var curKey = 0;
-    curKey = e.keyCode|| e.which|| e.charCode; //支持IE、FF
+    curKey = e.keyCode || e.which || e.charCode; //支持IE、FF
     if ( curKey == 13 ) {
         listener();
     }
@@ -386,17 +455,22 @@ $.enter = function(element, listener) {
 /**
  * 遍历元素添加事件
  *
- * @class
+ * @param {Object} element 传入DOM节点元素
+ * @param {string} tag 传入子节点标签名
+ * @param {string} eventName 传入事件名称
+ * @param {string | Function} listener 传入函数名称或匿名函数
  */
 function delegateEvent(element, tag, eventName, listener) {
     var e = event ? event : window.event;
     var ele = element ? element : document.body;
-    var target = e.target || e.srcElement;
-    $.on(element,eventName,function(){
-        if ( ele.nodeName === tag || ele.nodeName.toLowerCase() === tag ) {
-            listener();
+    var eleChild = ele.children;
+    for ( var i = 0 ; i < eleChild.length ; i++ ) {
+        if ( eleChild[i].nodeName === tag 
+            || eleChild[i].nodeName.toLowerCase() === tag 
+            ) {
+            addEvent(eleChild[i], eventName, listener);
         }
-    });
+    }
 }
 
 $.delegate = function(element, tag, eventName, listener) {
@@ -404,9 +478,9 @@ $.delegate = function(element, tag, eventName, listener) {
 };
 
 /**
- * 判断是否为IE浏览器，返回-1或者版本号
+ * 判断是否为IE浏览器
  *
- * @class
+ * @return {string} 返回IE版本号或-1
  */
 function isIE() {
     var ua = navigator.userAgent;
@@ -428,7 +502,7 @@ function isIE() {
                 return "IE10";
                 break;
             default :
-                return "Other Vision";
+                return -1;
         }
     }
 }
@@ -436,27 +510,31 @@ function isIE() {
 /**
  * 设置cookie
  *
- * @class
+ * @param {string} cookieName 传入cookie名称
+ * @param {string} cookieValue 传入cookie值
+ * @param {Date} expiredays 传入时间
  */
 function setCookie(cookieName, cookieValue, expiredays) {
-    var cookieText = encodeURIComponent( cookieName ) 
-                              + "="
-                              + encodeURIComponent( cookieValue );
-    if ( expiredays instanceof Date ) {
+    var cookieText = encodeURIComponent(cookieName) 
+                    + "="
+                    + encodeURIComponent(cookieValue);
+    if (expiredays instanceof Date) {
         cookieText += "; expire=" + expiredays.toGMTString();
     }
+
     document.cookie = cookieText;
 }
 
 /**
  * 获取cookie值
  *
- * @class
+ * @param {string} cookieName 传入cookie名称
+ * @param {String} coValue 返回对应cookie值
  */
 function getCookie(cookieName) {
-    var coName = encodeURIComponent(cookieName) + "=",
-         coStart = document.cookie.indexOf(coName),
-         coValue = null;
+    var coName = encodeURIComponent(cookieName) + "=";
+    var coStart = document.cookie.indexOf(coName);
+    var coValue = null;
 
     if ( coStart > -1 ) {
         var coEnd = document.cookie.indexOf(";", coStart);
@@ -465,7 +543,7 @@ function getCookie(cookieName) {
         }
         coValue = decodeURIComponent(
                         document.cookie.subString( coStart + coName.length, coEnd )
-                        );
+                  );
     }
     return coValue;
 }
