@@ -145,12 +145,8 @@ function getData(key){
         //监测浏览器是否支持localStorage
         if(window.localStorage){
             var storage = window.localStorage;
-            //若浏览器里已存在传递的key值，则直接返回key值对象
-            if(storage.getItem(key)){
-                return JSON.parse(storage.getItem(key));
-            }
             //若浏览器之前没有储存key值，则将初始化对象数组存入localStorage，再返回该key值
-            else{
+            if(!storage.getItem(key)){
                 switch (key){
                     case "cates":
                         storage.setItem("cates",JSON.stringify(cates));
@@ -165,6 +161,8 @@ function getData(key){
                         return JSON.parse(storage.getItem("tasks"));
                 }
             }
+            //若浏览器里已存在传递的key值，则直接返回key值对象
+            return JSON.parse(storage.getItem(key));
         }
     }
     catch (e) {
