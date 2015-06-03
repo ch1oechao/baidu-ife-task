@@ -1,0 +1,357 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Microsoft YaHei', arial, serif;
+    list-style: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+.fa-fw {
+    margin: 0 5px;
+}
+
+.fa-2x {
+    line-height: 45px;
+    font-size: 1.3em;
+}
+
+.todo-task-list > li:hover .fa-trash-o,
+span:hover .fa-trash-o {
+    opacity: 1;
+    color: #294B7C;
+    cursor: pointer;
+}
+span.remove-cate > i,
+span.remove-list > i {
+    opacity: 0;
+}
+
+.remove-cate,
+.remove-list {
+    position: absolute;
+    right: 0;
+    margin-right: 1.2em;
+}
+
+dd .fa-smile-o {
+    float: right;
+    line-height: inherit;
+    margin-right: 1.8em;
+}
+
+label > i {
+    margin-left: -33px;
+    margin-right: 10px;
+}
+
+/*header*/
+
+header {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 10%;
+    min-height: 60px;
+}
+
+header a {
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 60px;
+    height: 60px;
+    margin-left: 20px;
+
+    background: url(../img/icon-logo.png);
+}
+
+header .todo-title {
+    display: block;
+    line-height: 60px;
+    margin-left: 90px;
+
+    font-size: 1.8em;
+}
+
+/*todo_container*/
+.todo-container {
+    position: relative;
+    width: 100%;
+    height: 90%;
+    min-height: 380px;
+    float: left;
+}
+
+/*todo_category*/
+
+.todo-category {
+    position: relative;
+    display: block;
+    float: left;
+    width: 22%;
+    min-width: 250px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.todo-inventory {
+    position: relative;
+    display: block;
+    float: left;
+    width: 22%;
+    min-width: 250px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.todo-category > a,
+.todo-inventory > a {
+    position: absolute;
+    bottom: 0;
+
+    display: block;
+    width: 100%;
+    padding: 10px;
+
+    cursor: pointer;
+}
+
+.todo-category-total {
+    height: 45px;
+    padding-left: 10px;
+
+    line-height: 45px;
+    cursor: pointer;
+}
+
+.todo-category-detail {
+    overflow: scroll;
+    overflow-x: hidden;
+    width: 105%;
+    height: 82%;
+    margin: 10px;
+}
+.todo-category-detail > span {
+    height: 45px;
+}
+
+.todo-category-list {
+    display: block;
+    margin-top: 10px;
+    width: 90%;
+}
+
+.todo-category-list > li > span {
+    display: block;
+    height: 35px;
+    line-height: 35px;
+    z-index: 99;
+    cursor: pointer;
+}
+
+.todo-task-list {
+    margin-left: 15px;
+}
+
+.todo-task-list > li {
+    display: block;
+    margin: 4px 0;
+    padding: 2px 3px;
+    width: 100%;
+    z-index: 100;
+    cursor: pointer;
+}
+
+/*todo_inventory*/
+.todo-inventory-category {
+    height: 45px;
+    padding-left: 10px;
+}
+
+.todo-inventory-category > li {
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 5px;
+    padding: 3px 5px;
+
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.todo-inventory-detail {
+    display: block;
+    height: 82%;
+    width: 110%;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.todo-inventory-detail > dt {
+    display: block;
+    height: 45px;
+    padding-left: 20px;
+    line-height: 45px;
+}
+
+.todo-inventory-detail dd {
+    display: block;
+    height: 35px;
+    padding-left: 20px;
+
+    line-height: 35px;
+    cursor: pointer;
+}
+
+/*todo_spec*/
+
+.todo-spec {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.todo-spec-title {
+    height: 45px;
+    line-height: 45px;
+    text-indent: 2em;
+}
+
+.todo-spec-title > input,
+.todo-spec-time > input {
+    display: inline-block;
+    height: 30px;
+    width: 8%;
+
+    line-height: 30px;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.todo-spec-edit {
+    position: absolute;
+    right: 0;
+    margin-right: 1em;
+}
+
+.todo-spec-edit > i {
+    float: right;
+    cursor: pointer;
+}
+
+.todo-spec-time {
+    height: 45px;
+    line-height: 45px;
+    text-indent: 2em;
+}
+
+.todo-spec-content {
+    overflow: hidden;
+    height: 100%;
+    margin-top: -90px;
+}
+
+.todo-spec-content > p {
+    margin-top: 90px;
+    padding: 2em;
+    width: 90%;
+
+    color: #E58193;
+    word-wrap:break-word;
+}
+
+.todo-spec-content i {
+    margin-right: 9px;
+}
+
+.todo-spec-content > textarea {
+    padding-top: 1em;
+    padding-left: 2em;
+    width: 90%;
+    height: 300px;
+    margin-top: 90px;
+    overflow-y: hidden;
+
+    resize: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    word-wrap:break-word;
+}
+
+/*addCatePanel*/
+.add-cate-panel {
+    display: none;
+    width: 400px;
+    height: 180px;
+    padding: 10px;
+    z-index: 999;
+
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px #333;
+}
+
+.add-cate-panel > h3 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.4em;
+    line-height: 2em;
+    color: #294B7C;
+}
+
+.add-cate-panel ul {
+    margin-top: 10px;
+    margin-left: 60px;
+}
+
+.add-cate-panel li {
+    padding: 5px;
+}
+
+.add-cate-panel label {
+    display: inline;
+    width: 100px;
+    margin-right: 15px;
+}
+
+.add-cate-panel select,
+.add-cate-panel input {
+    height: 20px;
+    width: 155px;
+
+    border: none;
+    outline: none;   
+    border-radius: 3px;
+}
+
+.add-cate-btn {
+    margin-top: 18px;
+    margin-left: 28%;
+}
+
+.add-cate-btn > span {
+    display: inline-block;
+    width: 75px;
+    height: 27px;
+    margin: 0 5px;
+
+    line-height: 27px;
+    text-align: center;
+    color: #FFF;
+
+    border-radius: 3px;
+    background-color: #294B7C;
+    cursor: pointer;
+}
+
+.add-cate-btn > span:hover {
+    background-color: #FFF;
+    color: #294B7C;
+}
+
+.add-cate-btn > span > i {
+    margin-right: 6px;
+}

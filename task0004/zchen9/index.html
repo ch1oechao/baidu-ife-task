@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="app-touch-fullscreen" content="YES">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Todo - zchen9</title>
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/todo.shell.css" rel="stylesheet">
+    <link href="css/todo.mobile.css" rel="stylesheet">
+    <link href="css/todo.color.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="http://www.chen9.info"></a>
+        <h1 class="todo-title">ToDo</h1>
+    </header>
+    <div class="todo-container">
+        <section class="todo-category">
+            <p class="todo-category-total">
+                <span><i class="fa fa-archive fa-fw"></i>所有任务</span>
+                <span id="todo-total-count"></span>
+            </p>
+            <div class="todo-category-detail">
+                <span><i class="fa fa-folder fa-fw"></i>分类列表</span>
+                <ul class="todo-category-list"></ul>
+            </div>
+            <a id="todo-add-category"><i class="fa fa-plus fa-fw"></i>新增分类</a>
+        </section>
+        <section class="todo-inventory">
+            <ul class="todo-inventory-category">
+                <li class="todo-inventory-selected" id="todo-all">所有</li>
+                <li id="todo-doing">未完成</li>
+                <li id="todo-done">已完成</li>
+            </ul>
+            <dl class="todo-inventory-detail">
+            </dl>
+            <a id="todo-add-task"><i class="fa fa-plus fa-fw"></i>新增任务</a>
+        </section>
+
+        <section class="todo-spec">
+            <form name="taskForm" id="todo-form">
+                <div class="todo-spec-title">
+                    <label><i class="fa fa-flag"></i></label>
+                    <input type="text" id="todo-task-title" placeholder="在这里输入标题" autofocus="autofocus" display="none">
+                    <span id="todo-default-title"></span>
+                <span class="todo-spec-edit">
+                    <i class="fa fa-check fa-2x" style="display: none"></i>
+                    <i class="fa fa-undo fa-2x"  style="display: none"></i>
+                    <i class="fa fa-pencil-square-o fa-2x"></i>
+                    <i class="fa fa-check-square-o fa-2x"></i>
+                </span>
+                </div>
+                <div class="todo-spec-time">
+                    <label><i class="fa fa-calendar"></i></label>
+                    <input id="todo-task-time" type="date" style="display: none">
+                    <span id="todo-default-time"></span>
+                </div>
+                <div class="todo-spec-content">
+                    <textarea id="todo-task-content" placeholder="在这里输入内容" style="display: none"></textarea>
+                    <p id="todo-default-content"></p>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div class="add-cate-panel">
+        <h3><i class="fa fa-folder fa-fw"></i>新增分类</h3>
+        <ul>
+            <li>
+                <label for="add-cate-main">选择主分类：</label>
+                <select id="add-cate-main">
+                    <option value="null">新增主分类</option>
+                </select>
+            </li>
+            <li>
+                <label for="add-cate-name">新分类名称：</label>
+                <input type="text" id="add-cate-name">
+            </li>
+        </ul>
+        <div class="add-cate-btn">
+            <span id="add-cate-cancel"><i class="fa fa-meh-o"></i>取消</span>
+            <span id="add-cate-check"><i class="fa fa-smile-o"></i>确认</span>
+        </div>
+    </div>
+
+    <script src="js/todo.util.js"></script>
+    <script src="js/todo.data.js"></script>
+    <script src="js/todo.mobile.js"></script>
+    <script src="js/todo.shell.js"></script>
+</body>
+</html>
