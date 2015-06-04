@@ -161,14 +161,6 @@ var init = {
     //任务清单项
     delegateClickEvent(init.todoDetail, init.classToggle);
 
-    // var cWidth = document.documentElement.clientWidth || document.body.clientWidth;
-    //移动端滑动组件
-    // var slider = new Silder({
-    //                     dom: $("section"),
-    //                     wrap: $(".todo-container")[0],
-    //                     idx: 0
-    //              });
-
     //菜单按钮点击事件
     addClickEvent(init.todoNavCates, sliderGo);
     addClickEvent(init.todoNavInves, sliderGo);
@@ -759,6 +751,10 @@ addClickEvent(init.todoAddTask, function(){
                         });
                     }
                     cateList = [item[0], dataListId];
+                    //移动端切换页面
+                    if(init.slider.init()){
+                        init.slider.goIndex('2');
+                    }
                 }
             });
         }
@@ -784,6 +780,10 @@ addClickEvent(init.todoAddTask, function(){
                     listLists(data.lists);
                     //更新清单视图
                     listInventory(data.tasks,dataListId,"all");
+                    //移动端切换页面
+                    if(init.slider.init()){
+                        init.slider.goIndex('1');
+                    }
                     //更新内容视图
                     editIcon("check");
                     delegateEleEvent(init.todoDefault, function(ele){
