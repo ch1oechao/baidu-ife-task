@@ -7,6 +7,7 @@
 
 html, body {
     height: 100%;
+    overflow: hidden;
 }
 
 .fa-fw {
@@ -223,7 +224,7 @@ header .todo-title {
 .todo-spec-time > input {
     display: inline-block;
     height: 30px;
-    width: 8%;
+    width: 150px;
 
     line-height: 30px;
     background: transparent;

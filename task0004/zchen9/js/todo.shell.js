@@ -67,6 +67,11 @@ var init = {
     //新增分类确定按钮<span>
     addCateCheck: $("#add-cate-check"),
 
+    //菜单按钮
+    todoNavCates: $("#todo-nav-cates"),
+    todoNavInves: $("#todo-nav-inves"),
+    todoNavTasks: $("#todo-nav-tasks"),
+
     //任务分类视图下所有列表项<li>
     todoTaskItem: (function(){
         var todoTaskList = $(".todo-task-list");
@@ -117,9 +122,12 @@ var init = {
             }
             delegateInitClass(target, classname);
         }
-    }
+    },
+    slider : new Silder({
+                        dom: $("section"),
+                        wrap: $(".todo-container")[0]
+                 })
 };
-
 
 /**
  * 初始化显示内容
@@ -153,16 +161,50 @@ var init = {
     //任务清单项
     delegateClickEvent(init.todoDetail, init.classToggle);
 
-    var cWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    // var cWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    //移动端滑动组件
+    // var slider = new Silder({
+    //                     dom: $("section"),
+    //                     wrap: $(".todo-container")[0],
+    //                     idx: 0
+    //              });
 
-    if (cWidth <= 768) {
-        new Silder({
-            dom: $("section"),
-            wrap: $(".todo-container")[0]
-        });
-    }
+    //菜单按钮点击事件
+    addClickEvent(init.todoNavCates, sliderGo);
+    addClickEvent(init.todoNavInves, sliderGo);
+    addClickEvent(init.todoNavTasks, sliderGo);
 })();
 
+
+function sliderGo(e){
+    e = e || window.event;
+    var tar = e.target || e.srcElement;
+    var tarId = "";
+
+    tar.nodeName === "LI" && (tarId = tar.id);
+    tar.parentNode.nodeName === "LI" && (tarId = tar.parentNode.id);
+    
+    switch (tarId) {
+        case "todo-nav-cates":
+            //第一页
+            if(init.slider.init()){
+                init.slider.goIndex('0');
+            }
+            break;
+        case "todo-nav-inves":
+            //第二页
+            if(init.slider.init()){
+                init.slider.goIndex('1');
+            }
+            break;
+        case "todo-nav-tasks":
+            //第三页
+            if(init.slider.init()){
+                init.slider.goIndex('2');
+            }
+            break;
+    }
+}
 
 /*--------------分类视图---------------*/
 
@@ -629,6 +671,11 @@ function taskItemClick(e){
     if (target.nodeName === "LI") {
         var listId = target.getAttribute("data-list-id");
         listInventory(data.tasks, listId, "all");
+
+        //移动端切换页面
+        if(init.slider.init()){
+            init.slider.goIndex('1');
+        }
     }
 }
 
@@ -851,6 +898,10 @@ function showTaskDetail(e){
     each(data.tasks,function(item){
         if (item.id == taskId) {
             addContent(item);
+            //移动端切换页面
+            if(init.slider.init()){
+                init.slider.goIndex('2');
+            }
         }
     });
 }
@@ -928,6 +979,10 @@ addClickEvent(init.todoCheckIcon,function(){
                     listLists(data.lists);
                     //初始化清单筛选项
                     delegateInitClass(init.todoAllBtn,"todo-inventory-selected");
+                    //移动端切换页面
+                    if(init.slider.init()){
+                        init.slider.goIndex('1');
+                    }
                 }
             }
         }

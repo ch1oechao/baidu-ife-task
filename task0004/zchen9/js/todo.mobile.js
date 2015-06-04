@@ -2,14 +2,20 @@ function Silder(options){
     this.dom = options.dom;
     this.wrap = options.wrap;
 
-    this.init();
-    this.renderDOM();
-    this.bindDom();
+    if(this.init()){
+        this.renderDOM();
+        this.bindDom();
+    }
 }
 
 Silder.prototype.init = function(){
-    this.innerW = window.innerWidth;
     this.idx = 0;
+    this.innerW = window.innerWidth;
+
+    if(this.innerW <= 768){
+        return true;
+    }
+    return false;
 }
 
 Silder.prototype.renderDOM = function(){
@@ -37,7 +43,7 @@ Silder.prototype.goIndex = function(n){
     var curIdx = 0;
 
     if(typeof n === "number"){
-        curIdx = idx;
+        curIdx = n;
     }
     else if(typeof n === "string"){
         curIdx = idx + n * 1;
@@ -57,14 +63,19 @@ Silder.prototype.goIndex = function(n){
     dom[curIdx + 1] && (dom[curIdx + 1].style.webkitTransition = "-webkit-transform .3s ease-out");
 
     dom[curIdx].style.webkitTransform = "translate3d(0, 0, 0)";
-    dom[curIdx - 1] && (dom[curIdx - 1].style.webkitTransform = "translate3d(-"
+
+    for(var i = 0; i < curIdx; i++){
+        dom[i] && (dom[i].style.webkitTransform = "translate3d(-"
                                                                 + this.innerW 
                                                                 + "px, 0, 0)"
-                        );
-    dom[curIdx + 1] && (dom[curIdx + 1].style.webkitTransform = "translate3d("
+                    );
+    }
+    for (var ii = curIdx + 1; ii < len; ii++) {
+        dom[ii] && (dom[ii].style.webkitTransform = "translate3d("
                                                                 + this.innerW 
                                                                 + "px, 0, 0)"
-                        );
+                    );
+    };
 }
 
 Silder.prototype.bindDom = function(){
@@ -112,7 +123,7 @@ Silder.prototype.bindDom = function(){
 
         stopBubble(e);
 
-        var boundary = innerW / 8;
+        var boundary = innerW / 12;
         var endTime = new Date() * 1;
 
         if(endTime - self.startTime > 150){
