@@ -3,15 +3,10 @@ window.onload = function(){
 }
 
 function startAnimation(){
-    var header = $("header")[0];
     var todoStart = $(".todo-start")[0];
-    var todoHead = $(".todo-head")[0];
-
-
-    header.style.height = 10 + "%";
-    todoStart.style.marginTop = -155 + "%";
-    todoStart.style.display = "none";
-    todoHead.style.display = "block";
+    
+    todoStart.style.height = 0;
+    todoStart.style.padding = 0;
 }
 
 console.log($("header")[0].height);

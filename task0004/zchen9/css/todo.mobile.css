@@ -7,19 +7,7 @@
     }
 }
 @media (max-width: 768px){
-    header {
-        width: 100%;
-        height: 100%;
-        z-index: 999999;
-    }
     /*header content*/
-    .todo-head {
-        display: none;
-        width: 100%;
-        padding-top: 5px;
-        height: 60px;
-        line-height: 60px;
-    }
     .todo-icon {
         margin-left: 38%;
     }
@@ -30,13 +18,14 @@
     .todo-start {
         display: block;
         text-align: center;
-        padding-top: 50%;
+        height: 100%;
+        padding-top: 32%;
 
-        -webkit-transition: margin .2s ease-out;
-           -moz-transition: margin .2s ease-out;
-            -ms-transition: margin .2s ease-out;
-             -o-transition: margin .2s ease-out;
-                transition: margin .2s ease-out;
+        -webkit-transition: height .4s ease-out, padding .8s ease;
+           -moz-transition: height .4s ease-out, padding .8s ease;
+            -ms-transition: height .4s ease-out, padding .8s ease;
+             -o-transition: height .4s ease-out, padding .8s ease;
+                transition: height .4s ease-out, padding .8s ease;
     }
     .todo-start-icon {
         display: block;
@@ -176,9 +165,6 @@
 }
 
 @media (max-width: 640px){
-    header {
-        height: 100%;
-    }
     .todo-icon {
         margin-left: 25%;
     }
@@ -228,6 +214,6 @@
     }
     .todo-category > a,
     .todo-inventory > a {
-        bottom: 60px;
+        bottom: 75px;
     }
 }

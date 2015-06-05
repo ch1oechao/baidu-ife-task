@@ -3,7 +3,8 @@ html,body {
     color: #22273B;
 }
 
-header {
+header,
+.todo-start {
     background-color: #547095;
     color: #FFF;
 }
