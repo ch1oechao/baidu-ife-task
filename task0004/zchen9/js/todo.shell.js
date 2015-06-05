@@ -646,10 +646,17 @@ function addCateCheck(main, name){
  * 所有任务块点击监听事件
  */
 addClickEvent(init.todoCateAll,function(){
+    //移除所有任务项的点击样式
     each(init.todoTaskItem, function(item){
         removeClass(item, "todo-task-selected");
     });
+    // 刷新分类视图
     listInventory(data.tasks, "all", "all");
+    //移动端切换页面
+    if (init.slider.init()) {
+        init.slider.goIndex('1');
+    }
+
 });
 
 /**

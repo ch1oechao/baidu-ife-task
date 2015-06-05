@@ -1,13 +1,60 @@
 @media (min-width: 768px) {
     .todo-nav {
         display: none;
+    } 
+    .todo-start {
+        display: none;
     }
 }
 @media (max-width: 768px){
     header {
         width: 100%;
-        height: 10%;
+        height: 100%;
+        z-index: 999999;
+
+        -webkit-transition: height .4s ease-out;
+        -o-transition: height .4s ease-out;
+        transition: height .4s ease-out;
     }
+    /*header content*/
+    .todo-head {
+        display: none;
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+    }
+    .todo-icon {
+        margin-left: 38%;
+    }
+    .todo-title {
+        margin-left: 48%;
+    }
+    /*header start*/
+    .todo-start {
+        display: block;
+        text-align: center;
+        padding-top: 50%;
+
+        -webkit-transition: marginTop .2s ease-out;
+        -o-transition: marginTop .2s ease-out;
+        transition: marginTop .2s ease-out;
+    }
+    .todo-start-icon {
+        display: block;
+        width: 114px;
+        height: 114px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        background-image: url(../img/todo.png);
+    }
+    .todo-start > h1{
+        padding: 10px 2px;
+        font-size: 1.8em;
+    }
+    .todo-start span{
+        font-size: 1.1em;
+    }
+
     .todo-container {
         height: 90%;
         min-height: 320px;
@@ -18,13 +65,6 @@
     .todo-spec {
         display: inline-block;
         position: absolute;
-    }
-    /*header content*/
-    header a {
-        margin-left: 38%;
-    }
-    header .todo-title {
-        margin-left: 48%;
     }
     /*todo-category*/
     .todo-task-list > li {
@@ -102,10 +142,12 @@
         width: 225px;
         height: 40px;
         margin: 0 auto;
+
+        border-top: 2px solid #7690B4;
     }
     .todo-nav-item {
         float: left;
-        padding: 0 5px;
+        padding: 0 8px 0 2px;
         text-align: center;
         cursor: pointer;
     }
@@ -134,10 +176,10 @@
 }
 
 @media (max-width: 640px){
-    header a {
+    .todo-icon {
         margin-left: 25%;
     }
-    header .todo-title {
+    .todo-title {
         margin-left: 45%;
     }
     /*todo-category*/
@@ -180,5 +222,9 @@
     /*todo-spec*/
     .todo-spec-content > p {
         font-size: .9em;
+    }
+    .todo-category > a,
+    .todo-inventory > a {
+        bottom: 60px;
     }
 }

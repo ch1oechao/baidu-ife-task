@@ -1,3 +1,14 @@
+window.onload = function(){
+    var header = $("header")[0];
+    var todoStart = $(".todo-start")[0];
+    var todoHead = $(".todo-head")[0];
+    header.style.height = 10 + "%";
+    todoStart.style.marginTop = -160 + "%";
+    todoStart.style.display = "none";
+    todoHead.style.display = "block";
+}
+
+// slider组件
 function Silder(options){
     this.dom = options.dom;
     this.wrap = options.wrap;
@@ -76,6 +87,25 @@ Silder.prototype.goIndex = function(n){
                                                                 + "px, 0, 0)"
                     );
     };
+
+
+    //for todo-nav
+
+    var todoNav = $(".todo-nav")[0];
+    var todoNavUl = todoNav.getElementsByTagName("ul")[0];
+    switch (curIdx) {
+        case 0:
+            todoNavUl.style.borderTop = "2px solid #7690B4";
+        break;
+        case 1:
+            todoNavUl.style.borderTop = "2px solid #EBB74C";
+        break;
+        case 2:
+            todoNavUl.style.borderTop = "2px solid #E8919F";
+        break;
+
+    }
+
 }
 
 Silder.prototype.bindDom = function(){
@@ -102,6 +132,7 @@ Silder.prototype.bindDom = function(){
     var moveHandler = function(e){
 
         stopBubble(e);
+        stopDefault(e);
 
         self.offsetX = e.targetTouches[0].pageX - self.startX;
 
@@ -138,7 +169,15 @@ Silder.prototype.bindDom = function(){
             }
         }
         else {
-            self.goIndex(self.idx);
+            if(self.startX < 10){
+                self.goIndex("-1");
+            }
+            else if (self.startX > innerW - 10){
+                self.goIndex("+1");
+            }
+            else {
+                self.goIndex(self.idx);
+            }
         }
     };
 
