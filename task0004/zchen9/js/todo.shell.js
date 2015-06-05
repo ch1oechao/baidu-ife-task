@@ -165,8 +165,12 @@ var init = {
     addClickEvent(init.todoNavCates, sliderGo);
     addClickEvent(init.todoNavInves, sliderGo);
     addClickEvent(init.todoNavTasks, sliderGo);
+
 })();
 
+window.onload = function(){
+    setTimeout("startAnimation()", 500);
+}
 
 function sliderGo(e){
     e = e || window.event;

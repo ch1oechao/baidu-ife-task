@@ -80,7 +80,11 @@ header {
     width: 114px;
     height: 114px;
     margin-left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+       -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+         -o-transform: translateX(-50%);
+            transform: translateX(-50%);
     background-image: url(../img/todo.png);
 }
 

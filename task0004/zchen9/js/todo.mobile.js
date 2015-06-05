@@ -1,7 +1,3 @@
-window.onload = function(){
-    setTimeout("startAnimation()", 500);
-}
-
 function startAnimation(){
     var todoStart = $(".todo-start")[0];
     
