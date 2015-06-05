@@ -1,7 +1,12 @@
 window.onload = function(){
+    setTimeout("startAnimation()", 800);
+}
+
+function startAnimation(){
     var header = $("header")[0];
     var todoStart = $(".todo-start")[0];
     var todoHead = $(".todo-head")[0];
+
     header.style.height = 10 + "%";
     todoStart.style.marginTop = -160 + "%";
     todoStart.style.display = "none";
