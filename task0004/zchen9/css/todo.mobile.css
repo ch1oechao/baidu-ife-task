@@ -1,9 +1,6 @@
 @media (min-width: 768px) {
     .todo-nav {
         display: none;
-    } 
-    .todo-start {
-        display: none;
     }
 }
 @media (max-width: 768px){
@@ -16,35 +13,7 @@
     }
     /*header start*/
     .todo-start {
-        display: block;
-        height: 100%;
         padding-top: 32%;
-
-        text-align: center;
-
-        opacity: 1;
-        z-index: 999999;
-
-        -webkit-transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
-           -moz-transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
-            -ms-transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
-             -o-transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
-                transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
-    }
-    .todo-start-icon {
-        display: block;
-        width: 114px;
-        height: 114px;
-        margin-left: 50%;
-        transform: translateX(-50%);
-        background-image: url(../img/todo.png);
-    }
-    .todo-start > h1{
-        padding: 10px 2px;
-        font-size: 1.8em;
-    }
-    .todo-start span{
-        font-size: 1.1em;
     }
 
     .todo-container {
