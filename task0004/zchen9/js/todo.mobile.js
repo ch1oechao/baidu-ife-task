@@ -1,5 +1,5 @@
 window.onload = function(){
-    setTimeout("startAnimation()", 200);
+    setTimeout("startAnimation()", 500);
 }
 
 function startAnimation(){
