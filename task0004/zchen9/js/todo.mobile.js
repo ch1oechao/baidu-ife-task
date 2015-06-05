@@ -1,5 +1,5 @@
 window.onload = function(){
-    setTimeout("startAnimation()", 800);
+    setTimeout("startAnimation()", 200);
 }
 
 function startAnimation(){
@@ -7,11 +7,14 @@ function startAnimation(){
     var todoStart = $(".todo-start")[0];
     var todoHead = $(".todo-head")[0];
 
+
     header.style.height = 10 + "%";
     todoStart.style.marginTop = -155 + "%";
     todoStart.style.display = "none";
     todoHead.style.display = "block";
 }
+
+console.log($("header")[0].height);
 
 // slider组件
 function Silder(options){

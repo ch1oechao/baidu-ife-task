@@ -9,12 +9,8 @@
 @media (max-width: 768px){
     header {
         width: 100%;
-        height: 1500px;
+        height: 100%;
         z-index: 999999;
-
-        -webkit-transition: height .4s ease-out;
-        -o-transition: height .4s ease-out;
-        transition: height .4s ease-out;
     }
     /*header content*/
     .todo-head {
@@ -36,9 +32,11 @@
         text-align: center;
         padding-top: 50%;
 
-        -webkit-transition: marginTop .2s ease-out;
-        -o-transition: marginTop .2s ease-out;
-        transition: marginTop .2s ease-out;
+        -webkit-transition: margin .2s ease-out;
+           -moz-transition: margin .2s ease-out;
+            -ms-transition: margin .2s ease-out;
+             -o-transition: margin .2s ease-out;
+                transition: margin .2s ease-out;
     }
     .todo-start-icon {
         display: block;
@@ -179,7 +177,7 @@
 
 @media (max-width: 640px){
     header {
-        height: 1024px;
+        height: 100%;
     }
     .todo-icon {
         margin-left: 25%;
