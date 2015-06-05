@@ -119,10 +119,17 @@ header {
 /*todo_container*/
 .todo-container {
     position: relative;
+    top: 100%;
     width: 100%;
     height: 90%;
     min-height: 380px;
     float: left;
+
+    -webkit-transition: top .4s ease-out;
+       -moz-transition: top .4s ease-out;
+        -ms-transition: top .4s ease-out;
+         -o-transition: top .4s ease-out;
+            transition: top .4s ease-out;
 }
 
 /*todo_category*/
