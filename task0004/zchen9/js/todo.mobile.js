@@ -7,9 +7,9 @@ function startAnimation(){
     
     todoStart.style.height = 0;
     todoStart.style.padding = 0;
+    todoStart.style.opacity = 0;
+    todoStart.style.zIndex = -1;
 }
-
-console.log($("header")[0].height);
 
 // slider组件
 function Silder(options){

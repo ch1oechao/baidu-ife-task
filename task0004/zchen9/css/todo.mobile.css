@@ -17,15 +17,19 @@
     /*header start*/
     .todo-start {
         display: block;
-        text-align: center;
         height: 100%;
         padding-top: 32%;
 
-        -webkit-transition: height .4s ease-out, padding .8s ease;
-           -moz-transition: height .4s ease-out, padding .8s ease;
-            -ms-transition: height .4s ease-out, padding .8s ease;
-             -o-transition: height .4s ease-out, padding .8s ease;
-                transition: height .4s ease-out, padding .8s ease;
+        text-align: center;
+
+        opacity: 1;
+        z-index: 999999;
+
+        -webkit-transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
+           -moz-transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
+            -ms-transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
+             -o-transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
+                transition: height .4s ease-out, padding .8s ease, opacity 1s ease;
     }
     .todo-start-icon {
         display: block;
