@@ -8,7 +8,8 @@ function startAnimation(){
     var todoHead = $(".todo-head")[0];
 
     header.style.height = 10 + "%";
-    todoStart.style.marginTop = -160 + "%";
+    header.style.minHeight = 60 +"px";
+    todoStart.style.marginTop = -155 + "%";
     todoStart.style.display = "none";
     todoHead.style.display = "block";
 }
