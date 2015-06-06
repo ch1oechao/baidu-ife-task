@@ -124,6 +124,7 @@ Silder.prototype.bindDom = function(){
         self.startTime = new Date() * 1;
 
         self.startX = e.touches[0].pageX;
+        self.startY = e.touches[0].pageY;
 
         if(target.nodeName == "SECTION"){
             self.target = target;
@@ -133,9 +134,13 @@ Silder.prototype.bindDom = function(){
     var moveHandler = function(e){
 
         stopBubble(e);
-        stopDefault(e);
 
         self.offsetX = e.targetTouches[0].pageX - self.startX;
+        self.offsetY = e.targetTouches[0].pageY - self.startY;
+
+        if(self.offsetY < 50 && self.offsetX > 20){
+            stopDefault(e);
+        }
 
         var dom = self.dom;
         var i = self.idx - 1;
