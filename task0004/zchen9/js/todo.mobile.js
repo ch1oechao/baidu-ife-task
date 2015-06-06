@@ -138,7 +138,7 @@ Silder.prototype.bindDom = function(){
         self.offsetX = e.targetTouches[0].pageX - self.startX;
         self.offsetY = e.targetTouches[0].pageY - self.startY;
 
-        if(self.offsetY < 50 && self.offsetX != 0){
+        if(self.offsetY < 50){
             stopDefault(e);
         }
 
@@ -175,10 +175,10 @@ Silder.prototype.bindDom = function(){
             }
         }
         else {
-            if(self.startX < 10){
+            if(self.startX < 40){
                 self.goIndex("-1");
             }
-            else if (self.startX > innerW - 10){
+            else if (self.startX > innerW - 40){
                 self.goIndex("+1");
             }
             else {
