@@ -58,45 +58,6 @@ header {
     min-height: 60px;
 }
 
-.todo-start {
-    display: block;
-    height: 100%;
-    padding-top: 22%;
-
-    text-align: center;
-
-    opacity: 1;
-    z-index: 999999;
-
-    -webkit-transition: height .4s ease-out, padding .8s ease, opacity 1.5s ease;
-       -moz-transition: height .4s ease-out, padding .8s ease, opacity 1.5s ease;
-        -ms-transition: height .4s ease-out, padding .8s ease, opacity 1.5s ease;
-         -o-transition: height .4s ease-out, padding .8s ease, opacity 1.5s ease;
-            transition: height .4s ease-out, padding .8s ease, opacity 1.5s ease;
-}
-
-.todo-start-icon {
-    display: block;
-    width: 114px;
-    height: 114px;
-    margin-left: 50%;
-    -webkit-transform: translateX(-50%);
-       -moz-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-         -o-transform: translateX(-50%);
-            transform: translateX(-50%);
-    background-image: url(../img/todo.png);
-}
-
-.todo-start > h1{
-    padding: 10px 2px;
-    font-size: 1.8em;
-}
-
-.todo-start span{
-    font-size: 1.1em;
-}
-
 .todo-icon {
     position: absolute;
     top: 0;
@@ -119,7 +80,6 @@ header {
 /*todo_container*/
 .todo-container {
     position: relative;
-    top: 100%;
     width: 100%;
     height: 90%;
     min-height: 380px;

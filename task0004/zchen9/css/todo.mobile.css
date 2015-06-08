@@ -11,11 +11,6 @@
     .todo-title {
         margin-left: 48%;
     }
-    /*header start*/
-    .todo-start {
-        padding-top: 32%;
-    }
-
     .todo-container {
         height: 90%;
         min-height: 320px;

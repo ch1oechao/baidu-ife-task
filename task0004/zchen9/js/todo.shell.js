@@ -172,10 +172,6 @@ var init = {
 
 })();
 
-window.onload = function(){
-    setTimeout("startAnimation()", 500);
-}
-
 function sliderGo(e){
     e = e || window.event;
     var tar = e.target || e.srcElement;
