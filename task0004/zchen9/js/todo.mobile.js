@@ -138,7 +138,7 @@ Silder.prototype.bindDom = function(){
         self.offsetX = e.targetTouches[0].pageX - self.startX;
         self.offsetY = e.targetTouches[0].pageY - self.startY;
 
-        if(self.offsetY < 50 && Math.abs(self.offsetX) > 30){
+        if(self.offsetY < 50 && Math.abs(self.offsetX) > 15){
             stopDefault(e);
         }
 

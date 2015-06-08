@@ -133,6 +133,11 @@ var init = {
  * 初始化显示内容
  */
 (function(){
+    //适配移动端
+    if(init.slider.init()){
+        init.slider.renderDOM();
+        init.slider.bindDom();
+    }
     //添加所有已存在分类
     each(data.cates, addCate);
     //添加所有已存在列表
