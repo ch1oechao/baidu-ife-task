@@ -165,6 +165,10 @@ header .todo-title {
 .todo-task-list > li:hover .fa-trash-o:hover {
   color: #294b7c;
 }
+.todo-task-list .todo-task-selected {
+  color: #ffffff;
+  background-color: #9bb2d1;
+}
 /*todo_inventory*/
 .todo-inventory {
   position: relative;

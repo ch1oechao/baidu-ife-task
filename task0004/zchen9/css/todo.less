@@ -4,8 +4,6 @@
     padding: 0;
     font-family: 'Microsoft YaHei', arial, serif;
     list-style: none;
-
-    
 }
 
 html, body {
@@ -57,7 +55,7 @@ html, body {
 
 /*模块*/
 .section(@bg: @cate-color, @font: @font-cate){
-	position: relative;
+    position: relative;
     display: block;
     float: left;
     width: 22%;
@@ -69,7 +67,7 @@ html, body {
     color: @font;
 }
 .add-btn(@bg: @cate-btn-color, @hover: @add-btn-color, @font: @font-all){
-	position: absolute;
+    position: absolute;
     bottom: 0;
 
     display: block;
@@ -81,12 +79,12 @@ html, body {
     background-color: @bg;
 
     &:hover{
-    	background-color: @hover;
+        background-color: @hover;
     }
 }
 
 .add-btns(@color: @font-cate){
-	position: absolute;
+    position: absolute;
     top: 2px;
     right: 8px;
 
@@ -100,8 +98,8 @@ html, body {
 
     background-color: transparent;
     &:hover{
-    	color: @color;
-    	background-color: transparent;
+        color: @color;
+        background-color: transparent;
     }
 
     > .fa-plus {
@@ -110,7 +108,7 @@ html, body {
 }
 
 .spec-input() {
-	display: inline-block;
+    display: inline-block;
     height: 30px;
     width: 150px;
 
@@ -120,7 +118,7 @@ html, body {
     outline: none;
 }
 .add-input() {
-	height: 20px;
+    height: 20px;
     width: 155px;
 
     border: none;
@@ -128,7 +126,7 @@ html, body {
     border-radius: 3px;
 }
 .remove-icon(@op: 0, @color: @font-cate,@hover: @font-cate,@mr: 1.8em){
-	position: absolute;
+    position: absolute;
     right: 0;
     margin-right: @mr;
     line-height: 22px;
@@ -137,7 +135,7 @@ html, body {
     cursor: pointer;
 
     &:hover{
-    	color: @hover;
+        color: @hover;
     }
 }
 
@@ -154,23 +152,23 @@ header {
     background-color: @header-color;
 
     .todo-icon {
-	    position: absolute;
-	    top: 0;
+        position: absolute;
+        top: 0;
 
-	    display: block;
-	    width: 60px;
-	    height: 60px;
-	    margin-left: 20px;
+        display: block;
+        width: 60px;
+        height: 60px;
+        margin-left: 20px;
 
-	    background: url(../img/icon-logo.png);
-	}
+        background: url(../img/icon-logo.png);
+    }
 
-	.todo-title {
-	    line-height: 60px;
-	    margin-left: 90px;
+    .todo-title {
+        line-height: 60px;
+        margin-left: 90px;
 
-	    font-size: 1.8em;
-	}
+        font-size: 1.8em;
+    }
 }
 
 /*todo_container*/
@@ -190,23 +188,23 @@ header {
 
 
     > a {
-	    .add-btn();
-	}
+        .add-btn();
+    }
 
-	.todo-category-total {
-	    height: 45px;
-	    padding-left: 10px;
+    .todo-category-total {
+        height: 45px;
+        padding-left: 10px;
 
-	    line-height: 45px;
-	    cursor: pointer;
+        line-height: 45px;
+        cursor: pointer;
 
-	    color: @font-all;
-	    background-color: @cate-total-color;
+        color: @font-all;
+        background-color: @cate-total-color;
 
-	    &:hover {
-	    	background-color: @cate-btn-color;
-	    }
-	}
+        &:hover {
+            background-color: @cate-btn-color;
+        }
+    }
 }
 
 .todo-category-detail {
@@ -218,18 +216,18 @@ header {
 }
 
 .todo-category-list {
-	display: block;
+    display: block;
     width: 95%;
     margin-top: 10px;
 
     span {
 
-    	.fa-trash-o {
-	    	.remove-icon(0);
-	    }
-	    &:hover .fa-trash-o {
-	    	.remove-icon(1,@font-cate);
-	    }
+        .fa-trash-o {
+            .remove-icon(0);
+        }
+        &:hover .fa-trash-o {
+            .remove-icon(1,@font-cate);
+        }
     }
 }
 
@@ -238,26 +236,30 @@ header {
     padding: 3px;
 
     > li {
-	    display: block;
-	    margin: 4px 0;
-	    padding: 2px 3px;
-	    width: 100%;
-	    border-radius: 3px;
-	    cursor: pointer;
-	    
-	    &:hover {
-	    	color: @font-all;
-	    	background-color: @cate-total-color;
-	    }
+        display: block;
+        margin: 4px 0;
+        padding: 2px 3px;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        
+        &:hover {
+            color: @font-all;
+            background-color: @cate-total-color;
+        }
 
-	    .fa-trash-o {
-	    	.remove-icon(0);
-	    }
-	    &:hover .fa-trash-o {
-	    	.remove-icon(1,@font-all);
-	    }
-	    
-	}
+        .fa-trash-o {
+            .remove-icon(0);
+        }
+        &:hover .fa-trash-o {
+            .remove-icon(1,@font-all);
+        }
+        
+    }
+    .todo-task-selected {
+        color: @font-all;
+        background-color: @cate-total-color;
+    }
 }
 
 
@@ -267,32 +269,32 @@ header {
     .section(@inv-color, @font-inv);
 
     > a {
-	    .add-btn();
-	}
+        .add-btn();
+    }
 
-	.todo-inventory-category {
-	    height: 45px;
-	    padding-left: 10px;
+    .todo-inventory-category {
+        height: 45px;
+        padding-left: 10px;
 
-	    background-color: @inv-total-color;
+        background-color: @inv-total-color;
 
-	    > li {
-		    display: inline-block;
-		    margin-top: 10px;
-		    margin-right: 5px;
-		    padding: 3px 5px;
+        > li {
+            display: inline-block;
+            margin-top: 10px;
+            margin-right: 5px;
+            padding: 3px 5px;
 
-		    border-radius: 3px;
-		    cursor: pointer;
+            border-radius: 3px;
+            cursor: pointer;
 
-		    &:hover {
-		    	background-color: @inv-tbtn-color;
-		    }   
-		}
-		.todo-inventory-selected {
-			background-color: @inv-tbtn-color;
-		}
-	}
+            &:hover {
+                background-color: @inv-tbtn-color;
+            }   
+        }
+        .todo-inventory-selected {
+            background-color: @inv-tbtn-color;
+        }
+    }
 }
 
 .todo-inventory-detail {
@@ -303,38 +305,38 @@ header {
     overflow-x: hidden;
 
     dt {
-	    display: block;
-	    height: 45px;
-	    padding-left: 20px;
-	    line-height: 45px;
+        display: block;
+        height: 45px;
+        padding-left: 20px;
+        line-height: 45px;
 
-	    background-color: @inv-detail-color;
-	}
+        background-color: @inv-detail-color;
+    }
 
-	dd {
-	    display: block;
-	    height: 35px;
-	    padding-left: 20px;
+    dd {
+        display: block;
+        height: 35px;
+        padding-left: 20px;
 
-	    line-height: 35px;
-	    cursor: pointer;
+        line-height: 35px;
+        cursor: pointer;
 
-	    .fa-smile-o {
-		    float: right;
-		    line-height: inherit;
-		    margin-right: 1.8em;
-		}
+        .fa-smile-o {
+            float: right;
+            line-height: inherit;
+            margin-right: 1.8em;
+        }
 
-		&:hover {
-			color: @font-inv-btn;
-			background-color: @inv-dbtn-color;
-		}
-	}
+        &:hover {
+            color: @font-inv-btn;
+            background-color: @inv-dbtn-color;
+        }
+    }
 
-	.todo-detail-selected {
-		color: @font-inv-btn;
-		background-color: @inv-dbtn-color;
-	}
+    .todo-detail-selected {
+        color: @font-inv-btn;
+        background-color: @inv-dbtn-color;
+    }
 }
 
 /*todo_spec*/
@@ -345,79 +347,79 @@ header {
     color: @font-spec;
 
     .todo-spec-title {
-	    height: 45px;
-	    line-height: 45px;
-	    text-indent: 1em;
+        height: 45px;
+        line-height: 45px;
+        text-indent: 1em;
 
-	    background-color: @spec-title;
+        background-color: @spec-title;
 
-	    > input {
-	    	.spec-input();
-	    }
-	}
+        > input {
+            .spec-input();
+        }
+    }
 
-	.todo-spec-edit {
-	    position: absolute;
-	    right: 0;
-	    margin-right: 1em;
+    .todo-spec-edit {
+        position: absolute;
+        right: 0;
+        margin-right: 1em;
 
-	    > i {
-		    float: right;
-		    cursor: pointer;
+        > i {
+            float: right;
+            cursor: pointer;
 
-		    &:hover {
-		    	color: @font-all;
-		    }
-		}
-	}
+            &:hover {
+                color: @font-all;
+            }
+        }
+    }
 
-	.todo-spec-time {
-	    height: 45px;
-	    line-height: 45px;
-	    text-indent: 1em;
-	    background-color: @spec-time;
+    .todo-spec-time {
+        height: 45px;
+        line-height: 45px;
+        text-indent: 1em;
+        background-color: @spec-time;
 
-	    > input {
-	    	.spec-input();
-	    }
-	}
+        > input {
+            .spec-input();
+        }
+    }
 
-	.todo-spec-content {
-	    height: 100%;
-	    margin-top: -90px;
+    .todo-spec-content {
+        height: 100%;
+        margin-top: -90px;
 
-	    > p {
-		    margin-top: 90px;
-		    padding: 2em;
-		    width: 93%;
-		    overflow: scroll;
-		    overflow-x: hidden;
+        > p {
+            margin-top: 90px;
+            padding: 2em;
+            width: 93%;
+            overflow: scroll;
+            overflow-x: hidden;
 
-		    color: @font-spec-content;
-		    word-wrap:break-word;
-		}
+            color: @font-spec-content;
+            word-wrap:break-word;
+        }
 
-		i {
-		    margin-right: 9px;
-		}
+        i {
+            margin-right: 9px;
+        }
 
-		> textarea {
-		    padding-top: 1em;
-		    padding-left: 2em;
-		    width: 90%;
-		    height: 300px;
-		    margin-top: 90px;
-		    overflow-y: hidden;
+        > textarea {
+            padding-top: 1em;
+            padding-left: 2em;
+            width: 90%;
+            height: 300px;
+            margin-top: 90px;
+            overflow-y: hidden;
 
-		    resize: none;
-		    border: none;
-		    outline: none;
-		    font-size: 16px;
-		    word-wrap:break-word;
+            resize: none;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            word-wrap:break-word;
 
-		    background-color: @spec-content;
-		}
-	}
+            background-color: @spec-content;
+        }
+    }
 }
 
 /*addCatePanel*/
@@ -434,63 +436,63 @@ header {
     box-shadow: 2px 2px 5px #333;
 
     h3 {
-	    text-align: center;
-	    font-weight: 600;
-	    font-size: 1.4em;
-	    line-height: 2em;
-	    color: @font-cate;
-	}
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.4em;
+        line-height: 2em;
+        color: @font-cate;
+    }
 
-	ul {
-	    margin-top: 10px;
-	    margin-left: 60px;
-	}
+    ul {
+        margin-top: 10px;
+        margin-left: 60px;
+    }
 
-	 li {
-	    padding: 5px;
-	}
+     li {
+        padding: 5px;
+    }
 
-	label {
-	    display: inline;
-	    width: 100px;
-	    margin-right: 15px;
-	}
+    label {
+        display: inline;
+        width: 100px;
+        margin-right: 15px;
+    }
 
-	select {
-		.add-input();
-	}
-	input {
-	    .add-input();
-	}
+    select {
+        .add-input();
+    }
+    input {
+        .add-input();
+    }
 
-	.add-cate-btn {
-	    margin-top: 18px;
-	    margin-left: 28%;
+    .add-cate-btn {
+        margin-top: 18px;
+        margin-left: 28%;
 
-	    > span {
-		    display: inline-block;
-		    width: 75px;
-		    height: 27px;
-		    margin: 0 5px;
+        > span {
+            display: inline-block;
+            width: 75px;
+            height: 27px;
+            margin: 0 5px;
 
-		    line-height: 27px;
-		    text-align: center;
-		    color: @font-all;
+            line-height: 27px;
+            text-align: center;
+            color: @font-all;
 
-		    border-radius: 3px;
-		    background-color: @font-cate;
-		    cursor: pointer;
+            border-radius: 3px;
+            background-color: @font-cate;
+            cursor: pointer;
 
-		    i {
-    			margin-right: 6px;
-			}
+            i {
+                margin-right: 6px;
+            }
 
-		    &:hover {
-			    background-color: @font-all;
-			    color: @font-cate;
-			}
-		}
-	}
+            &:hover {
+                background-color: @font-all;
+                color: @font-cate;
+            }
+        }
+    }
 }
 
 /*适配移动端*/
@@ -503,22 +505,22 @@ header {
 
 @media (max-width: 768px) {
 
-	header {
-		.todo-icon {
+    header {
+        .todo-icon {
         margin-left: 38%;
-	    }
-	    .todo-title {
-	        margin-left: 48%;
-	    }
-	}
+        }
+        .todo-title {
+            margin-left: 48%;
+        }
+    }
 
-	.todo-container {
+    .todo-container {
         height: 90%;
         min-height: 320px;
         overflow: hidden;
     }
 
-	.todo-category,
+    .todo-category,
     .todo-inventory,
     .todo-spec {
         position: absolute;
@@ -527,52 +529,52 @@ header {
     /*todo-category*/
 
     .todo-task-list {
-    	> li {
-        	width: 92%;
-    	}
+        > li {
+            width: 92%;
+        }
     }
 
     .todo-inventory,
     .todo-category {
 
-	    > a {
-	        .add-btns();
-	    }
+        > a {
+            .add-btns();
+        }
 
-	    .todo-category-detail,
-	    .todo-inventory-detail {
-	        max-height: 78%;
+        .todo-category-detail,
+        .todo-inventory-detail {
+            max-height: 78%;
 
-	        .fa-smile-o {
-		        margin-right: 3em;
-		    }
-	    }
+            .fa-smile-o {
+                margin-right: 3em;
+            }
+        }
     }
 
     /*todo-spec*/
     .todo-spec {
-		.todo-spec-title,
-	    .todo-spec-time {
-	        text-indent: .6em;
-	        > input {
-	        	width: 150px;
-	        }
-	    }
-	    .todo-spec-content {
-	    	> p {
-		        padding: 1.2em;
-		        width: 92%;
-		        max-height: 280px;
-		        overflow: scroll;
-		        overflow-x: hidden;
-	    	}
-	    	> textarea {
-	    		width: 260px;
-		        height: 320px;
-		        overflow: auto;
-		        overflow-x: hidden;
-	    	}
-	    }
+        .todo-spec-title,
+        .todo-spec-time {
+            text-indent: .6em;
+            > input {
+                width: 150px;
+            }
+        }
+        .todo-spec-content {
+            > p {
+                padding: 1.2em;
+                width: 92%;
+                max-height: 280px;
+                overflow: scroll;
+                overflow-x: hidden;
+            }
+            > textarea {
+                width: 260px;
+                height: 320px;
+                overflow: auto;
+                overflow-x: hidden;
+            }
+        }
     }
     
 
@@ -589,70 +591,70 @@ header {
         color: #DEF0F0;
 
         ul {
-	        display: block;
-	        list-style: none;
-	        line-height: 40px;
-	        width: 225px;
-	        height: 40px;
-	        margin: 0 auto;
+            display: block;
+            list-style: none;
+            line-height: 40px;
+            width: 225px;
+            height: 40px;
+            margin: 0 auto;
 
-	        border-top: 2px solid @cate-btn-color;
+            border-top: 2px solid @cate-btn-color;
 
-	        .todo-nav-item {
-		        float: left;
-		        padding: 0 8px 0 2px;
-		        text-align: center;
-		        cursor: pointer;
-		    }
-		    #todo-nav-cates {
-		        color: @cate-btn-color;
-		    }
-		    #todo-nav-inves {
-		        color: @font-inv-btn;
-		    }
-		    #todo-nav-tasks {
-		        color: @font-spec-content;
-		    }
-	    }
+            .todo-nav-item {
+                float: left;
+                padding: 0 8px 0 2px;
+                text-align: center;
+                cursor: pointer;
+            }
+            #todo-nav-cates {
+                color: @cate-btn-color;
+            }
+            #todo-nav-inves {
+                color: @font-inv-btn;
+            }
+            #todo-nav-tasks {
+                color: @font-spec-content;
+            }
+        }
     }
 }
 
 
 @media (max-width: 640px){
-	header{
-		.todo-icon {
-	        margin-left: 25%;
-	    }
-	    .todo-title {
-	        margin-left: 45%;
-	    }
-	}
-	/*todo-spec*/
-	.todo-spec {
-	    .todo-spec-content {
-		    > p {
-		        font-size: .9em;
-		    }
-	    }
+    header{
+        .todo-icon {
+            margin-left: 25%;
+        }
+        .todo-title {
+            margin-left: 45%;
+        }
+    }
+    /*todo-spec*/
+    .todo-spec {
+        .todo-spec-content {
+            > p {
+                font-size: .9em;
+            }
+        }
     }
 }
 
 @media (max-width: 450px){
 
-	/*addCatePanel*/
+    /*addCatePanel*/
     .add-cate-panel {
         width: 320px;
         height: 220px;
         padding: 0;
     
-	    ul {
-	        margin-top: 10px;
-	        margin-left: 80px;
-	    }
+        ul {
+            margin-top: 10px;
+            margin-left: 80px;
+        }
 
-	    .add-cate-btn {
-	        margin-top: 18px;
-	        margin-left: 22%;
-	    }
+        .add-cate-btn {
+            margin-top: 18px;
+            margin-left: 22%;
+        }
     }
 }
