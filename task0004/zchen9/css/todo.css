@@ -415,6 +415,16 @@ header .todo-title {
   .todo-inventory,
   .todo-spec {
     position: absolute;
+    display: inline;
+    width: 100%;
+  }
+  .todo-inventory,
+  .todo-spec {
+    -webkit-transform: translate3d(100%, 0, 0);
+    -moz-transform: translate3d(100%, 0, 0);
+    -ms-transform: translate3d(100%, 0, 0);
+    -o-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
   }
   /*todo-category*/
   .todo-task-list > li {
@@ -465,9 +475,9 @@ header .todo-title {
     width: 150px;
   }
   .todo-spec .todo-spec-content > p {
+    display: block;
     padding: 1.2em;
-    width: 92%;
-    max-height: 280px;
+    width: 100%;
     overflow: scroll;
     overflow-x: hidden;
   }
@@ -521,7 +531,7 @@ header .todo-title {
   }
   /*todo-spec*/
   .todo-spec .todo-spec-content > p {
-    font-size: .9em;
+    width: 90%;
   }
 }
 @media (max-width: 450px) {
@@ -538,5 +548,9 @@ header .todo-title {
   .add-cate-panel .add-cate-btn {
     margin-top: 18px;
     margin-left: 22%;
+  }
+  /*todo-spec*/
+  .todo-spec .todo-spec-content > p {
+    font-size: .85em;
   }
 }

@@ -138,6 +138,13 @@ html, body {
         color: @hover;
     }
 }
+.transform_translate3d(@x: 0, @y: 0, @z: 0){
+    -webkit-transform: translate3d(@x, @y, @z);
+       -moz-transform: translate3d(@x, @y, @z);
+        -ms-transform: translate3d(@x, @y, @z);
+         -o-transform: translate3d(@x, @y, @z);
+            transform: translate3d(@x, @y, @z);
+}
 
 /*header*/
 
@@ -524,6 +531,13 @@ header {
     .todo-inventory,
     .todo-spec {
         position: absolute;
+        display: inline;
+        width: 100%;
+    }
+
+    .todo-inventory,
+    .todo-spec {
+        .transform_translate3d(100%,0,0);
     }
 
     /*todo-category*/
@@ -562,9 +576,9 @@ header {
         }
         .todo-spec-content {
             > p {
+                display: block;
                 padding: 1.2em;
-                width: 92%;
-                max-height: 280px;
+                width: 100%;
                 overflow: scroll;
                 overflow-x: hidden;
             }
@@ -577,7 +591,6 @@ header {
         }
     }
     
-
     /*菜单按钮*/
     .todo-nav {
         position: fixed;
@@ -633,7 +646,7 @@ header {
     .todo-spec {
         .todo-spec-content {
             > p {
-                font-size: .9em;
+                width: 90%;
             }
         }
     }
@@ -655,6 +668,14 @@ header {
         .add-cate-btn {
             margin-top: 18px;
             margin-left: 22%;
+        }
+    }
+    /*todo-spec*/
+    .todo-spec {
+        .todo-spec-content {
+            > p {
+                font-size: .85em;
+            }
         }
     }
 }

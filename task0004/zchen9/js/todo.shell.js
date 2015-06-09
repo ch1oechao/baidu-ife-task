@@ -612,6 +612,7 @@ function addCateCheck(main, name){
         var cateName = getByteVal(name, 20);
         //判断主分类
         if (main === "null") {
+
             if (confirm("确认创建新分类【" + cateName + "】吗？")) {
                 //新增分类对象
                 data.cates.push(new Category(cateName));
@@ -1144,7 +1145,7 @@ function formatTime(obj) {
 
 
 /**
- * t添加新增分类选框
+ * 添加新增分类选框
  *  
  * @param {String} display 传入display属性
  */
@@ -1214,7 +1215,7 @@ function checkTask(title,time,content){
         return false;
     }
     if (getByteVal(title.value,20)) {
-        var taskTitle = getByteVal(title.value,20);
+        var taskTitle = checkXSS(getByteVal(title.value,20));
     }
     else {
         return false;
@@ -1227,9 +1228,34 @@ function checkTask(title,time,content){
     else {
         return false;
     }
+    if(content.value){
+        var taskContent = checkXSS(content.value);
+    }
+    else {
+        return false;
+    }
+    
     //返回检查正确的内容<标题、时间、内容>
-    return [taskTitle, taskTime, content.value];
+    return [taskTitle, taskTime, taskContent];
 }
+
+/**
+ * 防护XSS
+ *  
+ * @param {String} str 传入输入值
+ * @return {String} strs 若输入值检查无误，返回该值
+ *
+ * 代码参考：http://www.shangxueba.com/jingyan/1904034.html
+ */
+
+ function checkXSS(str){
+    var reg = new RegExp("[$*()=|'\\[\\].<>/@#&{}]") ;
+    var strs = "";
+    for(var i = 0; i < str.length; i++){
+        strs = strs + str.substr(i, 1).replace(reg,"");
+    }
+    return strs;
+ }
 
 /**
  * 检查时间
@@ -1275,12 +1301,14 @@ function editIcon(status){
     }
 }
 
-//http://www.cnblogs.com/gossip/archive/2010/10/13/1849896.html
+
 /**
  * 返回val在规定字节长度max内的值
  *  
  * @param {String} val 传入字符串值
  * @param {number} max 传入字符串允许的最大长度
+ * 
+ * 代码参考：http://www.cnblogs.com/gossip/archive/2010/10/13/1849896.html
  */
 function getByteVal(val, max){
     var returnValue = '';
