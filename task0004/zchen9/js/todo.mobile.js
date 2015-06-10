@@ -1,14 +1,3 @@
-function startAnimation(){
-    var todoStart = $(".todo-start")[0];
-    var todoContainer = $(".todo-container")[0];
-    
-    todoStart.style.height = 0;
-    todoStart.style.padding = 0;
-    todoStart.style.opacity = 0;
-    todoStart.style.zIndex = -1;
-    todoContainer.style.top = 0;
-}
-
 // slider组件
 function Silder(options){
     this.dom = options.dom;

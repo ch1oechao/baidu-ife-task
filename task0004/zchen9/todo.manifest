@@ -1,0 +1,6 @@
+CACHE MANIFEST  
+#VERSION 1.0  
+CACHE:  
+css/font-awesome.min.css
+img/icon-logo.png
+js/todo.util.js

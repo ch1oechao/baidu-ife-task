@@ -1,94 +1,8 @@
 /**
- * @file util.js
+ * @file todo.util.js
  * @author zchen9(zxcvbnm.pop@qq.com)
  */
 
-/**
- * 判断arr是否为一个数组，返回一个bool值
- *
- * @class
- */
-function isArray(arr){
-    //方法一
-    //return arr instanceof Array;
-    //方法二
-    //return Array.isArray(arr);
-    //方法三
-    return Object.prototype.toString.call(arr) == "[object Array]";
-}
-
-/**
- * 判断fn是否为一个函数，返回一个bool值
- *
- * @class
- */
-
-function isFunction(fn){
-    //方法一
-    //return typeof fn === "function";
-    //方法二
-    //return fn instanceof Function;
-    //方法三
-    return Object.prototype.toString.call(fn) == "[object Function]";
-}
-/**
- * 使用递归来实现一个深度克隆，可以复制一个目标对象，返回一个完整拷贝
- * 被复制的对象类型会被限制为数字、字符串、布尔、日期、数组、Object对象。不会包含函数、正则对象等
- *
- * @class
- */
-
-function cloneObject(src) {
-    var tar = src.constructor === Array ? [] : {};
-    for ( var i in src ) {
-        if ( src.hasOwnProperty(i) ) {
-            tar[i] = typeof src[i] === "object" ? cloneObject(src[i]) : src[i];
-        }
-    }
-    return tar;
-}
-/**
- * 对数组进行去重操作，只考虑数组中元素为数字或字符串，返回一个去重后的数组
- *
- * @class
- */
-//方法1
-function uniqArray(arr) {
-    var temp = [];
-    if(arr instanceof Array){
-        arr.sort();
-        for(var i=0;i<arr.length;i++){
-            if(arr[i] !== arr[i+1]){
-                temp.push(arr[i]);
-            }
-        }
-    }
-    return temp;
-}
-//方法2
-//function uniqArray(arr) {
-//  var temp = [];
-//  if(arr instanceof Array){
-//      for(var i=0; i<arr.length; i++){
-//          temp.push(arr[i]);
-//          for(var j=i+1; j<=arr.length; j++){
-//              if(arr[i]===arr[j]){
-//                  temp.pop(arr[j]);
-//              }
-//          }
-//      }
-//  }
-//  return temp;
-//}
-
-/**
- * 对字符串头尾进行空格字符的去除、包括全角半角空格、Tab等，返回一个字符串
- *
- * @class
- */
-function trim(str) {
-    return str.replace( /\s+/g, "" );
-}
 
 /**
  * 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
@@ -99,41 +13,6 @@ function each(arr, fn) {
     for( var i=0; i < arr.length; i++ ) {
         fn(arr[i], i);
     }
-}
-
-/**
- * 获取一个对象里面第一层元素的数量，返回一个整数
- *
- * @class
- */
-function getObjectLength(obj) {
-    var count = 0;
-    if (obj instanceof Object) {
-        for (var i in obj) {
-            count++;
-        }
-    }
-    return count;
-}
-
-/**
- * 判断是否为邮箱地址
- *
- * @class
- */
-function isEmail(emailStr) {
-    var emReg = /^([a-zA-Z0-9\_\-\.])+@([a-zA-Z0-9\_\-\.])+([a-zA-Z0-9]){2,4}$/gi;
-    return emReg.test( emailStr );
-}
-
-/**
- * 判断是否为手机号
- *
- * @class
- */
-function isMobilePhone(phone) {
-    var phoneReg = /^\d{11}$/g;
-    return phoneReg.test(phone);
 }
 
 /**
@@ -169,39 +48,6 @@ function removeClass(element, oldClassName) {
             element.className = "";
         }
     }
-}
-
-/**
- * 判断siblingNode和element是否为同一个父元素下的同一级的元素，返回bool值
- *
- * @class
- */
-function isSiblingNode( element, siblingNode ) {
-    var nodes = element.parentNode.childNodes;
-    for (var i = 0; i < nodes.length; i++) {
-        if ( nodes[i] === siblingNode ) {
-            return true;
-        }
-    }
-}
-
-/**
- * 获取element相对于浏览器窗口的位置，返回一个对象{x, y}
- *
- * @class
- */
-function getPosition( element ) {
-    var actualLeft = elemnt.offsetLeft;
-    var actualTop = element.offsetTop;
-    var current = element.offsetParent;
-
-    while ( current !== null ) {
-        actualLeft += current.offsetLeft;
-        actualTop += current.offsetTop;
-        current = current.offsetParent;
-    }
-
-    return { x : actualLeft, y : actualTop };
 }
 
 /**
@@ -371,23 +217,6 @@ function addEnterEvent(element, listener) {
     }
 }
 
-$.on = function(element, event, listener) {
-    addEvent(element, event, listener)
-};
-
-$.un = function(element, event, listener) {
-    removeEvent(element, event, listener)
-};
-
-$.click = function(element, listener) {
-    addClickEvent(element, listener)
-};
-
-$.enter = function(element, listener) {
-    addEnterEvent(element, listener)
-};
-
-
 /**
  * 遍历元素添加事件
  *
@@ -396,189 +225,12 @@ $.enter = function(element, listener) {
 function delegateEvent(element, tag, eventName, listener) {
     var e = event ? event : window.event;
     var ele = element ? element : document.body;
-    var target = e.target || e.srcElement;
-    $.on(element,eventName,function(){
-        if ( ele.nodeName === tag || ele.nodeName.toLowerCase() === tag ) {
-            listener();
-        }
-    });
-}
-
-$.delegate = function(element, tag, eventName, listener) {
-    delegateEvent(element, tag, eventName, listener);
-};
-
-/**
- * 判断是否为IE浏览器，返回-1或者版本号
- *
- * @class
- */
-function isIE() {
-    var ua = navigator.userAgent;
-    if ( ua.indexOf("MSIE") > 0 ) {
-        switch( true ) {
-            case ua.indexOf("MSIE 6.0") != -1 :
-                return "IE6";
-                break;
-            case ua.indexOf("MSIE 7.0") != -1 :
-                return "IE7";
-                break;
-            case ua.indexOf("MSIE 8.0") != -1 :
-                return "IE8";
-                break;
-            case ua.indexOf("MSIE 9.0") != -1 :
-                return "IE9";
-                break;
-            case ua.indexOf("MSIE 10.0") != -1 :
-                return "IE10";
-                break;
-            default :
-                return "Other Vision";
-        }
-    }
-}
-
-/**
- * 设置cookie
- *
- * @class
- */
-function setCookie(cookieName, cookieValue, expiredays) {
-    var cookieText = encodeURIComponent( cookieName ) 
-                              + "="
-                              + encodeURIComponent( cookieValue );
-    if ( expiredays instanceof Date ) {
-        cookieText += "; expire=" + expiredays.toGMTString();
-    }
-    document.cookie = cookieText;
-}
-
-/**
- * 获取cookie值
- *
- * @class
- */
-function getCookie(cookieName) {
-    var coName = encodeURIComponent(cookieName) + "=",
-         coStart = document.cookie.indexOf(coName),
-         coValue = null;
-
-    if ( coStart > -1 ) {
-        var coEnd = document.cookie.indexOf(";", coStart);
-        if ( coEnd == -1) {
-            coEnd = document.cookie.length;
-        }
-        coValue = decodeURIComponent(
-                        document.cookie.subString( coStart + coName.length, coEnd )
-                        );
-    }
-    return coValue;
-}
-
-/**
- * 封装Ajax方法
- *
- * @param {Object} options 可以包括的参数为：
- *                 type: post或者get，可以有一个默认值
- *                 data: 发送的数据，为一个键值对象或者为一个用&连接的赋值字符串
- *                 onsuccess: 成功时的调用函数
- *                 onfail: 失败时的调用函数
- *@param {Object} url 链接
- *
- */
-function ajax(url, options) {
-
-    //若type值为空，默认为GET方法
-    var atype = options.type;
-    if ( typeof atype == null ) {
-        options.type = "GET";
-    }
-
-    options = {
-        onsuccess: function( responseText, xhr ) {
-            console.log( "Request was unsuccessful: " + xhr.status );
-        },
-        onfail: function( responseText, xhr ) {
-            console.log( responseText );
-        }
-    };
-
-    //XHR兼容
-    function createXHR() {
-        //一般浏览器
-        if ( typeof XMLHttpRequest != "undefined" ) {
-            return new XMLHttpRequest();
-        }
-        //兼容IE老版本
-        else if ( typeof ActiveXObject != "undefined" ) {
-            if ( typeof arguments.callee.activeXString != "string" ) {
-                var versions = [ "MSXML2.XMLHttp.6.0", 
-                                        "MSXML2.XMLHttp.3.0",
-                                        "MSXML2.XMLHttp"
-                                       ],
-                                       i,
-                                       len;
-                for ( i = 0, len = versions.length; i < len; i++) {
-                    try {
-                        new ActiveXObject( versions[i] );
-                        arguments.callee.activeXString = versions[i];
-                        break;
-                    }
-                    catch( ex ) {
-
-                    }
-                }
-            }
-            return new ActiveXObject( arguments.callee.activeXString );
-        }
-        else {
-            throw new Error( "No XHR object available." );
-        }
-    }
-
-    var xhr = createXHR();
-    xhr.onreadystatechange = function() {
-        if ( xhr.readyState == 4 ) {
-            if ( ( xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                options.onfail( xhr.responseText, xhr );
-            }
-            else {
-                options.onsuccess( xhr.responseText, xhr );
-            }
-        }
-    };
-
-    //定义发送的数据的格式
-    function addURLParam( data ){
-        var pair = [];
-        if ( data instanceof String ) {
-            data = encodeURIComponent( data );
-        }
-        else if ( data instanceof Object ) {
-            for( var i = 0; i < data.length; i++) {
-                if ( data.hasOwnProperty(i) ) {
-                    pair.push( i + "=" + data[i].toString() );
-                }
-            }
-            data = encodeURIComponent( pair.join("&") );
-        }
-        return data;
-    }
-
-    //当方法为GET时
-    if( options.type = "GET" ) {
-        if( options.data != null ) {
-            url += addURLParam( options.data );
-        }
-        xhr.open( "get", url, false );
-        xhr.send( null );
-    }
-    //当方法为POST时
-    else if( options.type = "POST" ) {
-        xhr.open("post", url, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        if( options.data != null ) {
-            xhr.send(addURLParam(options.data));
+    var eleChild = ele.children;
+    for ( var i = 0 ; i < eleChild.length ; i++ ) {
+        if ( eleChild[i].nodeName === tag 
+            || eleChild[i].nodeName.toLowerCase() === tag 
+            ) {
+            addEvent(eleChild[i], eventName, listener);
         }
     }
 }
@@ -631,17 +283,6 @@ var getElementsByTagName = function(tag,name) {
     return returns;
 };
 
-
-//getNextElement() —— 获取下一个元素节点
-function getNextElement(node) {
-    if(node.nodeType == 1) {
-        return node;
-    }
-    if(node.nextSibling) {
-        return getNextElement(node.nextSibling);
-    }
-    return null;
-}
 
 //遍历元素监听事件
 function delegateEleEvent(ele,listener){
