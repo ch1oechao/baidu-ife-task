@@ -226,7 +226,7 @@ function todoCount(arr,type){
         //列表下任务数
         case "data.lists":
             each(data.tasks, function(item){
-                if (!item.isDone && item.cateList[1] === type) {
+                if (!item.isDone && item.cateList.taskList === type) {
                     count++;
                 }
             });
@@ -235,7 +235,7 @@ function todoCount(arr,type){
         //分类下任务数
         case "data.cates":
             each(data.tasks, function(item){
-                if (!item.isDone && item.cateList[0] === type) {
+                if (!item.isDone && item.cateList.category === type) {
                     count++;
                 }
             });
@@ -300,8 +300,8 @@ function addCate(obj){
  */
 function addList(obj){
     //检查是否已存在对象的分类项
-    var liCate = $("[data-cate-id=" + obj[0] + "]");
-    if (obj[1]) {
+    var liCate = $("[data-cate-id=" + obj.category + "]");
+    if (obj.taskList) {
         //检查分类项中是否存在子列表项
         if (!(liCate.getElementsByTagName("ul")[0])) {
             var ulTask = document.createElement("ul");
@@ -312,23 +312,23 @@ function addList(obj){
             ulTask = liCate.getElementsByTagName("ul")[0];
             if (ulTask.hasAttribute("class", "todo-task-list")) {
                 //设置列表项【data-list-id】 内容为列表名称
-                var liList = $("[data-list-id=" + obj[1] + "]");
+                var liList = $("[data-list-id=" + obj.taskList + "]");
                 if (!liList || liList.nodeName !== "LI") {
                     var liTaskList = document.createElement("li");
-                    liTaskList.setAttribute("data-list-id", obj[1]);
+                    liTaskList.setAttribute("data-list-id", obj.taskList);
                     //默认任务<使用说明>不能删除
-                    if (obj[1] === "使用说明") {
+                    if (obj.taskList === "使用说明") {
                         liTaskList.innerHTML = '<i class="fa fa-file-o fa-fw"></i>'
-                                               + obj[1]
+                                               + obj.taskList
                                                + '('
-                                               + todoCount("data.lists", obj[1])
+                                               + todoCount("data.lists", obj.taskList)
                                                + ')';
                     }
                     else{
                         liTaskList.innerHTML = '<i class="fa fa-file-o fa-fw"></i>'
-                                               + obj[1]
+                                               + obj.taskList
                                                + '('
-                                               + todoCount("data.lists", obj[1])
+                                               + todoCount("data.lists", obj.taskList)
                                                + ')';
 
                         var removeSpan = document.createElement("span");
@@ -383,11 +383,11 @@ function removeClick(e){
  */
 function updateData(){
     //更新本地分类数据
-    setData("cates", data.cates);
+    data.setData("cates", data.cates);
     //更新本地列表数据
-    setData("lists", data.lists);
+    data.setData("lists", data.lists);
     //更新本地任务数据
-    setData("tasks", data.tasks);
+    data.setData("tasks", data.tasks);
 }
 
 
@@ -416,7 +416,7 @@ function removeCate(item){
             //删除分类下相关列表
             removeItem.length = 0;
             each(data.lists, function(item, i){
-                if (item[0] === liCate) {
+                if (item.category === liCate) {
                     removeItem.push(item);
                 }
             });
@@ -426,7 +426,7 @@ function removeCate(item){
             //删除分类和列表相关任务
             removeItem.length = 0;
             each(data.tasks, function(item, i){
-                if (item.cateList[0] === liCate) {
+                if (item.cateList.category === liCate) {
                     removeItem.push(item);
                 }
             });
@@ -461,7 +461,7 @@ function removeList(item){
             //删除列表对象
             var removeItem = [];
             each(data.lists, function(item,i){
-                if (item[1] === liList) {
+                if (item.taskList === liList) {
                     removeItem.push(item);
                 }
             });
@@ -471,7 +471,7 @@ function removeList(item){
             //删除列表相关任务
             removeItem.length = 0;
             each(data.tasks, function(item,i){
-                if (item.cateList[1] === liList) {
+                if (item.cateList.taskList === liList) {
                     removeItem.push(item);
                 }
             });
@@ -609,13 +609,13 @@ function addCateOption(cate){
 function addCateCheck(main, name){
     //判断输入名称长度
     if (getByteVal(name, 20)) {
-        var cateName = getByteVal(name, 20);
+        var cateName = checkXSS(getByteVal(name, 20));
         //判断主分类
         if (main === "null") {
 
             if (confirm("确认创建新分类【" + cateName + "】吗？")) {
                 //新增分类对象
-                data.cates.push(new Category(cateName));
+                data.cates.push(new Category({category: cateName}));
 
                 //刷新本地数据
                 updateData();
@@ -628,7 +628,7 @@ function addCateCheck(main, name){
         else {
             if(confirm("确认在【" + main + "】分类下创建新列表【" + cateName + "】吗？")) {
                 //新增列表对象
-                data.lists.push(new TaskList(main, cateName));
+                data.lists.push(new TaskList({category: main, taskList: cateName}));
 
                 //刷新本地数据
                 updateData();
@@ -720,7 +720,7 @@ function addInventory(obj){
                     ddTaskTitle.setAttribute("data-task-done", "0");
                     ddTaskTitle.innerHTML = obj.title;
                 }
-                ddTaskTitle.setAttribute("data-list-id", obj.cateList[1]);
+                ddTaskTitle.setAttribute("data-list-id", obj.cateList.taskList);
                 ddTaskTitle.setAttribute("data-task-id", obj.id);
                 init.taskInventory.appendChild(ddTaskTitle);
                 //更新清单项
@@ -741,7 +741,7 @@ function addInventory(obj){
 addClickEvent(init.todoAddTask, function(){
     //判断是否选中某一项任务列表
     var taskSelected = $(".todo-task-selected")[0];
-    var cateList = [];
+    var cateList = {};
     if (taskSelected && taskSelected.nodeName === "LI") {
         var dataListId = taskSelected.getAttribute("data-list-id");
         //使用说明下默认不建立子任务
@@ -750,8 +750,8 @@ addClickEvent(init.todoAddTask, function(){
         }
         else {
             each(data.lists, function(item){
-                if (item[1] === dataListId) {
-                    if (confirm("将在【" + item[0] + "】分类下的【" + dataListId + "】列表新增任务~")) {
+                if (item.taskList === dataListId) {
+                    if (confirm("将在【" + item.category + "】分类下的【" + dataListId + "】列表新增任务~")) {
                         //初始化编辑界面
                         editIcon("edit");
                         delegateEleEvent(init.todoDefault, function(ele){
@@ -762,7 +762,10 @@ addClickEvent(init.todoAddTask, function(){
                             ele.value = "";
                         });
                     }
-                    cateList = [item[0], dataListId];
+                    cateList = { 
+                        category: item.category, 
+                        taskList: dataListId
+                    };
                     //移动端切换页面
                     if(init.slider.init()){
                         init.slider.goIndex('2');
@@ -777,7 +780,14 @@ addClickEvent(init.todoAddTask, function(){
                     //新建任务
                     var newTask = checkTask(init.todoEdit[0], init.todoEdit[1], init.todoEdit[2]);
                     //新增任务对象
-                    data.tasks.push(new TaskDetail(cateList, newTask[0], newTask[1], newTask[2], false));
+                    data.tasks.push(new TaskDetail({
+                                            cateList: cateList, 
+                                            title: newTask[0], 
+                                            time: newTask[1], 
+                                            content: newTask[2], 
+                                            isDone: false
+                                        })
+                                    );
                     //遍历对象id
                     each(data.tasks,function(item, i){
                         item.id = i;
@@ -845,7 +855,7 @@ function listInventory(arr,list,isDone){
             //遍历指定id对象的任务
             else{
                 each(arr,function(item){
-                    if (item.cateList[1] === list) {
+                    if (item.cateList.taskList === list) {
                         addInventory(item);
                     }
                 })
@@ -865,7 +875,7 @@ function listInventory(arr,list,isDone){
                 //遍历指定id对象所有已完成任务
                 else{
                     each(arr,function(item){
-                        if (item.isDone && item.cateList[1] === list) {
+                        if (item.isDone && item.cateList.taskList === list) {
                             addInventory(item);
                         }
                     });
@@ -884,7 +894,7 @@ function listInventory(arr,list,isDone){
                 //遍历指定id对象所有未完成任务
                 else {
                     each(arr,function(item){
-                        if (!item.isDone && item.cateList[1] === list) {
+                        if (!item.isDone && item.cateList.taskList === list) {
                             addInventory(item);
                         }
                     });
@@ -982,7 +992,7 @@ addClickEvent(init.todoCheckIcon,function(){
                     //刷新本地数据
                     updateData();
                     //刷新任务清单视图
-                    listInventory(data.tasks,data.tasks[i].cateList[1],"all");
+                    listInventory(data.tasks,data.tasks[i].cateList.taskList,"all");
                     //刷新未完成任务总数
                     init.todoTotal.innerHTML = "(" + todoCount("data.tasks","all") + ")";
                     //刷新分类视图
@@ -1043,7 +1053,7 @@ addClickEvent(init.todoEditIcon,function(){
                     //刷新本地数据
                     updateData();
                     //更新清单视图
-                    listInventory(data.tasks,itemTask.cateList[1],"all");
+                    listInventory(data.tasks,itemTask.cateList.taskList,"all");
                     //更新未完成任务总数
                     init.todoTotal.innerHTML = "(" + todoCount("data.tasks","all") + ")";
                     //刷新分类视图

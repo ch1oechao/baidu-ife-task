@@ -1,4 +1,9 @@
-// slider组件
+/**
+ * @file todo.mobile.js
+ * @author zchen9(zhao.zchen9@gmail.com)
+ */
+
+// 移动端slider组件
 function Silder(options){
     this.dom = options.dom;
     this.wrap = options.wrap;
