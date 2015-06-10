@@ -1,6 +1,15 @@
 CACHE MANIFEST  
-#VERSION 1.0  
+#VERSION 1.1  
 CACHE:  
-css/font-awesome.min.css
 img/icon-logo.png
+fonts/FontAwesome.otf
+fonts/fontawesome-webfont.eot
+fonts/fontawesome-webfont.svg
+fonts/fontawesome-webfont.ttf
+fonts/fontawesome-webfont.woff
+css/font-awesome.min.css
+css/todo.min.css
 js/todo.util.js
+js/todo.data.js
+js/todo.mobile.js
+js/todo.shell.js
