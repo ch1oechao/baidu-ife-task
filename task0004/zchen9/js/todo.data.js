@@ -256,12 +256,23 @@ var data = (function(){
                 }
             };
 
+
+    updateData = function(cates, lists, tasks){
+        //更新本地分类数据
+        this.setData("cates", cates);
+        //更新本地列表数据
+        this.setData("lists", lists);
+        //更新本地任务数据
+        this.setData("tasks", tasks);
+    };
+
     return {
         tasks: this.getData("tasks"),
         lists: this.getData("lists"),
         cates: this.getData("cates"),
         getData: getData,
-        setData: setData
+        setData: setData,
+        updateData: updateData
     };
 
 })();
