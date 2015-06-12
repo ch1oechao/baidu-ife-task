@@ -4,378 +4,334 @@
 *
 */
 
-var control = (function(){
+define(["util", "data", "render"], function(_, data, render){
 
-	/* 实例化滑动组件 */
-	var slider = new Silder({
-                    dom: $("section"),
-                    wrap: $(".todo-container")[0]
+    /**
+     * @namespace init 初始化变量
+     */
+    var init = {
+        
+        /* 清单视图 */
+        //任务清单视图下的新增任务按钮<a>
+        todoAddTask: _.$("#todo-add-task"),
+
+        /* 分类视图 */
+        //任务分类视图下新增分类按钮<a>
+        todoCateBtn: _.$("#todo-add-category"),
+        //任务分类视图显示所有任务块<p>
+        todoCateAll: _.$(".todo-category-total")[0],
+
+        /* 新增分类弹窗 */
+        //新增分类名称<input>
+        addCateName: _.$("#add-cate-name"),
+        //新增分类取消按钮<span>
+        addCateCancel: _.$("#add-cate-cancel"),
+        //新增分类确定按钮<span>
+        addCateCheck: _.$("#add-cate-check"),
+
+        /* 移动端菜单按钮 */
+        todoNav: [ _.$("#todo-nav-cates"), 
+                   _.$("#todo-nav-inves"), 
+                   _.$("#todo-nav-tasks")
+                 ]
+    };
+
+    var start = function(){
+        
+        /*--------------初始化渲染默认视图--------------*/
+
+        //适配移动端
+        if(_.silder.init()){
+            _.silder.renderDOM();
+        }
+
+        //添加所有已存在分类
+        _.each(data.cates, render.addCate);
+        //添加所有已存在列表
+        _.each(data.lists, render.addList);
+        
+        //添加默认任务清单和内容
+        render.addInventory(data.tasks[0]);
+        render.addContent(data.tasks[0]);
+
+        //初始化第一项默认被选中
+        render.renderFirstItem();
+
+        //初始化未完成任务总数
+        render.renderCount();
+
+        //初始化下拉框添加主分类选项
+        _.each(data.cates, function(item){
+            render.addCateOption(item.category);
+        });
+
+
+        /*--------------事件监听---------------*/
+
+        //初始化切换样式点击事件
+        //任务清单筛选项
+        _.delegateClickEvent(render.todoInventory, render.classToggle);
+        //更换样式
+        _.delegateClickEvent(render.todoTaskItem, render.classToggle);
+
+        //遍历删除图标点击事件监听
+        _.delegateClickEvent(render.removeIcon, render.removeClick);
+        //更新清单任务视图
+        _.delegateClickEvent(render.todoTaskItem, render.taskItemClick);
+        //菜单按钮点击事件
+        _.each(init.todoNav, function(item){
+            _.addClickEvent(item, render.silderGo);
+        });
+
+    };
+
+    var listen = function(){
+        /**
+         * 新增分类点击事件
+         */
+        _.addClickEvent(init.todoCateBtn, function(){
+            //显示新增分类弹窗
+            render.addCatePanel("block");
+            //新增分类确认按钮监听
+            if (init.addCateCheck) {
+                _.addClickEvent(init.addCateCheck, function(){
+                    var mainCateName = render.addCateSelect.value;
+                    var newCateName = init.addCateName.value;
+                    //检查下拉框分类和新分类输入值
+                    render.addCateList(mainCateName, newCateName);
+                    //清空输入框内容
+                    init.addCateName.value = "";
+                    //关闭弹窗
+                    render.addCatePanel("none");
                 });
+            }
+            //新增分类取消按钮监听
+            if (init.addCateCancel) {
+                _.addClickEvent(init.addCateCancel, function(){
+                    init.addCateName.value = "";
+                    render.addCatePanel("none");
+                });
+            }
+        });
 
-	/**
-	 * 添加删除图标点击事件
-	 */
-	removeClick = function(e){
-	    stopBubble(e);
-	    e = e || window.event;
-	    var target = e.target || e.srcElement;
-	    if (target.parentNode.nodeName === "SPAN") {
-	        var removeSpanClass = target.parentNode.getAttribute("class");
-	        switch (removeSpanClass) {
-	            //判断删除类型
-	            case "remove-list":
-	                control.removeList(target.parentNode);
-	                break;
-	            case "remove-cate":
-	                control.removeCate(target.parentNode);
-	                break;
-	        }
-	    }
-	}
+        /*--------------分类视图-点击事件监听---------------*/
 
-	/**
-	 * 删除主分类
-	 *
-	 * @param {DOM} item 传递包含分类属性的节点
-	 */
-	removeCate = function(item){
-	    if (item.parentNode.parentNode.nodeName === "LI") {
-	        var liCate = item.parentNode.parentNode.getAttribute("data-cate-id");
-	        if (confirm("是否删除主分类【" 
-	                    + liCate 
-	                    + "】和所有子列表任务？删除后不可恢复╮(╯▽╰)╭")
-	            ) {
-	            //删除分类对象
-	            var removeItem = [];
-	            each(data.cates, function(item){
-	                if( item.category === liCate) {
-	                    removeItem.push(item);
-	                }
-	            });
-	            each(removeItem, function(item){
-	                data.cates.remove(item);
-	            });
-	            //删除分类下相关列表
-	            removeItem.length = 0;
-	            each(data.lists, function(item, i){
-	                if (item.category === liCate) {
-	                    removeItem.push(item);
-	                }
-	            });
-	            each(removeItem, function(item){
-	                data.lists.remove(item);
-	            });
-	            //删除分类和列表相关任务
-	            removeItem.length = 0;
-	            each(data.tasks, function(item, i){
-	                if (item.cateList.category === liCate) {
-	                    removeItem.push(item);
-	                }
-	            });
-	            each(removeItem, function(item){
-	                data.tasks.remove(item);
-	            });
+        /**
+         * 所有任务块点击监听事件
+         */
+        _.addClickEvent(init.todoCateAll,function(){
+            //移除所有任务项的点击样式
+            _.each(render.todoTaskItem, function(item){
+                _.removeClass(item, "todo-task-selected");
+            });
+            // 刷新分类视图
+            render.refreshInventory(data.tasks, "all", "all");
 
-	            //刷新本地数据
-	            data.updateData(data.cates, data.lists, data.tasks);
-	            //刷新分类视图
-	            control.refreshCate(data.cates, data.lists);
-	        }
-	    }
-	}
+            //移动端切换页面
+            if (_.silder.init()) {
+                _.silder.goIndex('1');
+            }
+        });
 
-	/**
-	 * 删除子列表
-	 *
-	 * @param {DOM} item 传递包含列表属性的节点
-	 */
-	removeList = function(item){
-	    if (item.parentNode.nodeName === "LI" 
-	        && hasClass(item.parentNode, "todo-task-selected")
-	        ) {
-	        var liList = item.parentNode.getAttribute("data-list-id");
-	        if (confirm("是否删除列表【"
-	                    + liList
-	                    + "】和所有子任务？删除后不可恢复╮(╯▽╰)╭")
-	            ) {
-	            //删除列表对象
-	            var removeItem = [];
-	            each(data.lists, function(item,i){
-	                if (item.taskList === liList) {
-	                    removeItem.push(item);
-	                }
-	            });
-	            each(removeItem, function(item){
-	                data.lists.remove(item);
-	            });
-	            //删除列表相关任务
-	            removeItem.length = 0;
-	            each(data.tasks, function(item,i){
-	                if (item.cateList.taskList === liList) {
-	                    removeItem.push(item);
-	                }
-	            });
-	            each(removeItem, function(item){
-	                data.tasks.remove(item);
-	            });
+        /*--------------清单视图-新增任务--------------*/
 
-	            //刷新本地数据
-	            data.updateData(data.cates, data.lists, data.tasks);
-	            //刷新分类视图
-	            control.refreshCate(data.cates, data.lists);
-	        }
-	    }
-	    else {
-	        alert("选中列表后才能删除~");
-	    }
-	}
-
-	/**
-	 * 刷新分类视图
-	 *
-	 * @param {Array} arr 传递分类对象数组
-	 */
-	refreshCate = function(cates, lists){
-	    //初始化分类视图
-	    render.initCate();
-	    //初始化各子列表内容
-	    render.initList();
-	    //初始化下拉菜单项
-	    render.initSelect();
-
-	    //添加更新后的对象数组
-	    each(cates, function(item){
-	        //更新分类项
-	        render.addCate(item);
-	        //更新新增分类弹窗下拉框的分类选项
-	        render.addCateOption(item.category);
-	    });
-	    //添加更新后的列表数组项
-	    each(lists, function(item){
-	        //更新列表项
-	        render.addList(item);
-	    });
-
-	    //更新任务清单视图
-	    control.refreshInventory(data.tasks, "all", "all");
-
-	    //遍历删除图标点击事件监听
-	    delegateClickEvent(render.removeIcon, control.removeClick);
-	    //更换样式
-	    delegateClickEvent(render.todoTaskItem, render.classToggle);
-	    //更新清单任务视图
-	    delegateClickEvent(render.todoTaskItem, control.taskItemClick);
-
-	    //刷新未完成任务总数
-	    render.renderCount();
-	    //更新内容视图，默认任务内容
-	    render.addContent(data.tasks[0]);
-	}
+        /**
+         * 添加新任务点击事件
+         */
+        _.addClickEvent(init.todoAddTask, function(){
+            //判断是否选中某一项任务列表
+            var taskSelected = _.$(".todo-task-selected")[0];
+            var cateList = {};
+            if (taskSelected && taskSelected.nodeName === "LI") {
+                var dataListId = taskSelected.getAttribute("data-list-id");
+                //使用说明下默认不建立子任务
+                if (dataListId === "使用说明") {
+                    alert("【使用说明】不能新建子任务啦~");
+                }
+                else {
+                    _.each(data.lists, function(item){
+                        if (item.taskList === dataListId) {
+                            if (confirm("将在【" + item.category + "】分类下的【" + dataListId + "】列表新增任务~")) {
+                                //初始化编辑界面
+                                render.renderEditChange("new");
+                            }
+                            cateList = { 
+                                category: item.category, 
+                                taskList: dataListId
+                            };
+                            //移动端切换页面
+                            if(_.silder.init()){
+                                _.silder.goIndex('2');
+                            }
+                        }
+                    });
+                }
+                //编辑任务新建完成点击事件
+                render.todoCheckEle.onclick = function(){
+                    if (_.checkTask(render.todoEdit[0], render.todoEdit[1], render.todoEdit[2])) {
+                        if (confirm("确认新建【" + render.todoEdit[0].value + "】任务吗？")) {
+                            //新建任务
+                            var newTask = _.checkTask(render.todoEdit[0], render.todoEdit[1], render.todoEdit[2]);
+                            //新增任务对象
+                            data.tasks.push(new data.TaskDetail({
+                                                    cateList: cateList, 
+                                                    title: newTask[0], 
+                                                    time: newTask[1], 
+                                                    content: newTask[2], 
+                                                    isDone: false
+                                                })
+                                            );
+                            //遍历对象id
+                            _.each(data.tasks,function(item, i){
+                                item.id = i;
+                            });
+                            //刷新本地数据
+                            data.updateData(data.cates, data.lists, data.tasks);
+                            //刷新分类视图
+                            render.refreshCate(data.cates, data.lists);
+                            //更新清单视图
+                            render.refreshInventory(data.tasks,dataListId,"all");
+                            //更新内容视图
+                            render.renderEditChange("check");
+                            _.each(data.tasks, function(item){
+                                if (item.id === data.tasks.length - 1) {
+                                    render.addContent(item);
+                                }
+                            });
+                            //移动端切换页面
+                            if(_.silder.init()){
+                                _.silder.goIndex('1');
+                            }
+                        }
+                    }
+                };
+            }
+            else {
+                alert("【新增任务】需要选中【目标分类】喔~╰(￣▽￣)╭");
+            }
+        });
 
 
-	/**
-	 * 检查输入内容插入新分类或新列表
-	 *
-	 * @param {String} main 主分类名称
-	 * @param {String} name 子列表名称
-	 */
-	addCateList = function(main, name){
-	    //判断输入名称长度
-	    if (getByteVal(name, 20)) {
-	        var cateName = checkXSS(getByteVal(name, 20));
-	        //判断主分类
-	        if (main === "null") {
-	            if (confirm("确认创建新分类【" + cateName + "】吗？")) {
-	                //新增分类对象
-	                data.cates.push(new Category({category: cateName}));
-	            }
-	        }
-	        else {
-	            if(confirm("确认在【" + main + "】分类下创建新列表【" + cateName + "】吗？")) {
-	                //新增列表对象
-	                data.lists.push(new TaskList({category: main, taskList: cateName}));
-	            }
-	        }
-	        //刷新本地数据
-	        data.updateData(data.cates, data.lists, data.tasks);
-	        //刷新分类视图
-	        control.refreshCate(data.cates, data.lists);
-	    }
-	}
+        /**
+         * 任务清单菜单选项点击更新内容视图事件
+         */
+        _.delegateClickEvent(render.todoInventory, function(e){
 
-	/**
-	 * 列表项点击刷新任务清单视图事件
-	 */
-	taskItemClick = function(e){
-	    stopBubble(e);
-	    e = e || window.event;
-	    var target = e.target || e.srcElement;
-	    if (target.nodeName === "LI") {
-	        var listId = target.getAttribute("data-list-id");
-	        control.refreshInventory(data.tasks, listId, "all");
+            e = e || window.event;
+            var target = e.target || e.srcElement;
 
-	        //移动端切换页面
-	        if(slider.init()){
-	            slider.goIndex('1');
-	        }
-	    }
-	}
+            _.stopBubble(e);
 
-	/**
-	 * 刷新任务清单视图事件
-	 *  
-	 * @param {Array} arr 传入任务对象数组
-	 * @param {String} list 传入列表名称
-	 * @param {String} isDone 传入任务是否完成布尔值
-	 */
-	refreshInventory = function(arr, list, isDone){
-	    render.initInventory();
-	    //将任务内容按时间排序
-	    arr.sort(compare("time"));
-	    //检查筛选项
-	    switch (typeof isDone) {
-	        //默认所有
-	        case "string":
-	            //遍历所有对象的任务
-	            if (list === "all") {
-	                each(arr,function(item){
-	                    render.addInventory(item);
-	                });
-	            }
-	            //遍历指定id对象的任务
-	            else{
-	                each(arr,function(item){
-	                    if (item.cateList.taskList === list) {
-	                        render.addInventory(item);
-	                    }
-	                })
-	            }
-	            break;
-	        case "boolean":
-	            //已完成
-	            if (isDone) {
-	                //遍历所有对象已完成任务
-	                if (list === "all") {
-	                    each(arr,function(item){
-	                        if (item.isDone) {
-	                            render.addInventory(item);
-	                        }
-	                    });
-	                }
-	                //遍历指定id对象所有已完成任务
-	                else{
-	                    each(arr,function(item){
-	                        if (item.isDone && item.cateList.taskList === list) {
-	                            render.addInventory(item);
-	                        }
-	                    });
-	                }
-	            }
-	            //未完成
-	            else{
-	                //遍历所有对象未完成任务
-	                if (list === "all") {
-	                    each(arr,function(item){
-	                        if (!item.isDone) {
-	                            render.addInventory(item);
-	                        }
-	                    });
-	                }
-	                //遍历指定id对象所有未完成任务
-	                else {
-	                    each(arr,function(item){
-	                        if (!item.isDone && item.cateList.taskList === list) {
-	                            render.addInventory(item);
-	                        }
-	                    });
-	                }
-	            }
-	            break;
-	    }
+            var listSelected = _.$(".todo-task-selected")[0];
+            if (listSelected) {
+                var listId = listSelected.getAttribute("data-list-id");
+            }
+            else {
+                listId = "all";
+            }
+            switch (target.getAttribute("id")) {
+                case "todo-all":
+                    render.refreshInventory(data.tasks, listId, "all");
+                    break;
+                case "todo-doing":
+                    render.refreshInventory(data.tasks, listId, false);
+                    break;
+                case "todo-done":
+                    render.refreshInventory(data.tasks, listId, true);
+                    break;
+            }
 
-	    //更新清单任务项点击监听事件
-    	delegateClickEvent(render.todoDetail, control.showTaskDetail);
-	}
+        });
 
-	/**
-	 * 点击更新内容视图事件
-	 *  
-	 */
-	showTaskDetail = function(e){
-	    stopBubble(e);
-	    e = e ||window.event;
-	    var target = e.target || e.srcElement;
-	    var taskId = target.getAttribute("data-task-id");
-	    each(data.tasks,function(item){
-	        if (item.id == taskId) {
-	            render.addContent(item);
-	            //移动端切换页面
-	            if(slider.init()){
-	                slider.goIndex('2');
-	            }
-	        }
-	    });
-	}
 
-	/**
-	 * 取消编辑事件
-	 */
-	reback = function(){
-	    if (confirm("取消任务编辑吗？")) {
-	        var taskId = render.todoDefault[0].getAttribute("data-task-id");
-	        //更新内容视图
-	        render.renderEditChange("check");
-	        //更新任务内容
-	        each(data.tasks,function(item){
-	            if (item.id == taskId) {
-	                render.addContent(item);
-	            }
-	        });
-	    }
-	}
+        /*--------------内容视图---------------*/
 
-	sliderGo = function(e){
-	    e = e || window.event;
-	    var tar = e.target || e.srcElement;
-	    var tarId = "";
+        /**
+         * 任务完成点击事件监听
+         */
+        _.addClickEvent(render.todoCheckIcon, function(){
+            var taskId = render.todoDefault[0].getAttribute("data-task-id");
+            //根据标题中的【data-task-id】属性确定对应任务对象
+            for (var i = 0; i < data.tasks.length; i++) {
+                if (data.tasks[i].id == taskId) {
+                    //检查任务是否完成
+                    if (data.tasks[i].isDone) {
+                        alert("该任务已经完成啦！o(≧v≦)o~~");
+                    }
+                    else {
+                        if (confirm("任务完成后不能修改啦~")) {
+                            //确认任务完成
+                            data.tasks[i].isDone = true;
+                            //刷新本地数据
+                            data.updateData(data.cates, data.lists, data.tasks);
+                            //刷新分类视图
+                            render.refreshCate(data.cates, data.lists);
+                            //刷新任务清单视图
+                            render.refreshInventory(data.tasks, data.tasks[i].cateList.taskList, "all");
+                            //初始化第一项默认被选中
+                            render.renderFirstItem();
+                            //移动端切换页面
+                            if(_.silder.init()){
+                                _.silder.goIndex('1');
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
-	    tar.nodeName === "LI" && (tarId = tar.id);
-	    tar.parentNode.nodeName === "LI" && (tarId = tar.parentNode.id);
-	    
-	    switch (tarId) {
-	        case "todo-nav-cates":
-	            //第一页
-	            if (slider.init()) {
-	                slider.goIndex('0');
-	            }
-	            break;
-	        case "todo-nav-inves":
-	            //第二页
-	            if (slider.init()) {
-	                slider.goIndex('1');
-	            }
-	            break;
-	        case "todo-nav-tasks":
-	            //第三页
-	            if (slider.init()) {
-	                slider.goIndex('2');
-	            }
-	            break;
-	    }
-	}
+        /**
+         * 任务编辑点击事件监听
+         */
+        _.addClickEvent(render.todoEditIcon,function(){
+            var taskId = render.todoDefault[0].getAttribute("data-task-id");
+            //判断对象
+            if (render.isTaskDefault(taskId)) {
+                //获取对象
+                var itemTask = render.isTaskDefault(taskId);
+                if (itemTask.isDone) {
+                    alert("该任务已完成，不能编辑喽(～￣▽￣)～");
+                }
+                else {
+                    //编辑任务
+                    if (confirm("确认编辑"+itemTask.title+"任务吗？")) {
+                        //初始化编辑界面
+                        render.renderEditChange("edit");
+                    }
+                }
+                //回退图标点击事件监听
+                _.addClickEvent(render.todoUndoEle,render.reback);
+                //检查编辑后的任务内容
+                render.todoCheckEle.onclick = function(){
+                    //检查任务内容
+                    if (_.checkTask(render.todoEdit[0],render.todoEdit[1],render.todoEdit[2])) {
+                        if (confirm("任务编辑完成，确认提交吗？")) {
+                            //修改任务
+                            var editTask = _.checkTask(render.todoEdit[0],render.todoEdit[1],render.todoEdit[2]);
+                            itemTask.title = editTask[0];
+                            itemTask.time = editTask[1];
+                            itemTask.content = editTask[2];
+                            //刷新本地数据
+                            data.updateData(data.cates, data.lists, data.tasks);
+                            //更新清单视图
+                            render.refreshInventory(data.tasks, itemTask.cateList.taskList, "all");
+                            //刷新分类视图
+                            render.refreshCate(data.cates, data.lists);
+                            //更新未完成任务总数
+                            render.renderCount();
+                            //更新内容视图
+                            render.renderEditChange("check");
+                            render.addContent(itemTask);
+                        }
+                    }
+                };
+            }
+        });
+    };
 
-	return {
-		slider: slider,
-		removeCate: removeCate,
-		removeList: removeList,
-		removeClick: removeClick,
-		reback: reback,
-		refreshInventory: refreshInventory,
-		refreshCate: refreshCate,
-		taskItemClick: taskItemClick,
-		showTaskDetail: showTaskDetail,
-		addCateList: addCateList,
-		sliderGo: sliderGo
-	}
+    return {
+        start: start,
+        listen: listen
+    }
 
-})();
+});
