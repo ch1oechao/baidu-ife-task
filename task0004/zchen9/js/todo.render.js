@@ -258,27 +258,28 @@ define(["util", "data"], function(_, data){
                     addTitle(obj);
                 }
             }
-            //添加任务标题
-            function addTitle(obj){
-                if (obj.title) {
-                    var ddTaskTitle = document.createElement("dd");
-                    if (obj.isDone) {
-                        ddTaskTitle.setAttribute("data-task-done", "1");
-                        ddTaskTitle.innerHTML = obj.title + '<i class="fa fa-smile-o"></i>';
-                    }
-                    else {
-                        ddTaskTitle.setAttribute("data-task-done", "0");
-                        ddTaskTitle.innerHTML = obj.title;
-                    }
-                    ddTaskTitle.setAttribute("data-list-id", obj.cateList.taskList);
-                    ddTaskTitle.setAttribute("data-task-id", obj.id);
-                    init.taskInventory.appendChild(ddTaskTitle);
-                    //更新清单项
-                    init.todoDetail.push(ddTaskTitle);
-                }
-            }
         }
     };
+
+    //添加任务标题
+    var addTitle = function(obj){
+        if (obj.title) {
+            var ddTaskTitle = document.createElement("dd");
+            if (obj.isDone) {
+                ddTaskTitle.setAttribute("data-task-done", "1");
+                ddTaskTitle.innerHTML = obj.title + '<i class="fa fa-smile-o"></i>';
+            }
+            else {
+                ddTaskTitle.setAttribute("data-task-done", "0");
+                ddTaskTitle.innerHTML = obj.title;
+            }
+            ddTaskTitle.setAttribute("data-list-id", obj.cateList.taskList);
+            ddTaskTitle.setAttribute("data-task-id", obj.id);
+            init.taskInventory.appendChild(ddTaskTitle);
+            //更新清单项
+            init.todoDetail.push(ddTaskTitle);
+        }
+    }
 
     //内容视图渲染
     var addContent = function(obj){
