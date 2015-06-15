@@ -1,0 +1,593 @@
+/*初始化*/
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Microsoft YaHei', arial, serif;
+  list-style: none;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  color: #ffffff;
+  background-color: #fcf5f0;
+}
+.fa-fw {
+  margin: 0 5px;
+}
+.fa-2x {
+  line-height: 45px;
+  font-size: 1.3em;
+}
+/*变量*/
+/*背景颜色*/
+/*字体颜色*/
+/*模块*/
+/*header*/
+header {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 10%;
+  min-height: 60px;
+  background-color: #547095;
+}
+header .todo-icon {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin-left: 20px;
+  background: url(../images/icon-logo.png);
+}
+header .todo-title {
+  line-height: 60px;
+  margin-left: 90px;
+  font-size: 1.8em;
+}
+/*todo_container*/
+.todo-container {
+  position: relative;
+  width: 100%;
+  height: 90%;
+  min-height: 380px;
+}
+/*todo_category*/
+.todo-category {
+  position: relative;
+  display: block;
+  float: left;
+  width: 22%;
+  min-width: 250px;
+  height: 100%;
+  overflow: hidden;
+  background-color: #edf0f0;
+  color: #294b7c;
+}
+.todo-category > a {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #7690b7;
+}
+.todo-category > a:hover {
+  background-color: #547095;
+}
+.todo-category .todo-category-total {
+  height: 45px;
+  padding-left: 10px;
+  line-height: 45px;
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #9bb2d1;
+}
+.todo-category .todo-category-total:hover {
+  background-color: #7690b7;
+}
+.todo-category-detail {
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 102%;
+  height: 82%;
+  padding: 10px;
+}
+.todo-category-list {
+  display: block;
+  width: 95%;
+  margin-top: 10px;
+}
+.todo-category-list span .fa-trash-o {
+  position: absolute;
+  right: 0;
+  margin-right: 1.8em;
+  line-height: 22px;
+  opacity: 0;
+  color: #294b7c;
+  cursor: pointer;
+}
+.todo-category-list span .fa-trash-o:hover {
+  color: #294b7c;
+}
+.todo-category-list span:hover .fa-trash-o {
+  position: absolute;
+  right: 0;
+  margin-right: 1.8em;
+  line-height: 22px;
+  opacity: 1;
+  color: #294b7c;
+  cursor: pointer;
+}
+.todo-category-list span:hover .fa-trash-o:hover {
+  color: #294b7c;
+}
+.todo-task-list {
+  margin-left: 15px;
+  padding: 3px;
+}
+.todo-task-list > li {
+  display: block;
+  margin: 4px 0;
+  padding: 2px 3px;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.todo-task-list > li:hover {
+  color: #ffffff;
+  background-color: #9bb2d1;
+}
+.todo-task-list > li .fa-trash-o {
+  position: absolute;
+  right: 0;
+  margin-right: 1.8em;
+  line-height: 22px;
+  opacity: 0;
+  color: #294b7c;
+  cursor: pointer;
+}
+.todo-task-list > li .fa-trash-o:hover {
+  color: #294b7c;
+}
+.todo-task-list > li:hover .fa-trash-o {
+  position: absolute;
+  right: 0;
+  margin-right: 1.8em;
+  line-height: 22px;
+  opacity: 1;
+  color: #ffffff;
+  cursor: pointer;
+}
+.todo-task-list > li:hover .fa-trash-o:hover {
+  color: #294b7c;
+}
+.todo-task-list .todo-task-selected {
+  color: #ffffff;
+  background-color: #9bb2d1;
+}
+/*todo_inventory*/
+.todo-inventory {
+  position: relative;
+  display: block;
+  float: left;
+  width: 22%;
+  min-width: 250px;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f7f2e5;
+  color: #986700;
+}
+.todo-inventory > a {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #7690b7;
+}
+.todo-inventory > a:hover {
+  background-color: #547095;
+}
+.todo-inventory .todo-inventory-category {
+  height: 45px;
+  padding-left: 10px;
+  background-color: #f5dead;
+}
+.todo-inventory .todo-inventory-category > li {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 5px;
+  padding: 3px 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.todo-inventory .todo-inventory-category > li:hover {
+  background-color: #f7f0d8;
+}
+.todo-inventory .todo-inventory-category .todo-inventory-selected {
+  background-color: #f7f0d8;
+}
+.todo-inventory-detail {
+  display: block;
+  height: 82%;
+  width: 110%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.todo-inventory-detail dt {
+  display: block;
+  height: 45px;
+  padding-left: 20px;
+  line-height: 45px;
+  background-color: #f7eace;
+}
+.todo-inventory-detail dd {
+  display: block;
+  height: 35px;
+  padding-left: 20px;
+  line-height: 35px;
+  cursor: pointer;
+}
+.todo-inventory-detail dd .fa-smile-o {
+  float: right;
+  line-height: inherit;
+  margin-right: 1.8em;
+}
+.todo-inventory-detail dd:hover {
+  color: #eab23e;
+  background-color: #ffffff;
+}
+.todo-inventory-detail .todo-detail-selected {
+  color: #eab23e;
+  background-color: #ffffff;
+}
+/*todo_spec*/
+.todo-spec {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  color: #90001a;
+}
+.todo-spec .todo-spec-title {
+  height: 45px;
+  line-height: 45px;
+  text-indent: 1em;
+  background-color: #fcb2bf;
+}
+.todo-spec .todo-spec-title > input {
+  display: inline-block;
+  height: 30px;
+  width: 150px;
+  line-height: 30px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+.todo-spec .todo-spec-edit {
+  position: absolute;
+  right: 0;
+  margin-right: 1em;
+}
+.todo-spec .todo-spec-edit > i {
+  float: right;
+  cursor: pointer;
+}
+.todo-spec .todo-spec-edit > i:hover {
+  color: #ffffff;
+}
+.todo-spec .todo-spec-time {
+  height: 45px;
+  line-height: 45px;
+  text-indent: 1em;
+  background-color: #fad1d8;
+}
+.todo-spec .todo-spec-time > input {
+  display: inline-block;
+  height: 30px;
+  width: 150px;
+  line-height: 30px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+.todo-spec .todo-spec-content {
+  height: 100%;
+  margin-top: -90px;
+}
+.todo-spec .todo-spec-content > p {
+  margin-top: 90px;
+  padding: 2em;
+  width: 93%;
+  overflow: scroll;
+  overflow-x: hidden;
+  color: #e58193;
+  word-wrap: break-word;
+}
+.todo-spec .todo-spec-content i {
+  margin-right: 9px;
+}
+.todo-spec .todo-spec-content > textarea {
+  padding-top: 1em;
+  padding-left: 2em;
+  width: 90%;
+  height: 300px;
+  margin-top: 90px;
+  overflow-y: hidden;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  word-wrap: break-word;
+  background-color: #fcf5f5;
+}
+/*addCatePanel*/
+.add-cate-panel {
+  display: none;
+  width: 400px;
+  height: 180px;
+  padding: 10px;
+  z-index: 999;
+  border-radius: 15px;
+  background-color: #9bb2d1;
+  box-shadow: 2px 2px 5px #333;
+}
+.add-cate-panel h3 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.4em;
+  line-height: 2em;
+  color: #294b7c;
+}
+.add-cate-panel ul {
+  margin-top: 10px;
+  margin-left: 60px;
+}
+.add-cate-panel li {
+  padding: 5px;
+}
+.add-cate-panel label {
+  display: inline;
+  width: 100px;
+  margin-right: 15px;
+}
+.add-cate-panel select {
+  height: 20px;
+  width: 155px;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+}
+.add-cate-panel input {
+  height: 20px;
+  width: 155px;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+}
+.add-cate-panel .add-cate-btn {
+  margin-top: 18px;
+  margin-left: 28%;
+}
+.add-cate-panel .add-cate-btn > span {
+  display: inline-block;
+  width: 75px;
+  height: 27px;
+  margin: 0 5px;
+  line-height: 27px;
+  text-align: center;
+  color: #ffffff;
+  border-radius: 3px;
+  background-color: #294b7c;
+  cursor: pointer;
+}
+.add-cate-panel .add-cate-btn > span i {
+  margin-right: 6px;
+}
+.add-cate-panel .add-cate-btn > span:hover {
+  background-color: #ffffff;
+  color: #294b7c;
+}
+/*适配移动端*/
+@media (min-width: 768px) {
+  .todo-nav {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  header .todo-icon {
+    margin-left: 38%;
+  }
+  header .todo-title {
+    margin-left: 48%;
+  }
+  .todo-container {
+    height: 90%;
+    min-height: 320px;
+    overflow: hidden;
+  }
+  .todo-category,
+  .todo-inventory,
+  .todo-spec {
+    position: absolute;
+    display: inline;
+    width: 100%;
+  }
+  .todo-inventory,
+  .todo-spec {
+    -webkit-transform: translate3d(100%, 0, 0);
+    -ms-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+  /*todo-category*/
+  .todo-task-list > li {
+    width: 98%;
+  }
+  .todo-inventory > a,
+  .todo-category > a {
+    position: absolute;
+    top: 2px;
+    right: 8px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    border-radius: 5px;
+    z-index: 999999;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  .todo-inventory > a:hover,
+  .todo-category > a:hover {
+    color: #294b7c;
+    background-color: transparent;
+  }
+  .todo-inventory > a > .fa-plus,
+  .todo-category > a > .fa-plus {
+    margin: 1px 5px 20px 1px;
+  }
+  .todo-inventory .todo-category-detail,
+  .todo-category .todo-category-detail,
+  .todo-inventory .todo-inventory-detail,
+  .todo-category .todo-inventory-detail {
+    max-height: 78%;
+  }
+  .todo-inventory .todo-category-detail .fa-smile-o,
+  .todo-category .todo-category-detail .fa-smile-o,
+  .todo-inventory .todo-inventory-detail .fa-smile-o,
+  .todo-category .todo-inventory-detail .fa-smile-o {
+    margin-right: 6em;
+  }
+  /*todo-spec*/
+  .todo-spec .todo-spec-title,
+  .todo-spec .todo-spec-time {
+    text-indent: .6em;
+  }
+  .todo-spec .todo-spec-title > input,
+  .todo-spec .todo-spec-time > input {
+    width: 150px;
+  }
+  .todo-spec .todo-spec-content > p {
+    display: block;
+    padding: 1.2em;
+    width: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  .todo-spec .todo-spec-content > textarea {
+    width: 260px;
+    height: 320px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+  /*菜单按钮*/
+  .todo-nav {
+    position: fixed;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #DEF0F0;
+  }
+  .todo-nav ul {
+    display: block;
+    list-style: none;
+    line-height: 40px;
+    width: 225px;
+    height: 40px;
+    margin: 0 auto;
+    border-top: 2px solid #7690b7;
+  }
+  .todo-nav ul .todo-nav-item {
+    float: left;
+    padding: 0 8px 0 2px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .todo-nav ul #todo-nav-cates {
+    color: #7690b7;
+  }
+  .todo-nav ul #todo-nav-inves {
+    color: #eab23e;
+  }
+  .todo-nav ul #todo-nav-tasks {
+    color: #e58193;
+  }
+}
+@media (max-width: 640px) {
+  header .todo-icon {
+    margin-left: 25%;
+  }
+  header .todo-title {
+    margin-left: 45%;
+  }
+  /*todo-category*/
+  .todo-task-list > li {
+    width: 94%;
+  }
+  .todo-inventory > a,
+  .todo-category > a {
+    position: absolute;
+    top: 2px;
+    right: 8px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    border-radius: 5px;
+    z-index: 999999;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  .todo-inventory > a:hover,
+  .todo-category > a:hover {
+    color: #294b7c;
+    background-color: transparent;
+  }
+  .todo-inventory > a > .fa-plus,
+  .todo-category > a > .fa-plus {
+    margin: 1px 5px 20px 1px;
+  }
+  .todo-inventory .todo-category-detail,
+  .todo-category .todo-category-detail,
+  .todo-inventory .todo-inventory-detail,
+  .todo-category .todo-inventory-detail {
+    max-height: 78%;
+  }
+  .todo-inventory .todo-category-detail .fa-smile-o,
+  .todo-category .todo-category-detail .fa-smile-o,
+  .todo-inventory .todo-inventory-detail .fa-smile-o,
+  .todo-category .todo-inventory-detail .fa-smile-o {
+    margin-right: 3.2em;
+  }
+  /*todo-spec*/
+  .todo-spec .todo-spec-content > p {
+    width: 90%;
+  }
+}
+@media (max-width: 450px) {
+  /*addCatePanel*/
+  .add-cate-panel {
+    width: 320px;
+    height: 220px;
+    padding: 0;
+  }
+  .add-cate-panel ul {
+    margin-top: 10px;
+    margin-left: 80px;
+  }
+  .add-cate-panel .add-cate-btn {
+    margin-top: 18px;
+    margin-left: 22%;
+  }
+  /*todo-spec*/
+  .todo-spec .todo-spec-content > p {
+    font-size: .85em;
+  }
+}
