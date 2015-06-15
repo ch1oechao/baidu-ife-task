@@ -1,10 +1,10 @@
 CACHE MANIFEST  
-#VERSION 2.0
+#VERSION 2.1
 CACHE: 
 
 favicon.ico
 images/icon-logo.png
-fonts/fontawesome-webfont.woff
+styles/fonts/fontawesome-webfont.woff
 styles/font-awesome.css
 styles/todo.css
 scripts/require.js

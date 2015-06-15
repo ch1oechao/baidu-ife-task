@@ -1,3 +1,4 @@
 node_modules
-.tmpbower_components
-.bowerrc.editorconfig.jshintrc.yo-rc.jsonbower.json
+
+.tmp
+bower_components
