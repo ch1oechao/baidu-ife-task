@@ -39,7 +39,7 @@ header .todo-icon {
   width: 60px;
   height: 60px;
   margin-left: 20px;
-  background: url(../img/icon-logo.png);
+  background: url(../images/icon-logo.png);
 }
 header .todo-title {
   line-height: 60px;

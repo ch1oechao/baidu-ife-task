@@ -2,7 +2,7 @@
 
 - [[任务地址]](https://github.com/baidu-ife/ife/tree/master/task/task0004)
 - [[查看代码]](https://github.com/zchen9/baidu-ife-task/tree/gh-pages/task0004/zchen9)
-- [[查看demo]](http://www.chen9.info/baidu-ife-task/task0004/zchen9/)
+- [[查看demo]](http://www.chen9.info/baidu-ife-task/task0004/dist/)
 - [[任务笔记]](http://www.chen9.info/)
 
 ##任务进程
@@ -28,3 +28,7 @@
 ####06.12
 
 使用require.js模块化JS代码
+
+####06.15
+
+使用Grunt&Yeoman整合 todo webapp 代码
