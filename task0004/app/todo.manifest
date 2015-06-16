@@ -1,8 +1,7 @@
 CACHE MANIFEST  
-#VERSION 2.2
+#VERSION 2.3
 CACHE: 
 
-favicon.ico
 images/icon-logo.png
 styles/fonts/fontawesome-webfont.woff
 styles/font-awesome.css
