@@ -23,5 +23,10 @@
 
 - [[查看demo]](http://www.chen9.info/baidu-ife-task/task0003/zchen9/)
 
-
 - [[任务笔记]](http://www.chen9.info/)
+
+###task0004
+
+- [[查看代码]](https://github.com/zchen9/baidu-ife-task/tree/gh-pages/task0004)
+
+- [[查看demo]](http://www.chen9.info/baidu-ife-task/task0004/dist/)
