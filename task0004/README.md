@@ -5,6 +5,9 @@
 - [[查看demo]](http://www.chen9.info/baidu-ife-task/task0004/dist/)
 - [[任务笔记]](http://www.chen9.info/)
 
+- [ 手机查看 ] 请扫二维码 ☞
+![在手机上观看](todo_webapp_icon.png)
+
 ##任务进程
 
 ####06.03
