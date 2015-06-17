@@ -1,8 +1,7 @@
 CACHE MANIFEST  
-#VERSION 2.3
+#VERSION 2.4
 CACHE: 
 
-images/icon-logo.png
 styles/fonts/fontawesome-webfont.woff
 styles/font-awesome.css
 styles/todo.css
