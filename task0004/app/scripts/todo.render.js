@@ -3,7 +3,7 @@
  * @author zchen9(zhao.zchen9@gmail.com)
  */
 
-define(["util", "data"], function(_, data){
+define(["util", "data"], function(_, data) {
 
     //初始化节点
     var init = {
@@ -30,37 +30,38 @@ define(["util", "data"], function(_, data){
         //新增主分类下拉框<select>
         addCateSelect: _.$("#add-cate-main"),
         //任务清单视图单项任务<dd>
-        todoDetail: (function(){
+        todoDetail: (function() {
             var todoDetails = _.$("dd");
             var todoDetailItem = [];
-            _.each(todoDetails, function(item){
+            _.each(todoDetails, function(item) {
                 todoDetailItem.push(item);
             });
             return todoDetailItem;
         })(),
         //返回所有删除图标项
-        removeIcon: (function(){
+        removeIcon: (function() {
             var removeListIcon = _.$(".fa-trash-o");
-            var removeItem =[];
-            _.each(removeListIcon,function(item){
+            var removeItem = [];
+            _.each(removeListIcon, function(item) {
                 removeItem.push(item);
             });
             return removeItem;
         })(),
         //任务分类视图下所有列表项<li>
-        todoTaskItem: (function(){
+        todoTaskItem: (function() {
             var todoTaskList = _.$(".todo-task-list");
+            var listLen = todoTaskList.length;
             var todoItem = [];
-            for (var j = 0,len = todoTaskList.length; j < len; j++) {
+            for (var j = 0; j < listLen; j++) {
                 var todoTaskItem = todoTaskList[j].getElementsByTagName("li");
-                _.each(todoTaskItem,function(item){
+                _.each(todoTaskItem, function(item) {
                     todoItem.push(item);
                 });
             }
             return todoItem;
         })(),
         //任务内容视图，返回文本显示的内容 <任务标题、时间、内容>
-        todoDefault: (function(){
+        todoDefault: (function() {
             var taskTitle = _.$("#todo-default-title");
             var taskTime = _.$("#todo-default-time");
             var taskContent = _.$("#todo-default-content");
@@ -68,7 +69,7 @@ define(["util", "data"], function(_, data){
             return [taskTitle, taskTime, taskContent];
         })(),
         //任务内容视图，返回编辑显示的内容 <任务标题、时间、内容>
-        todoEdit: (function(){
+        todoEdit: (function() {
             var taskTitle = _.$("#todo-task-title");
             var taskTime = _.$("#todo-task-time");
             var taskContent = _.$("#todo-task-content");
@@ -80,7 +81,7 @@ define(["util", "data"], function(_, data){
     };
 
     //鼠标点击时更换样式
-    var classToggle = function(e){
+    var classToggle = function(e) {
         _.stopBubble(e);
         e = e || window.event;
         var target = e.target || e.srcElement;
@@ -108,7 +109,7 @@ define(["util", "data"], function(_, data){
     };
 
     // 第一项默认选中渲染
-    var renderFirstItem = function(){
+    var renderFirstItem = function() {
         //初始化默认选中任务列表
         var listFirst = _.$(".todo-task-list")[0].getElementsByTagName("li")[0];
         if (listFirst) {
@@ -120,22 +121,22 @@ define(["util", "data"], function(_, data){
             _.addClass(titleFirst, "todo-detail-selected");
         }
 
-        _.delegateInitClass(init.todoInventory[0],"todo-inventory-selected");
+        _.delegateInitClass(init.todoInventory[0], "todo-inventory-selected");
     };
 
     //任务总数渲染
-    var renderCount = function(){
+    var renderCount = function() {
         //更新未完成任务总数
-        init.todoTotal.innerHTML = "(" + todoCount("data.tasks","all") + ")";
+        init.todoTotal.innerHTML = "(" + todoCount("data.tasks", "all") + ")";
     };
 
     //分类视图渲染
-    var initCate = function(){
+    var initCate = function() {
         init.todoCateList.innerHTML = "";
     };
 
     //添加分类视图
-    var addCate = function(obj){
+    var addCate = function(obj) {
         if (obj.category) {
             //检查是否已存在对象的分类项
             var liCate = _.$("[data-cate-id=" + obj.category + "]");
@@ -162,8 +163,10 @@ define(["util", "data"], function(_, data){
 
                     var removeSpan = document.createElement("span");
                     _.addClass(removeSpan, "remove-cate");
+
                     var  removeItem = document.createElement("i");
                     _.addClass(removeItem, "fa fa-trash-o");
+
                     removeSpan.appendChild(removeItem);
                     spanCateDefault.appendChild(removeSpan);
                     //更新删除图标
@@ -177,20 +180,22 @@ define(["util", "data"], function(_, data){
         }
     };
 
-    var initList = function(){
+    var initList = function() {
         //初始化各子列表内容
         _.each(init.todoTaskList, function(item){
             item.innerHTML = "";
         });
     };
 
-    var addList = function(obj){
+    var addList = function(obj) {
         //检查是否已存在对象的分类项
         var liCate = _.$("[data-cate-id=" + obj.category + "]");
+        var doc = document;
+
         if (obj.taskList) {
             //检查分类项中是否存在子列表项
             if (!(liCate.getElementsByTagName("ul")[0])) {
-                var ulTask = document.createElement("ul");
+                var ulTask = doc.createElement("ul");
                 _.addClass(ulTask, "todo-task-list");
                 liCate.appendChild(ulTask);
             }
@@ -199,8 +204,8 @@ define(["util", "data"], function(_, data){
                 if (ulTask.hasAttribute("class", "todo-task-list")) {
                     //设置列表项【data-list-id】 内容为列表名称
                     var liList = _.$("[data-list-id=" + obj.taskList + "]");
-                    if (!liList || liList.nodeName !== "LI") {
-                        var liTaskList = document.createElement("li");
+                    if (!liList || liList.nodeName.toUpperCase() !== "LI") {
+                        var liTaskList = doc.createElement("li");
                         liTaskList.setAttribute("data-list-id", obj.taskList);
                         //默认任务<使用说明>不能删除
                         if (obj.taskList === "使用说明") {
@@ -219,8 +224,10 @@ define(["util", "data"], function(_, data){
 
                             var removeSpan = document.createElement("span");
                             _.addClass(removeSpan,"remove-list");
-                            var  removeItem = document.createElement("i");
+
+                            var removeItem = document.createElement("i");
                             _.addClass(removeItem,"fa fa-trash-o");
+
                             removeSpan.appendChild(removeItem);
                             liTaskList.appendChild(removeSpan);
                             //更新删除图标
@@ -235,13 +242,13 @@ define(["util", "data"], function(_, data){
         }
     };
 
-    var initInventory = function(){
+    var initInventory = function() {
         //初始化任务清单视图内容
         init.taskInventory.innerHTML = "";
     };
 
     //清单视图渲染
-    var addInventory = function(obj){
+    var addInventory = function(obj) {
         if (obj.cateList) {
             //添加时间
             if (obj.time) {
@@ -262,7 +269,7 @@ define(["util", "data"], function(_, data){
     };
 
     //添加任务标题
-    var addTitle = function(obj){
+    var addTitle = function(obj) {
         if (obj.title) {
             var ddTaskTitle = document.createElement("dd");
             if (obj.isDone) {
@@ -282,10 +289,10 @@ define(["util", "data"], function(_, data){
     }
 
     //内容视图渲染
-    var addContent = function(obj){
-        if(obj){
+    var addContent = function(obj) {
+        if (obj) {
             init.todoDefault[1].innerHTML = _.formatTime(obj);
-            init.todoDefault[0].setAttribute("data-task-id",obj.id);
+            init.todoDefault[0].setAttribute("data-task-id", obj.id);
             init.todoDefault[0].innerHTML = obj.title;
             init.todoDefault[2].innerHTML = obj.content;
         }
@@ -294,33 +301,34 @@ define(["util", "data"], function(_, data){
 
 
     //渲染新增分类弹窗
-    var initSelect = function(){
+    var initSelect = function() {
         init.addCateSelect.innerHTML = "";
         var defaultOption = document.createElement("option");
-        defaultOption.setAttribute("value","null");
+        defaultOption.setAttribute("value", "null");
         defaultOption.innerHTML = "新增主分类";
         init.addCateSelect.appendChild(defaultOption);
     };
 
-    var addCatePanel = function(display){
+    var addCatePanel = function(display) {
         if (init.addCatePanel) {
             var cWidth = document.documentElement.clientWidth || document.body.clientWidth;
             var cHeight = document.documentElement.clientHeight || document.body.clientHeight;
             var oWidth = init.addCatePanel.offsetWidth;
             var oHeight = init.addCatePanel.offsetHeight;
             init.addCatePanel.style.position = "absolute";
-            if(cWidth > 768){
+            if (cWidth > 768) {
                 init.addCatePanel.style.left = Math.round((cWidth - oWidth) / 3.2) + "px"; 
             }
-            else if (cWidth > 640 && cWidth <= 768){
+            else if (cWidth > 640 && cWidth <= 768) {
                 init.addCatePanel.style.left = Math.round(cWidth / 4.5) + "px";
             }
-            else if(cWidth > 400 && cWidth <= 640){
+            else if (cWidth > 400 && cWidth <= 640) {
                 init.addCatePanel.style.left = Math.round(cWidth / 7.5) + "px";
             }
-            else if(cWidth > 350 && cWidth <=400){
+            else if (cWidth > 350 && cWidth <= 400) {
                 init.addCatePanel.style.left = 20 + "px";
-            }else{
+            }
+            else {
                 init.addCatePanel.style.left = 0 + "px";
             }
             init.addCatePanel.style.top = Math.round((cHeight - oHeight) / 3.2) + "px";
@@ -328,14 +336,14 @@ define(["util", "data"], function(_, data){
         }
     };
 
-    var addCateOption = function(cate){
+    var addCateOption = function(cate) {
         var cateOption = document.createElement("option");
         cateOption.setAttribute("value", cate);
         cateOption.innerHTML = cate;
         init.addCateSelect.appendChild(cateOption);
     };
 
-    var renderEditChange = function(status){
+    var renderEditChange = function(status) {
         switch (status) {
             case "edit":
                 //切换图标
@@ -344,12 +352,12 @@ define(["util", "data"], function(_, data){
                 init.todoUndoEle.style.display = "block";
                 init.todoCheckEle.style.display = "block";
                 //切换界面
-                _.delegateEleEvent(init.todoDefault,function(ele){
+                _.delegateEleEvent(init.todoDefault, function(ele) {
                     ele.style.display = "none";
                 });
-                _.delegateEleEvent(init.todoEdit,function(ele){
+                _.delegateEleEvent(init.todoEdit, function(ele) {
                     ele.style.display = "inline-block";
-                    for (var i = 0; i < init.todoEdit.length; i++) {
+                    for (var i = 0, len = init.todoEdit.length; i < len; i++) {
                         init.todoEdit[i].value = init.todoDefault[i].innerHTML;
                     }
                 });
@@ -361,11 +369,11 @@ define(["util", "data"], function(_, data){
                 init.todoUndoEle.style.display = "none";
                 init.todoCheckEle.style.display = "none";
                 //切换界面
-                _.delegateEleEvent(init.todoDefault,function(ele){
+                _.delegateEleEvent(init.todoDefault, function(ele) {
                     ele.style.display = "inline";
-                    init.todoDefault[init.todoDefault.length-1].style.display = "block";
+                    init.todoDefault[init.todoDefault.length - 1].style.display = "block";
                 });
-                _.delegateEleEvent(init.todoEdit,function(ele){
+                _.delegateEleEvent(init.todoEdit, function(ele) {
                     ele.style.display = "none";
                 });
                 break;
@@ -376,10 +384,10 @@ define(["util", "data"], function(_, data){
                 init.todoUndoEle.style.display = "block";
                 init.todoCheckEle.style.display = "block";
                 //切换界面
-                _.delegateEleEvent(init.todoDefault, function(ele){
+                _.delegateEleEvent(init.todoDefault, function(ele) {
                     ele.style.display = "none";
                 });
-                _.delegateEleEvent(init.todoEdit, function(ele){
+                _.delegateEleEvent(init.todoEdit, function(ele) {
                     ele.style.display = "inline-block";
                     ele.value = "";
                 });
@@ -393,13 +401,13 @@ define(["util", "data"], function(_, data){
      * @param {string} type 传递数据的类型值
      * @return {number} count 返回指定类型数组内未完成任务数
      */
-    var todoCount = function(arr, type){
+    var todoCount = function(arr, type) {
         var count = 0;
         //判断数组类型
         switch (arr) {
             //所有任务数
             case "data.tasks":
-                _.each(data.tasks, function(item){
+                _.each(data.tasks, function(item) {
                     if (!item.isDone) {
                         count++;
                     }
@@ -408,7 +416,7 @@ define(["util", "data"], function(_, data){
                 break;
             //列表下任务数
             case "data.lists":
-                _.each(data.tasks, function(item){
+                _.each(data.tasks, function(item) {
                     if (!item.isDone && item.cateList.taskList === type) {
                         count++;
                     }
@@ -417,7 +425,7 @@ define(["util", "data"], function(_, data){
                 break;
             //分类下任务数
             case "data.cates":
-                _.each(data.tasks, function(item){
+                _.each(data.tasks, function(item) {
                     if (!item.isDone && item.cateList.category === type) {
                         count++;
                     }
@@ -431,7 +439,7 @@ define(["util", "data"], function(_, data){
     /**
      * 添加删除图标点击事件
      */
-    var removeClick = function(e){
+    var removeClick = function(e) {
         _.stopBubble(e);
         e = e || window.event;
         var target = e.target || e.srcElement;
@@ -454,7 +462,7 @@ define(["util", "data"], function(_, data){
      *
      * @param {DOM} item 传递包含分类属性的节点
      */
-    var removeCate = function(item){
+    var removeCate = function(item) {
         if (item.parentNode.parentNode.nodeName === "LI") {
             var liCate = item.parentNode.parentNode.getAttribute("data-cate-id");
             if (confirm("是否删除主分类【" 
@@ -463,32 +471,32 @@ define(["util", "data"], function(_, data){
                 ) {
                 //删除分类对象
                 var removeItem = [];
-                _.each(data.cates, function(item){
-                    if( item.category === liCate) {
-                        removeItem.push(item);
-                    }
-                });
-                _.each(removeItem, function(item){
-                    data.cates.remove(item);
-                });
-                //删除分类下相关列表
-                removeItem.length = 0;
-                _.each(data.lists, function(item, i){
+                _.each(data.cates, function(item) {
                     if (item.category === liCate) {
                         removeItem.push(item);
                     }
                 });
-                _.each(removeItem, function(item){
+                _.each(removeItem, function(item) {
+                    data.cates.remove(item);
+                });
+                //删除分类下相关列表
+                removeItem.length = 0;
+                _.each(data.lists, function(item, i) {
+                    if (item.category === liCate) {
+                        removeItem.push(item);
+                    }
+                });
+                _.each(removeItem, function(item) {
                     data.lists.remove(item);
                 });
                 //删除分类和列表相关任务
                 removeItem.length = 0;
-                _.each(data.tasks, function(item, i){
+                _.each(data.tasks, function(item, i) {
                     if (item.cateList.category === liCate) {
                         removeItem.push(item);
                     }
                 });
-                _.each(removeItem, function(item){
+                _.each(removeItem, function(item) {
                     data.tasks.remove(item);
                 });
 
@@ -505,7 +513,7 @@ define(["util", "data"], function(_, data){
      *
      * @param {DOM} item 传递包含列表属性的节点
      */
-    var removeList = function(item){
+    var removeList = function(item) {
         if (item.parentNode.nodeName === "LI" 
             && _.hasClass(item.parentNode, "todo-task-selected")
             ) {
@@ -516,22 +524,22 @@ define(["util", "data"], function(_, data){
                 ) {
                 //删除列表对象
                 var removeItem = [];
-                _.each(data.lists, function(item,i){
+                _.each(data.lists, function(item, i) {
                     if (item.taskList === liList) {
                         removeItem.push(item);
                     }
                 });
-                _.each(removeItem, function(item){
+                _.each(removeItem, function(item) {
                     data.lists.remove(item);
                 });
                 //删除列表相关任务
                 removeItem.length = 0;
-                _.each(data.tasks, function(item,i){
+                _.each(data.tasks, function(item, i) {
                     if (item.cateList.taskList === liList) {
                         removeItem.push(item);
                     }
                 });
-                _.each(removeItem, function(item){
+                _.each(removeItem, function(item) {
                     data.tasks.remove(item);
                 });
 
@@ -560,14 +568,14 @@ define(["util", "data"], function(_, data){
         initSelect();
 
         //添加更新后的对象数组
-        _.each(cates, function(item){
+        _.each(cates, function(item) {
             //更新分类项
             addCate(item);
             //更新新增分类弹窗下拉框的分类选项
             addCateOption(item.category);
         });
         //添加更新后的列表数组项
-        _.each(lists, function(item){
+        _.each(lists, function(item) {
             //更新列表项
             addList(item);
         });
@@ -595,7 +603,7 @@ define(["util", "data"], function(_, data){
      * @param {String} main 主分类名称
      * @param {String} name 子列表名称
      */
-    var addCateList = function(main, name){
+    var addCateList = function(main, name) {
         //判断输入名称长度
         if (_.getByteVal(name, 20)) {
             var cateName = _.checkXSS(_.getByteVal(name, 20));
@@ -607,7 +615,7 @@ define(["util", "data"], function(_, data){
                 }
             }
             else {
-                if(confirm("确认在【" + main + "】分类下创建新列表【" + cateName + "】吗？")) {
+                if (confirm("确认在【" + main + "】分类下创建新列表【" + cateName + "】吗？")) {
                     //新增列表对象
                     data.lists.push(new data.TaskList({category: main, taskList: cateName}));
                 }
@@ -622,16 +630,16 @@ define(["util", "data"], function(_, data){
     /**
      * 列表项点击刷新任务清单视图事件
      */
-    var taskItemClick = function(e){
+    var taskItemClick = function(e) {
         _.stopBubble(e);
         e = e || window.event;
         var target = e.target || e.srcElement;
-        if (target.nodeName === "LI") {
+        if (target.nodeName.toUpperCase() === "LI") {
             var listId = target.getAttribute("data-list-id");
             refreshInventory(data.tasks, listId, "all");
 
             //移动端切换页面
-            if(_.silder.init()){
+            if (_.silder.init()) {
                 _.silder.goIndex('1');
             }
         }
@@ -644,7 +652,7 @@ define(["util", "data"], function(_, data){
      * @param {String} list 传入列表名称
      * @param {String} isDone 传入任务是否完成布尔值
      */
-    var refreshInventory = function(arr, list, isDone){
+    var refreshInventory = function(arr, list, isDone) {
         initInventory();
         //将任务内容按时间排序
         arr.sort(_.compare("time"));
@@ -654,13 +662,13 @@ define(["util", "data"], function(_, data){
             case "string":
                 //遍历所有对象的任务
                 if (list === "all") {
-                    _.each(arr,function(item){
+                    _.each(arr, function(item) {
                         addInventory(item);
                     });
                 }
                 //遍历指定id对象的任务
                 else{
-                    _.each(arr,function(item){
+                    _.each(arr, function(item) {
                         if (item.cateList.taskList === list) {
                             addInventory(item);
                         }
@@ -672,15 +680,15 @@ define(["util", "data"], function(_, data){
                 if (isDone) {
                     //遍历所有对象已完成任务
                     if (list === "all") {
-                        _.each(arr,function(item){
+                        _.each(arr, function(item) {
                             if (item.isDone) {
                                 addInventory(item);
                             }
                         });
                     }
                     //遍历指定id对象所有已完成任务
-                    else{
-                        _.each(arr,function(item){
+                    else {
+                        _.each(arr, function(item) {
                             if (item.isDone && item.cateList.taskList === list) {
                                 addInventory(item);
                             }
@@ -688,10 +696,10 @@ define(["util", "data"], function(_, data){
                     }
                 }
                 //未完成
-                else{
+                else {
                     //遍历所有对象未完成任务
                     if (list === "all") {
-                        _.each(arr,function(item){
+                        _.each(arr, function(item) {
                             if (!item.isDone) {
                                 addInventory(item);
                             }
@@ -699,7 +707,7 @@ define(["util", "data"], function(_, data){
                     }
                     //遍历指定id对象所有未完成任务
                     else {
-                        _.each(arr,function(item){
+                        _.each(arr, function(item) {
                             if (!item.isDone && item.cateList.taskList === list) {
                                 addInventory(item);
                             }
@@ -717,16 +725,16 @@ define(["util", "data"], function(_, data){
      * 点击更新内容视图事件
      *  
      */
-    var showTaskDetail = function(e){
+    var showTaskDetail = function(e) {
         _.stopBubble(e);
-        e = e ||window.event;
+        e = e || window.event;
         var target = e.target || e.srcElement;
         var taskId = target.getAttribute("data-task-id");
-        _.each(data.tasks,function(item){
+        _.each(data.tasks, function(item) {
             if (item.id == taskId) {
                 addContent(item);
                 //移动端切换页面
-                if(_.silder.init()){
+                if (_.silder.init()) {
                     _.silder.goIndex('2');
                 }
             }
@@ -736,13 +744,13 @@ define(["util", "data"], function(_, data){
     /**
      * 取消编辑事件
      */
-    var reback = function(){
+    var reback = function() {
         if (confirm("取消任务编辑吗？")) {
             var taskId = init.todoDefault[0].getAttribute("data-task-id");
             //更新内容视图
             renderEditChange("check");
             //更新任务内容
-            _.each(data.tasks,function(item){
+            _.each(data.tasks, function(item) {
                 if (item.id == taskId) {
                     addContent(item);
                 }
@@ -750,13 +758,13 @@ define(["util", "data"], function(_, data){
         }
     };
 
-    var silderGo = function(e){
+    var silderGo = function(e) {
         e = e || window.event;
         var tar = e.target || e.srcElement;
         var tarId = "";
 
-        tar.nodeName === "LI" && (tarId = tar.id);
-        tar.parentNode.nodeName === "LI" && (tarId = tar.parentNode.id);
+        tar.nodeName.toUpperCase() === "LI" && (tarId = tar.id);
+        tar.parentNode.nodeName.toUpperCase() === "LI" && (tarId = tar.parentNode.id);
         
         switch (tarId) {
             case "todo-nav-cates":
@@ -785,7 +793,7 @@ define(["util", "data"], function(_, data){
      *  
      * @param {number} i 传入任务对象id
      */
-    var isTaskDefault = function(i){
+    var isTaskDefault = function(i) {
         var taskItem = "";
         if (i == 0) {
             alert("我是【使用说明】(～￣▽￣)～，不要调戏我~");
@@ -793,7 +801,7 @@ define(["util", "data"], function(_, data){
         }
         else {
             //根据id查找该任务对象
-            _.each(data.tasks, function(item){
+            _.each(data.tasks, function(item) {
                 if (item.id == i) {
                     taskItem = item;
                 }

@@ -30,7 +30,7 @@ requirejs.config({
 
 });
 
-require(["control"], function(control){
+require(["control"], function(control) {
     control.start();
     control.listen();
 });

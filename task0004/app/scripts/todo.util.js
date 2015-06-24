@@ -11,9 +11,25 @@ define(function(){
      * @class
      */
     var each = function(arr, fn) {
-        for( var i=0; i < arr.length; i++ ) {
+        for (var i = 0, len = arr.length; i < len; i++) {
             fn(arr[i], i);
         }
+    };
+
+    /**
+     * 判断class属性
+     *
+     * @class
+     */
+    var hasClass = function(tagStr, classStr) {
+        //这个正则表达式是因为class可以有多个,判断是否包含
+        var arr = tagStr.className.split(/\s+/); 
+        for (var i = 0, len = arr.length; i < len; i++) {
+            if (arr[i] == classStr) {
+                return true;
+            }
+        }
+        return false;
     };
 
     /**
@@ -21,9 +37,9 @@ define(function(){
      *
      * @class
      */
-    var addClass = function(element,value) {
+    var addClass = function(element, value) {
         //判断className属性是否为空
-        if(!element.className) {
+        if (!element.className) {
             element.className = value;
         }
         else {
@@ -41,11 +57,11 @@ define(function(){
      * @class
      */
     var removeClass = function(element, oldClassName) {
-        if ( element.className == oldClassName ) {
+        if (element.className == oldClassName) {
             try{
                 element.removeAttribute("class");
             }
-            catch( ex ) {
+            catch(ex) {
                 element.className = "";
             }
         }
@@ -59,98 +75,87 @@ define(function(){
     var selector = function(selector) {
 
         var selItem = selector.split(" ");
+        var itemLen = selItem.length;
 
-        if ( selItem.length === 1 ) {
+        var elements = document.getElementsByTagName("*");
+        var eleLen = elements.length;
+
+        if (itemLen === 1) {
             var aitem = selItem.toString();
-            switch ( aitem.substr(0, 1) ) {
+            switch (aitem.substr(0, 1)) {
                 case "#":
-                    return document.getElementById( aitem.substr(1) );
+                    return document.getElementById(aitem.substr(1));
                     break;
                 case ".":
                     if (document.getElementsByClassName) {
-                        return document.getElementsByClassName(aitem.substr(1))
-                    }else {
-                        var nodes = document.getElementsByTagName("*"),ret = [];
-                        for(i = 0; i < nodes.length; i++) {
-                            if(hasClass(nodes[i],aitem.substr(1))){
-                                ret.push(nodes[i])
+                        return document.getElementsByClassName(aitem.substr(1));
+                    }
+                    else {
+                        var ret = [];
+                        for (var i = 0; i < eleLen; i++) {
+                            if (hasClass(elements[i], aitem.substr(1))) {
+                                ret.push(elements[i]);
                             }
                         }
                         return ret;
                     }
                     break;
                 case "[":
-                    if ( aitem.charAt( aitem.length - 1 ) === "]" ) {
+                    if (aitem.charAt(aitem.length - 1) === "]") {
 
-                        var item = aitem.substring( 1, aitem.length - 1 );
-                        var elements = document.getElementsByTagName("*");
+                        var item = aitem.substring(1, aitem.length - 1);
 
-                        if ( item.indexOf("=")  != -1 ) {
+                        if (item.indexOf("=") != -1) {
                             var items = item.split("=");
-                            for ( var j = 0; j < elements.length; j++) {
-                                if ( elements[j].getAttribute( items[0] ) === items[1] ) {
+                            for (var j = 0; j < eleLen; j++) {
+                                if (elements[j].getAttribute(items[0]) === items[1]) {
                                     return elements[j];
                                 }
                             }
                         }
                         else {
-                            for ( var i=0; i < elements.length; i++ ) {
-                                if ( elements[i].hasAttribute( item ) ) {
+                            for (var i = 0; i < eleLen; i++) {
+                                if (elements[i].hasAttribute(item)) {
                                     return elements[i];
                                 }
                             }
                         }
                     }
-                    else
-                    {
+                    else {
                         throw Error( "']' is missing !" );
                     }
                     break;
                 default :
-                    return document.getElementsByTagName( aitem );
+                    return document.getElementsByTagName(aitem);
             }
         }
         else {
-            for ( var k = 1; k < selItem.length; i++ ) {
+            for (var k = 1; k < itemLen; i++) {
                 
-                if ( selItem[0].substr(0, 1) == "#" ) {
-                    var itemId = document.getElementById( selItem[0].substr(1) );
-                    switch ( selItem[k].substr(0,1) ) {
+                if (selItem[0].substr(0, 1) == "#") {
+                    var itemId = document.getElementById(selItem[0].substr(1));
+                    switch (selItem[k].substr(0, 1)) {
                         case ".":
-                            return itemId.getElementsByClassName( selItem[k].substr(1) )[0];
+                            return itemId.getElementsByClassName(selItem[k].substr(1))[0];
                             break;
                         default :
-                            return itemId.getElementsByTagName( selItem[k] );
+                            return itemId.getElementsByTagName(selItem[k]);
                     }
                 }
-                else if ( selItem[0].substr(0, 1) == "." ) {
-                    var itemClass = document.getElementsByClassName( selItem[0].substr(1) );
-                    switch ( selItem[k].substr(0, 1) ) {
+                else if (selItem[0].substr(0, 1) == ".") {
+                    var itemClass = document.getElementsByClassName(selItem[0].substr(1));
+                    switch (selItem[k].substr(0, 1)) {
                         case "#":
-                            return itemClass.getElementById( selItem[k].substr(1) );
+                            return itemClass.getElementById(selItem[k].substr(1));
                             break;
                         default :
-                            return itemId.getElementsByTagName( selItem[k] );
+                            return itemId.getElementsByTagName(selItem[k]);
                     }
                 }
             }
         }
     };
 
-    /**
-     * 判断class属性
-     *
-     * @class
-     */
-    var hasClass = function(tagStr,classStr){
-        var arr=tagStr.className.split(/\s+/ ); //这个正则表达式是因为class可以有多个,判断是否包含
-        for (var i=0;i<arr.length;i++){
-            if (arr[i]==classStr){
-                return true ;
-            }
-        }
-        return false;
-    };
 
     /**
      * 给一个element绑定一个针对event事件的响应，响应函数为listener
@@ -158,14 +163,14 @@ define(function(){
      * @class
      */
     var addEvent = function(element, event, listener) {
-        if ( element.addEventListener ) {
-            element.addEventListener( event, listener, false );
+        if (element.addEventListener) {
+            element.addEventListener(event, listener, false);
         }
-        else if ( element.attachEvent ) {
-            element.attachEvent( "on" + event, listener );
+        else if (element.attachEvent) {
+            element.attachEvent("on" + event, listener);
         }
         else {
-            element[ "on" + event ] = listener;
+            element["on" + event] = listener;
         }
     };
 
@@ -175,11 +180,11 @@ define(function(){
      * @class
      */
     var addClickEvent = function(element, listener) {
-        if ( element.addEventListener ) {
-            element.addEventListener( "click", listener, false );
+        if (element.addEventListener) {
+            element.addEventListener("click", listener, false);
         }
-        else if ( element.attachEvent ) {
-            element.attachEvent( "onclick", listener );
+        else if (element.attachEvent) {
+            element.attachEvent("onclick", listener);
         }else {
             element["onclick"] = listener;
         }
@@ -192,7 +197,7 @@ define(function(){
      */
     var stopBubble = function(e) {
         // 如果提供了事件对象，则这是一个非IE浏览器
-        if ( e && e.stopPropagation ) {
+        if (e && e.stopPropagation) {
             // 因此它支持W3C的stopPropagation()方法
             e.stopPropagation();
         }
@@ -209,7 +214,7 @@ define(function(){
      */
     var stopDefault = function(e) {
         // 阻止默认浏览器动作(W3C)
-        if ( e && e.preventDefault ) {
+        if (e && e.preventDefault) {
             e.preventDefault();
         }
         else {
@@ -220,32 +225,34 @@ define(function(){
     };
 
     //遍历元素监听事件
-    var delegateEleEvent = function(ele, listener){
-        for(var i = 0,len=ele.length;i<len;i++){
+    var delegateEleEvent = function(ele, listener) {
+        for (var i = 0, len = ele.length; i < len; i++) {
             listener(ele[i]);
         }
     };
 
     //遍历元素添加点击事件
-    var delegateClickEvent = function(ele,listener){
-        for(var i = 0, len = ele.length; i < len;i++){
-            addClickEvent(ele[i],listener);
+    var delegateClickEvent = function(ele, listener) {
+        for (var i = 0, len = ele.length; i < len; i++) {
+            addClickEvent(ele[i], listener);
         }
     };
 
     //遍历元素初始化样式
-    var  delegateInitClass = function(ele,classname){
+    var  delegateInitClass = function(ele, classname) {
         var eles = ele.parentNode.children;
-        for(var i = 0,len=eles.length;i<len;i++){
-            removeClass(eles[i],classname);
+        for (var i = 0, len = eles.length; i < len; i++) {
+            removeClass(eles[i], classname);
         }
-        addClass(ele,classname);
+        addClass(ele, classname);
     };
 
     //添加数组原型方法 查找指定位置的元素
     Array.prototype.indexOf = function(val) {
-        for (var i = 0; i < this.length; i++) {
-            if (this[i] == val) return i;
+        for (var i = 0, len = this.length; i < len; i++) {
+            if (this[i] == val) {
+                return i;
+            }
         }
         return -1;
     };
@@ -259,62 +266,62 @@ define(function(){
     };
 
     // 移动端slider组件
-    function Silder(options){
+    function Silder(options) {
         this.dom = options.dom;
         this.wrap = options.wrap;
 
-        if(this.init()){
+        if (this.init()) {
             this.renderDOM();
             this.bindDom();
         }
     };
 
-    Silder.prototype.init = function(){
+    Silder.prototype.init = function() {
         this.idx = 0;
         this.innerW = window.innerWidth;
 
-        if(this.innerW <= 768){
+        if (this.innerW <= 768) {
             return true;
         }
 
         return false;
     };
 
-    Silder.prototype.renderDOM = function(){
+    Silder.prototype.renderDOM = function() {
         var innerW = this.innerW;
         var sections = this.dom;
         var wrap = this.wrap;
 
-        if(innerW <= 768){
+        if (innerW <= 768) {
 
             wrap.style.width = innerW + "px";
 
-            each(sections,function(item,i) {
+            each(sections, function(item, i) {
                 item.style.width = innerW + "px";
                 item.style.display = "inline-block";
                 item.style.position = "absolute";
-                item.style.webkitTransform = "translate3d(" + innerW * i + "px,0,0)";
+                item.style.webkitTransform = "translate3d(" + innerW * i + "px, 0, 0)";
             });
         }
     };
 
-    Silder.prototype.goIndex = function(n){
+    Silder.prototype.goIndex = function(n) {
         var idx = this.idx;
         var dom = this.dom;
         var len = this.dom.length;
         var curIdx = 0;
 
-        if(typeof n === "number"){
+        if (typeof n === "number") {
             curIdx = n;
         }
-        else if(typeof n === "string"){
+        else if (typeof n === "string") {
             curIdx = idx + n * 1;
         }
 
-        if(curIdx > len -1){
+        if (curIdx > len - 1) {
             curIdx = len - 1;
         }
-        else if(curIdx < 0){
+        else if (curIdx < 0) {
             curIdx = 0;
         }
 
@@ -326,7 +333,7 @@ define(function(){
 
         dom[curIdx].style.webkitTransform = "translate3d(0, 0, 0)";
 
-        for(var i = 0; i < curIdx; i++){
+        for (var i = 0; i < curIdx; i++) {
             dom[i] && (dom[i].style.webkitTransform = "translate3d(-"
                                                                     + this.innerW 
                                                                     + "px, 0, 0)"
@@ -356,12 +363,12 @@ define(function(){
         }
     };
 
-    Silder.prototype.bindDom = function(){
+    Silder.prototype.bindDom = function() {
         var self = this;
         var innerW = self.innerW;
         var wrap = self.wrap;
 
-        var startHandler = function(e){
+        var startHandler = function(e) {
 
             stopBubble(e);
 
@@ -373,19 +380,20 @@ define(function(){
             self.startX = e.touches[0].pageX;
             self.startY = e.touches[0].pageY;
 
-            if(target.nodeName == "SECTION"){
+            if (target.nodeName.toUpperCase() == "SECTION") {
                 self.target = target;
             }
         };
 
-        var moveHandler = function(e){
+        var moveHandler = function(e) {
 
             stopBubble(e);
 
             self.offsetX = e.targetTouches[0].pageX - self.startX;
             self.offsetY = e.targetTouches[0].pageY - self.startY;
 
-            if(self.offsetY < 50 && Math.abs(self.offsetX) > 15){
+            // 判断手势是否是垂直还是水平
+            if (self.offsetY < 50 && Math.abs(self.offsetX) > 15) {
                 stopDefault(e);
             }
 
@@ -393,7 +401,7 @@ define(function(){
             var i = self.idx - 1;
             var len = dom.length;
 
-            for(i; i < len ; i++){
+            for (i; i < len; i++) {
                 dom[i] 
                 && (dom[i].style.webkitTransition = "-webkit-transform 0s ease-out");
                 dom[i] 
@@ -403,34 +411,40 @@ define(function(){
             }
         };
 
-        var endHandler = function(e){
+        var endHandler = function(e) {
 
             stopBubble(e);
 
             var boundary = innerW / 12;
             var endTime = new Date() * 1;
 
-            if(endTime - self.startTime > 150){
-                if(self.offsetX >= boundary){
-                    self.goIndex("-1");
+            if (endTime - self.startTime > 150) {
+
+                switch (true) {
+                    case self.offsetX >= boundary:
+                        self.goIndex("-1");
+                        break;
+                    case self.offsetX < 0 && self.offsetX < -boundary:
+                        self.goIndex("+1");
+                        break;
+                    default:
+                        self.goIndex("0");
                 }
-                else if(self.offsetX < 0 && self.offsetX < -boundary){
-                    self.goIndex("+1");
-                }
-                else{
-                    self.goIndex("0");
-                }
+
             }
             else {
-                if(self.startX < 10){
-                    self.goIndex("-1");
+
+                switch (true) {
+                    case self.startX < 10:
+                        self.goIndex("-1");
+                        break;
+                    case self.startX > innerW - 10:
+                        self.goIndex("+1");
+                        break;
+                    default:
+                        self.goIndex(self.idx);
                 }
-                else if (self.startX > innerW - 10){
-                    self.goIndex("+1");
-                }
-                else {
-                    self.goIndex(self.idx);
-                }
+
             }
         };
 
@@ -447,10 +461,10 @@ define(function(){
      * 
      * 代码参考：http://www.cnblogs.com/gossip/archive/2010/10/13/1849896.html
      */
-    var getByteVal = function(val, max){
+    var getByteVal = function(val, max) {
         var returnValue = '';
         var byteValLen = 0;
-        for (var i = 0; i < val.length; i++) {
+        for (var i = 0, len = val.length; i < len; i++) {
             if (val[i].match(/[^\x00-\xff]/ig) != null) {
                 byteValLen += 2;
             }
@@ -478,15 +492,17 @@ define(function(){
      * @param {String} time 传入列表时间值
      * @return {String} taskDate 若日期检查无误，返回该值
      */
-    var checkTime = function(time){
+    var checkTime = function(time) {
         var dates = time.split("-");
         var year = parseInt(dates[0]);
         var month = parseInt(dates[1] - 1);
         var day = parseInt(dates[2]);
+
         var curDate = new Date();
         var taskDate = new Date(year,month,day);
+
         if (curDate > taskDate) {
-            alert("任务完成日期太超前啦");
+            alert("任务日期设置的太超前啦~再检查一下~");
             return false;
         }
         else {
@@ -503,11 +519,11 @@ define(function(){
      * 代码参考：http://www.shangxueba.com/jingyan/1904034.html
      */
 
-     var checkXSS = function(str){
-        var reg = new RegExp("[$*()=|'\\[\\].<>/@#&{}]") ;
+     var checkXSS = function(str) {
+        var reg = new RegExp("[$*()=|'\\[\\].<>/@#&{}]");
         var strs = "";
-        for (var i = 0; i < str.length; i++) {
-            strs = strs + str.substr(i, 1).replace(reg,"");
+        for (var i = 0, len = str.length; i < len; i++) {
+            strs = strs + str.substr(i, 1).replace(reg, "");
         }
         return strs;
      };
@@ -520,7 +536,7 @@ define(function(){
      * @param {String} content 传入任务对象的内容值
      * @return {Array} 返回匿名数组，内容为检测无误的任务标题、日期、内容
      */
-    var checkTask = function(title, time, content){
+    var checkTask = function(title, time, content) {
         var timeRex = /^(\d{4})\-(\d{2})\-(\d{2})$/;
         if (title.value == ""
             || time.value == ""
@@ -529,8 +545,8 @@ define(function(){
             alert("请仔细检查任务，查看是否填写完整~");
             return false;
         }
-        if (getByteVal(title.value,20)) {
-            var taskTitle = checkXSS(getByteVal(title.value,20));
+        if (getByteVal(title.value, 20)) {
+            var taskTitle = checkXSS(getByteVal(title.value, 20));
         }
         else {
             return false;
@@ -559,7 +575,7 @@ define(function(){
      *  
      * @param {String} properyName 传入数组属性名
      */
-    var compare = function(properyName){
+    var compare = function(properyName) {
         return function(obj1, obj2) {
             var val1 = obj1[properyName];
             var val2 = obj2[properyName];

@@ -4,7 +4,7 @@
  * 
  */
 
-define(["util"], function(_){
+define(["util"], function(_) {
 
     /**
      * 创建分类对象
@@ -12,7 +12,7 @@ define(["util"], function(_){
      * @param {Object} category 传递分类的值
      * @return {Object} category 将传递的值设置为分类对象返回
      */
-    var Category = function(obj){
+    var Category = function(obj) {
         this.category = obj.category;
 
         return {category: this.category};
@@ -31,7 +31,7 @@ define(["util"], function(_){
      * @param {Object} taskList 传递列表的值
      * @return {Array} category,taskList 返回匿名对象：分类对象和列表对象 
      */
-    var TaskList = function(obj){
+    var TaskList = function(obj) {
         this.category = obj.category;
         this.taskList = obj.taskList;
 
@@ -55,7 +55,7 @@ define(["util"], function(_){
      * @param {Boolean} isDone  传递任务是否完成布尔值
      * @return {Object} 返回任务对象 
      */
-    var TaskDetail = function(obj){
+    var TaskDetail = function(obj) {
         this.id = 0;
         this.cateList = obj.cateList;
         this.title = obj.title;
@@ -81,7 +81,7 @@ define(["util"], function(_){
         id: 0,
         cateList: TaskList.prototype,
         title: "Welcome to ToDo",
-        time: new Date(2015,0,1),
+        time: new Date(2015, 0, 1),
         content: ''
             + 'Nice to meet U !  欢迎使用 ToDo 应用 ~ (๑•̀ㅂ•́)و✧'
             + '<br>'
@@ -116,7 +116,7 @@ define(["util"], function(_){
      * @return {Array} cates 返回数据初始化后的cates数组
      */
 
-    var init = (function(){
+    var init = (function() {
 
         //创建默认分类、默认列表、默认任务对象
         var defaultCate = Category.prototype;
@@ -142,35 +142,35 @@ define(["util"], function(_){
         var detail1 = new TaskDetail({
                             cateList: list1,
                             title: "todo1",
-                            time: new Date(2015,3,1),
+                            time: new Date(2015, 3, 1),
                             content: "完成task0001作业",
                             isDone: true
                         });
         var detail2 = new TaskDetail({
                             cateList: list1,
                             title: "todo2",
-                            time: new Date(2015,3,20),
+                            time: new Date(2015, 3, 20),
                             content: "重构task0001作业",
                             isDone: false
                         });
         var detail3 = new TaskDetail({
                             cateList: list2,
                             title: "todo3",
-                            time: new Date(2015,3,25),
+                            time: new Date(2015, 3, 25),
                             content: "完成task0002作业",
                             isDone: true
                         });
         var detail4 = new TaskDetail({
                             cateList: list2,
                             title: "todo4",
-                            time: new Date(2015,4,5),
+                            time: new Date(2015, 4, 5),
                             content: "重构task0002作业",
                             isDone: false
                         });
         var detail5 = new TaskDetail({
                             cateList: list3,
                             title: "todo5",
-                            time: new Date(2015,4,25),
+                            time: new Date(2015, 4, 25),
                             content: "完成task0003作业",
                             isDone: true
                         });
@@ -181,7 +181,7 @@ define(["util"], function(_){
         var tasks = [defaultDetail, detail1, detail2, detail3, detail4, detail5];
 
         //为任务数组里的每个对象设置id
-        _.each(tasks, function(item, i){
+        _.each(tasks, function(item, i) {
            item.id = i;
         });
 
@@ -206,7 +206,7 @@ define(["util"], function(_){
      * @return {Array} lists 返回LocalStorage中的lists对象数组
      * @return {Array} cates 返回LocalStorage中的cates对象数组
      */
-    var getData = function(key){
+    var getData = function(key) {
         try{
             //监测浏览器是否支持localStorage
             if (window.localStorage) {
@@ -236,20 +236,20 @@ define(["util"], function(_){
         }
     };
 
-    var setData = function(key, val){
+    var setData = function(key, val) {
         try{
-            if(window.localStorage){
+            if (window.localStorage) {
                 var storage = window.localStorage;
-                if(storage.getItem(key)){
-                    switch (key){
+                if (storage.getItem(key)) {
+                    switch (key) {
                         case "cates":
-                            storage.setItem("cates",JSON.stringify(val));
+                            storage.setItem("cates", JSON.stringify(val));
                             break;
                         case "lists":
-                            storage.setItem("lists",JSON.stringify(val));
+                            storage.setItem("lists", JSON.stringify(val));
                             break;
                         case "tasks":
-                            storage.setItem("tasks",JSON.stringify(val));
+                            storage.setItem("tasks", JSON.stringify(val));
                     }
                 }
             }
@@ -259,7 +259,7 @@ define(["util"], function(_){
         }
     };
 
-    var updateData = function(cates, lists, tasks){
+    var updateData = function(cates, lists, tasks) {
         //更新本地分类数据
         setData("cates", cates);
         //更新本地列表数据

@@ -1,5 +1,5 @@
 CACHE MANIFEST  
-#VERSION 2.5
+#VERSION 2.6
 CACHE: 
 
 styles/fonts/fontawesome-webfont.woff
@@ -16,6 +16,6 @@ styles/fonts/FontAwesome.otf
 styles/fonts/fontawesome-webfont.eot
 styles/fonts/fontawesome-webfont.svg
 styles/fonts/fontawesome-webfont.ttf
-images/apple-touch-icon-chen.png
-images/apple-touch-icon-144x144-chen.png
-images/apple-touch-icon-72x72-chen.png
+images/apple-touch-icon-precomposed.png
+images/apple-touch-icon-144x144-precomposed.png
+images/apple-touch-icon-72x72-precomposed.png
