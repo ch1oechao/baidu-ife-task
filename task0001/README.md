@@ -1,1 +1,0 @@
-[[task001 Note]](http://zchen9.github.io/baidu-ife/2015/05/02/baidu-ife-task0001-Note.html)
