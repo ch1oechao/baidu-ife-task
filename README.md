@@ -1,32 +1,20 @@
-## baidu-ife-task [[任务地址]](https://github.com/baidu-ife/ife/tree/master/task)
+# baidu-ife-task
+
+温故而知新，嗯。 
 
 
-###task &amp; note
+### Season1 
+- [[任务地址]](https://github.com/baidu-ife/ife/tree/master/2015_spring)
+- [[练习地址]](https://github.com/zchen9/baidu-ife-task/tree/season1)
 
-* 提交baidu-ife布置的每次任务完成结果
 
-* 记录完成情况以及学习笔记
+### Season2 
+- [[任务地址]](https://github.com/baidu-ife/ife/tree/master/2015_summer)
+- [[完成成果]](https://github.com/zchen9/PlotIt)
 
-###task0001
 
-* [[查看demo]](http://zchen9.github.io/baidu-ife-task/task0001/zchen9/index.html)
+### Season3 
 
-* [[学习笔记]](http://zchen9.github.io/baidu-ife/2015/05/02/baidu-ife-task0001-Note.html)
+- [[任务地址]](http://ife.baidu.com/task/all)
+- [[练习地址]](https://github.com/zchen9/baidu-ife-task/tree/season3)
 
-###task0002
-
-* [[查看demo]](http://zchen9.github.io/baidu-ife-task/task0002/zchen9/task0002.html)
-
-* [[学习笔记]](http://zchen9.github.io/baidu-ife/2015/05/07/baidu-ife-task0002-Note.html)
-
-###task0003
-
-- [[查看demo]](http://www.chen9.info/baidu-ife-task/task0003/zchen9/)
-
-- [[任务笔记]](http://www.chen9.info/)
-
-###task0004
-
-- [[查看代码]](https://github.com/zchen9/baidu-ife-task/tree/gh-pages/task0004)
-
-- [[查看demo]](http://www.chen9.info/baidu-ife-task/task0004/dist/)

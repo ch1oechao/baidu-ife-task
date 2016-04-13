@@ -1,1 +1,0 @@
-requirejs.config({paths:{util:"todo.util",data:"todo.data",render:"todo.render",control:"todo.controller"},shim:{util:{exports:"_"},data:{deps:["util"],exports:"data"},render:{deps:["util","data"],exports:"render"},control:{deps:["util","data","render"],exports:"control"}}}),require(["control"],function(a){a.start(),a.listen()});
