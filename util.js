@@ -2,6 +2,10 @@
 
   function Util() {
 
+    this.trim = function(text) {
+      return text.replace(/^\s*|\s+|\s*$/g, '');
+    }
+
     this.addEvent = function(elem, event, listener) {
       if (elem.addEventListener) {
         elem.addEventListener(event, listener, false);
@@ -9,6 +13,18 @@
         elem.attachEvent('on' + event, listener);
       } else {
         elem['on' + event] = listener;
+      }
+    };
+
+    this.delegate = function(elem, tag, event, listener) {
+      var self = this;
+      if (elem && elem.children) {
+        var $children = elem.children;
+        Array.prototype.map.call($children, function(elem) {
+          if (elem.tagName.toUpperCase() === tag.toUpperCase()) {
+            self.addEvent(elem, event, listener);
+          }
+        });
       }
     };
 
@@ -28,7 +44,7 @@
       }
 
       return ev;
-    }
+    };
 
   }
 
