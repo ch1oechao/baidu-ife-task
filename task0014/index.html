@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+  </head>
+<body>
+
+  <h3>污染城市列表</h3>
+  <ul id="aqi-list">
+<!--   
+    <li>第一名：福州（样例），10</li>
+    <li>第二名：福州（样例），10</li> -->
+  </ul>
+
+<script src="../util.js"></script>
+<script type="text/javascript">
+
+var aqiData = [
+  ["北京", 90],
+  ["上海", 50],
+  ["福州", 10],
+  ["广州", 50],
+  ["成都", 90],
+  ["西安", 100]
+];
+
+(function () {
+
+  /*
+  在注释下方编写代码
+  遍历读取aqiData中各个城市的数据
+  将空气质量指数大于60的城市显示到aqi-list的列表中
+  */
+ 
+  var genLiDom = function(data) {
+    var list = [];
+
+    // 排序
+    Array.prototype.sort.call(data, function(a, b) {
+      return b[1] - a[1];
+    });
+    // 生成 li
+    Array.prototype.map.call(data, function(val, idx) {
+      list.push('<li> 第' + (idx + 1) + '名: ' + val.toString() + '</li>');
+    });
+
+    return list;
+  };
+
+  var render = function(data) {
+    // 过滤
+    var filterData = Array.prototype.filter.call(data, function(val) {
+      if (val && Array.isArray(val)) {
+        var city = val[0],
+            api = val[1];
+        if (+api > 60) {
+          return val;
+        }
+      }
+    });
+    // dom 添加
+    var $ul = document.querySelector('#aqi-list');
+    $ul.innerHTML = genLiDom(filterData).join('');   
+  }
+
+  render(aqiData);
+
+})();
+
+</script>
+</body>
+</html>

@@ -11,6 +11,7 @@
 
   <div>您输入的值是：<span id="aqi-display">尚无录入</span></div>
 
+<script src="../util.js"></script>
 <script type="text/javascript">
 
 (function() {
@@ -25,45 +26,17 @@
       $input = document.querySelector('#aqi-input'),
       $text = document.querySelector('#aqi-display');
 
-  var addEvent = function(elem, event, listener) {
-    if (elem.addEventListener) {
-      elem.addEventListener(event, listener, false);
-    } else if (elem.attachEvent) {
-      elem.attachEvent('on' + event, listener);
-    } else {
-      elem['on' + event] = listener;
-    }
-  };
-
-  var halt = function(ev) {
-    ev = ev || window.event;
-
-    if (ev.preventDefault) {
-      ev.preventDefault();
-    } else {
-      ev.returnValue = false;
-    }
-
-    if (ev.stopPropagation) {
-      ev.stopPropagation();
-    } else {
-      ev.cancelBubble = true;
-    }
-
-    return ev;
-  }
-
   var handler = function(ev) {
-    halt(ev);
+    util.halt(ev);
     $text.innerHTML = $input.value;
   }
 
   // 点击事件
-  addEvent($btn, 'click', handler);
+  util.addEvent($btn, 'click', handler);
 
   // Enter事件
-  addEvent($input, 'keyup', function(ev) {
-    ev = halt(ev);
+  util.addEvent($input, 'keyup', function(ev) {
+    ev = util.halt(ev);
     if (ev.keyCode === 13) {
       handler();
     }
