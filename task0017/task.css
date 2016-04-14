@@ -1,0 +1,7 @@
+.aqi-chart-wrap {
+  display: flex;
+  align-items: flex-end;
+  margin: 20px auto;
+  width: 80%;
+  min-height: 300px;
+}
