@@ -28,7 +28,8 @@
 
   var handler = function(ev) {
     util.halt(ev);
-    $text.innerHTML = $input.value;
+    var num = Number(util.trim($input.value));
+    $text.innerHTML = isNaN(num < 0 ? NaN : num) ? '请输入正数' : num;
   }
 
   // 点击事件

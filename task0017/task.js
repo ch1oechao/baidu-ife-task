@@ -98,7 +98,7 @@ function renderChart() {
 
   var $chart = document.querySelector('.aqi-chart-wrap'),
       colors = ['#3EC9A7', '#2B879E', '#F25C5E'],
-      grade;
+      grade, list = [];
 
   $chart.innerHTML = '';
 
@@ -110,17 +110,18 @@ function renderChart() {
       grade = chartData[item] > 150 ? 2 : 1;
     }
 
-    var $item = document.createElement('div');
-    $item.style.height = chartData[item] + 'px';
-    $item.style.width = itemW + 'px';
-    $item.style.marginRight = 2 + 'px';
-    $item.style.float = 'left';
-    $item.style.background = colors[grade];
-    $item.title = item + ': ' + chartData[item];
-
-    $chart.appendChild($item);
-
+    list.push('<div title="' + item + ': ' + chartData[item] + '"'
+                  + 'style="' 
+                  + 'height:' + chartData[item] + 'px;'
+                  + 'width:' + itemW + 'px;'
+                  + 'margin-right:' + 2 + 'px;'
+                  + 'background:'+ colors[grade] + ';'
+                  + 'float: left;'
+                  + '"'
+            + '></div>');
   });
+
+  $chart.innerHTML = list.join('');
 
 }
 
